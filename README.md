@@ -1,34 +1,21 @@
-README.md
+# carworld CSV import
 
- Car World – Car Listing & Comparison PortalAdd commentMore actions
+Loads `car_dataset.csv` into the existing PostgreSQL `carworld.cars` table.
 
-**Car World** is a BCA Final Year Web Project that allows users to explore, compare, and view detailed information about various cars categorized by brand and model.
+## Run
 
-## 🌟 Features
+```powershell
+cd C:\Users\ansha\carworld-import
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+copy .env.example .env
+```
 
-- Multi-brand car listings (e.g., Audi, BMW, Ferrari)
-- Interactive About Us and Contact pages
-- Organized car pages with specifications and images
-- Hosted online using GitHub Pages
+Edit `.env` with your PostgreSQL password, then:
 
-## 🛠 Technologies Used
+```powershell
+python import_cars.py
+```
 
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap (optional)
-- GitHub Pages (for hosting)
-
-## 🎓 Project Purpose
-
-This project was built as part of the BCA Final Year curriculum to showcase website development skills and project structure.
-
-## 🔗 Live Demo
-
-👉 [Click here to visit the live site](https://ansh9057.github.io/Car-World/)
-
-## 📩 Contact
-
-For any queries, contact at:  
-📍 137 1st Jagatpura Rd, Prem Nagar, Model Town, Jagatpura, Jaipur, Rajasthan 302017  
-anshanand317@gmail.com
+The script creates `cars` only if it is missing (`CREATE TABLE IF NOT EXISTS`), then bulk-copies all rows with PostgreSQL `COPY`. It does not drop or alter an existing table.
