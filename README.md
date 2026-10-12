@@ -81,7 +81,19 @@ Run the retained Gradio interface locally with:
 
 ### Backend configuration and deployment
 
-The root `.env.example` lists server settings. `FRONTEND_ORIGINS` is a comma-separated
+The root `.env.example` lists server settings. For Render, set `CARWORLD_ENV=production`
+and connect the Render PostgreSQL database to the web service so Render provides its
+`DATABASE_URL` connection string. Both FastAPI and Alembic read this same variable;
+production startup fails clearly if it is missing and never falls back to localhost.
+Local development continues to use `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_USER`,
+`POSTGRES_PASSWORD`, and `POSTGRES_DB` from `.env` or Docker Compose.
+
+For a Python runtime on Render, use `pip install -r requirements.txt` as the build
+command, `cd backend && alembic upgrade head` as the pre-deploy migration command, and
+`cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT` as the start command.
+For a Docker runtime, the Dockerfile already runs migrations before starting Uvicorn.
+
+`FRONTEND_ORIGINS` is a comma-separated
 allowlist; set it to the exact HTTPS origins serving the frontend. The static site
 has no bundler, so configure the public API origin in `apps/carworld-config.js` at
 deployment time by running the config renderer with `FRONTEND_ENV=production` and

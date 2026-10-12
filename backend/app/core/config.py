@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from pydantic import BaseModel, Field
-from sqlalchemy.engine import URL
+from sqlalchemy.engine import URL, make_url
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -12,6 +12,8 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 
 class Settings(BaseModel):
+    carworld_env: str = "development"
+    database_url_override: str | None = None
     chat_rate_limit_per_minute: int = Field(default=30, gt=0)
     chat_rate_limit_per_day: int = Field(default=300, gt=0)
     postgres_host: str = "localhost"
@@ -29,11 +31,41 @@ class Settings(BaseModel):
 
     @classmethod
     def from_environment(cls) -> "Settings":
-        environment = os.environ.get("CARWORLD_ENV", "development").strip().lower()
+        render_service = bool(os.environ.get("RENDER_SERVICE_ID"))
+        environment = os.environ.get(
+            "CARWORLD_ENV", "production" if render_service else "development"
+        ).strip().lower()
+        database_url_value = os.environ.get("DATABASE_URL", "").strip() or None
+        if (environment == "production" or render_service) and not database_url_value:
+            raise ValueError(
+                "DATABASE_URL is required in production; configure the Render PostgreSQL connection string."
+            )
+
+        normalized_database_url = None
+        if database_url_value:
+            try:
+                parsed_url = make_url(database_url_value)
+            except Exception:
+                raise ValueError("DATABASE_URL must be a valid PostgreSQL URL.") from None
+
+            if parsed_url.drivername.split("+", 1)[0] not in {"postgres", "postgresql"}:
+                raise ValueError("DATABASE_URL must use PostgreSQL.")
+
+            query = dict(parsed_url.query)
+            ssl_mode = query.pop("sslmode", None)
+            if ssl_mode is not None:
+                query.setdefault("ssl", ssl_mode)
+            normalized_database_url = parsed_url.set(
+                drivername="postgresql+asyncpg",
+                query=query,
+            ).render_as_string(hide_password=False)
+
         default_minute_limit, default_day_limit = (
             (5, 40) if environment == "production" else (30, 300)
         )
         return cls(
+            carworld_env=environment,
+            database_url_override=normalized_database_url,
             chat_rate_limit_per_minute=int(os.environ.get(
                 "CHAT_RATE_LIMIT_PER_MINUTE", default_minute_limit
             )),
@@ -56,6 +88,12 @@ class Settings(BaseModel):
 
     @property
     def database_url(self) -> URL:
+        if self.database_url_override:
+            return make_url(self.database_url_override)
+
+        if self.carworld_env == "production":
+            raise ValueError("DATABASE_URL is required in production.")
+
         return URL.create(
             drivername="postgresql+asyncpg",
             username=self.postgres_user,
