@@ -1,0 +1,1 @@
+"""Car catalog module; its schema awaits dataset inspection."""

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Car Details | CarWorld</title>
+    <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="FontAwsome/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="FontAwsome/all.min.js"></script>
+    <script src="apps/carworld-config.js?v=20261013-1" defer></script>
+    <script src="carworld-api.js?v=20261013-1" defer></script>
+    <script src="car-detail.js?v=20261013-1" defer></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="rounded-circle shadow-sm" height="60" width="60" alt="CarWorld"></a>
+            <a href="index.html" class="logo-text navbar-brand"><b><span class="text-primary"> C</span>ar<span class="text-primary">W</span>orld</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav text-center ml-auto">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><b>ALL CARS</b></a></li>
+                    <li class="nav-item"><a href="BMWCars.html" class="nav-link"><b>BRANDS</b></a></li>
+                    <li class="nav-item"><button class="btn btn-link nav-link" type="button" data-toggle="modal" data-target="#loginmodal"><b>ACCOUNT</b></button></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container" style="padding-top: 100px;">
+        <a href="index.html" class="btn btn-outline-secondary mb-3"><i class="fas fa-arrow-left"></i> Back to cars</a>
+        <div class="alert alert-info carworld-state" id="detail-loading" role="status">Loading car details...</div>
+        <div class="alert alert-danger carworld-state" id="detail-error" role="alert" hidden></div>
+        <main id="detail-content" hidden>
+            <div class="row"><div class="col-12"><h3 id="detail-title"></h3></div></div>
+            <div class="row border mt-3 m-1">
+                <div class="col-md-6 border-right p-3">
+                    <img id="detail-image" class="img-fluid" src="images/run-car/car.png" alt="">
+                </div>
+                <div class="col-md-6 p-3">
+                    <p class="text-muted mb-1" id="detail-variant"></p>
+                    <h3 id="detail-price"></h3>
+                    <p class="text-muted">Ex-showroom price</p>
+                    <p class="mb-1"><strong>Fuel type:</strong> <span id="detail-fuel"></span></p>
+                    <p class="mb-1"><strong>Body type:</strong> <span id="detail-body"></span></p>
+                    <p class="mb-1"><strong>Transmission:</strong> <span id="detail-transmission"></span></p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12"><h3 id="detail-spec-heading">Key Specifications</h3></div>
+                <div class="col-12"><div class="row justify-content-center" id="detail-specifications"></div></div>
+            </div>
+        </main>
+    </div>
+    <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="login-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button class="btn btn-danger close" type="button" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <br>
+                    <h5 class="modal-title" id="login-title">Login to CarWorld</h5>
+                    <a href="#" class="text-decoration-none" data-carworld-google-login>
+                        <div class="text-center text-muted border p-3 mt-4"><img src="images/google-logo.jpg" width="20" alt="" class="img-fluid"> Continue With Google</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="style.js"></script>
+</body>
+</html>

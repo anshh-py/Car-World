@@ -12,10 +12,76 @@
     <script type="text/javascript" src="bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="car_style.css">
+    <link rel="stylesheet" href="carworld-chat.css">
     <script type="text/javascript" src="style.js"></script>
+    <script defer src="apps/carworld-config.js?v=20261013-1"></script>
+    <script defer src="carworld-api.js?v=20261013-1"></script>
+    <script defer src="carworld-auth.js?v=20261012-1"></script>
+    <script defer src="carworld-chat.js"></script>
+    <script defer src="car-catalog.js"></script>
     <title>CarWorld</title>
 </head>
 <body>
+    <div class="cw-chat" data-chat-widget>
+        <button class="cw-chat-launcher" type="button" data-chat-open aria-controls="carworld-chat-panel"
+                aria-expanded="false" aria-label="Open CarWorld AI chat">
+            <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                <path class="cw-launcher-bubble" d="M24 5.5c-10.1 0-18.3 6.8-18.3 15.2 0 4.4 2.3 8.4 6.1 11.2l-1.4 7.2 8.1-3.7c1.8.4 3.6.6 5.5.6 10.1 0 18.3-6.8 18.3-15.2S34.1 5.5 24 5.5Z"/>
+                <path class="cw-launcher-car" d="m15.5 25.5 2-5.2c.4-.9 1.2-1.5 2.2-1.5h8.6c.9 0 1.8.6 2.2 1.5l2 5.2 1.5 1.1v5.1h-2.2v-1.9H16.2v1.9H14v-5.1l1.5-1.1Zm3.1-.4h10.8l-1.4-3.6h-8l-1.4 3.6Zm-.5 3.1a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6Zm11.8 0a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6Z"/>
+                <path class="cw-launcher-spark" d="M34 10.5v4m-2-2h4"/>
+            </svg>
+        </button>
+        <span class="cw-chat-launcher-label" aria-hidden="true">CarWorld AI</span>
+
+        <section class="cw-chat-panel" id="carworld-chat-panel" data-chat-panel role="dialog"
+                 aria-labelledby="carworld-chat-title" aria-modal="false" tabindex="-1" hidden>
+            <header class="cw-chat-header">
+                <div class="cw-chat-brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" focusable="false">
+                        <path d="M24 4 42 14v20L24 44 6 34V14L24 4Z"/>
+                        <path d="m14 27 2.4-6.1c.5-1.2 1.5-1.9 2.8-1.9h9.6c1.2 0 2.3.7 2.8 1.9L34 27l2 1.5v5.2h-3v-2H15v2h-3v-5.2l2-1.5Zm4-1h12l-1.7-4h-8.6L18 26Zm-.4 4.3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm12.8 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>
+                    </svg>
+                </div>
+                <div class="cw-chat-heading">
+                    <h2 id="carworld-chat-title">CarWorld <span>AI</span></h2>
+                    <p><i aria-hidden="true"></i> Your automotive copilot</p>
+                </div>
+                <div class="cw-chat-header-actions">
+                    <button class="cw-icon-button" type="button" data-chat-clear aria-label="Clear conversation" title="Clear conversation">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M9 7V4h6v3m3 0-.8 13H6.8L6 7m4 3v6m4-6v6"/></svg>
+                    </button>
+                    <button class="cw-icon-button" type="button" data-chat-close aria-label="Minimize CarWorld AI" title="Minimize chat">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>
+                    </button>
+                </div>
+            </header>
+            <div class="cw-chat-messages" data-chat-messages role="log" aria-live="polite" aria-relevant="additions text" aria-label="Chat messages">
+                <div class="cw-chat-welcome" data-chat-welcome>
+                    <div class="cw-welcome-glow" aria-hidden="true">✦</div>
+                    <p class="cw-eyebrow">MADE FOR THE ROAD AHEAD</p>
+                    <h3>Your next car<br>starts here.</h3>
+                    <p class="cw-welcome-copy">Compare models, explore the latest, or plan your car loan with a little help from AI.</p>
+                    <div class="cw-prompt-list" role="group" aria-label="Suggested questions">
+                        <button type="button" data-chat-prompt="Find the best cars under ₹10 lakh">Best cars under ₹10 lakh <span aria-hidden="true">↗</span></button>
+                        <button type="button" data-chat-prompt="Compare SUVs for my family">Compare family SUVs <span aria-hidden="true">↗</span></button>
+                        <button type="button" data-chat-prompt="Calculate my car loan EMI">Calculate my car loan EMI <span aria-hidden="true">↗</span></button>
+                        <button type="button" data-chat-prompt="Check the latest car prices">Check latest car prices <span aria-hidden="true">↗</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="cw-chat-typing" data-chat-typing hidden aria-hidden="true"><span></span><span></span><span></span><em>Finding the right answer</em></div>
+            <p class="cw-chat-status" data-chat-status role="status" aria-live="polite"></p>
+            <form class="cw-chat-composer" data-chat-form>
+                <label class="sr-only" for="carworld-chat-input">Ask CarWorld AI</label>
+                <textarea id="carworld-chat-input" name="message" rows="1" maxlength="2000" autocomplete="off"
+                          placeholder="Ask about cars, EMI, and more..." required></textarea>
+                <button class="cw-send-button" type="submit" data-chat-send aria-label="Send message" title="Send message" disabled>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m4 4 17 8-17 8 3-8-3-8Zm3 8h14"/></svg>
+                </button>
+            </form>
+            <div class="cw-chat-footnote"><span>CARWORLD AI</span><span>For every road in India</span></div>
+        </section>
+    </div>
     <div class="container-fluid">
         <div class="navbar navbar-expand-md navbar-light bg-light fixed-top">
            
@@ -216,7 +282,7 @@
                    
                    <b class=""><span>price : </span>₹ 28.00 - 30.00 Lakh</b>
                    <br>
-                   <p class="text-white">When to Expect : April 2026 (Tentative)</p>
+                   <p class="text-blue">When to Expect : April 2026 (Tentative)</p>
                 </div>
                 </div>
                 </a>
@@ -225,10 +291,10 @@
     </div>
        <div class="container">
         <div class="row">
-           <div class="col-12"><h4>Fetured Cars</h4></div>
+           <div class="col-12"><h4>Featured Cars</h4></div>
             <div class="col-12">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item"><a href="#popular" class="nav-link active" data-toggle="tab">Populer</a></li>
+                    <li class="nav-item"><a href="#popular" class="nav-link active" data-toggle="tab">Popular</a></li>
                     <li class="nav-item"><a href="#just-launched" class="nav-link" data-toggle="tab">Just Launched</a></li>
                     <li class="nav-item"><a href="#upcomingcar" class="nav-link" data-toggle="tab">upcoming cars</a></li>
                 </ul>
@@ -241,15 +307,15 @@
                     <img src="images/citroen-c5-aircross/c5-aircross.jpg" alt="" class="card-img-top">
                     <div class="card-body bg-danger text-white">
                         <h5 class="card-title">Citroen C5 Aircross</h5>
-                       <b>₹28.00-30.00 lakh</b><span style="font-size: 13px;"> Estimeted price</span>
+                       <b>₹28.00-30.00 lakh</b><span style="font-size: 13px;"> Estimated price</span>
                        <p>When to Expect : April 2026 (Tentative)</p>
                     </div>
                 </div>
                          </a>
                         </div>
                                
-                                <div class="col-lg-4 col-sm-6">
-                                <a href="Renault-Kiger.html">
+                         <div class="col-lg-4 col-sm-6">
+               <a href="Renault-Kiger.html">
                      <div class="card">
                     <img src="images/Renault-Kiger/Renault-Kiger1.jpg" alt="" class="card-img-top">
                     <div class="card-body bg-light text-muted">
@@ -279,11 +345,11 @@
                         <h5 class="card-title">Maruti Suzuki Swift</h5>
                        <b>₹ 6.70 Lakh</b><span style="font-size: 13px;"> onwards</span>
                        <p>On-Road Price, Jaipur</p>
-                    </div>
+                       </div>
                                     </div></a>
-                                </div>
-                                <div class="col-lg-4 col-sm-6">
-                                <a href="Hyundai-Creta.html">
+                      </div>
+                        <div class="col-lg-4 col-sm-6">
+                              <a href="Hyundai-Creta.html">
                      <div class="card">
                     <img src="images/Hyundai-Creta/Hyundai-Creta1.jpg" alt="" class="card-img-top">
                     <div class="card-body bg-light text-muted">
@@ -428,7 +494,7 @@
                     <img src="images/Audi-New-Q3/Audi-New-Q3-1.jpg" alt="" class="card-img-top">
                     <div class="card-body bg-light text-muted">
                         <h5 class="card-title">Audi New Q3</h5>
-                       <b>₹ 33.00 - 44.00 Lakh</b><span style="font-size: 13px;"> Estimeted price</span>
+                       <b>₹ 33.00 - 44.00 Lakh</b><span style="font-size: 13px;"> Estimated price</span>
                        <p>When to Expect : March 2026 (Tentative)</p>
                     </div>
                                     </div></a>
@@ -445,25 +511,25 @@
                    <center>
                     <div class="col-12">
                        <div class="row">
-                       <div class="col-lg-2 col-md-4 col-6   border"><a href="Maruti-Suzuki-Cars.html"><img src="images/company-logo/maruti.png" width="150" alt="" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Hyundai-cars.html"><img src="images/company-logo/hyundai.png" width="150" alt="Hyundaicars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Tata-cars.html"><img src="images/company-logo/tata.png" width="150" alt="Tatacars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="KiaCars.html"><img src="images/company-logo/kia.png" width="150" alt="KiaCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="HondaCars.html"><img src="images/company-logo/honda.png" width="150" alt="HondaCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="ToyotaCars.html"><img src="images/company-logo/toyota.png" width="150" alt="ToyotaCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6   border"><a href="Maruti-Suzuki-Cars.html"><img src="https://fabrikbrands.com/wp-content/uploads/Suzuki-Logo-1.png" width="150" alt="" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Hyundai-cars.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX8L9x244wW7fDd6tgrAUif9UfY3Kqr8uyow&s" width="150" alt="Hyundaicars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Tata-cars.html"><img src="https://images.seeklogo.com/logo-png/13/2/tata-football-academy-de-jamshedpur-logo-png_seeklogo-135883.png" width="150" alt="Tatacars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="KiaCars.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo8gTUCq9PQr6fmhC_-HZkac1hhpjcqmauoQ&s" width="150" alt="KiaCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="HondaCars.html"><img src="https://static.vecteezy.com/system/resources/previews/036/459/363/non_2x/honda-car-logo-illustration-free-vector.jpg" width="150" alt="HondaCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="ToyotaCars.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4iJzOWvuwVzeisz5UiIjYBbrqE5Ek-QMFbQ&s" width="150" alt="ToyotaCars" class="img-fluid"></a></div>
                     </div>
                     </div>
                     </center>
                     <center>
                     <div class="col-12">
                        <div class="row">
-                       <div class="col-lg-2 col-md-4 col-6   border"><a href="AudiCars.html"><img src="images/company-logo/audi.png" width="150" alt="AudiCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Mercedes-BenzCars.html"><img src="images/company-logo/mercedesbenz.png" width="150" alt="Mercedes-BenzCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="BMWCars.html"><img src="images/company-logo/bmw.png" width="150" alt="BMWCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6   border"><a href="AudiCars.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYIsn1MliicvJzve1GBdPFK8yXychXqOoFGA&s" width="150" alt="AudiCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="Mercedes-BenzCars.html"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png" width="150" alt="Mercedes-BenzCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="BMWCars.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwZtSGJ-iR7Eqlu2wvZA4N8fu9T_foteAHg&s" width="150" alt="BMWCars" class="img-fluid"></a></div>
                        <div class="col-lg-2 col-md-4 col-6  border">
-                       <a href="JaguarCars.html"><img src="images/company-logo/jaguar.png" width="150" alt="JaguarCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="TeslaCars.html"><img src="images/company-logo/tesla.jpg" width="150" alt="TeslaCars" class="img-fluid"></a></div>
-                       <div class="col-lg-2 col-md-4 col-6  border"><a href="MGCars.html"><img src="images/company-logo/mg.png" width="150" alt="MGCars" class="img-fluid"></a></div>
+                       <a href="JaguarCars.html"><img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/04/jaguar-logo-2012-present-768x557.webp" width="150" alt="JaguarCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="TeslaCars.html"><img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/03/tesla-logo-2003-present-768x557.webp" width="150" alt="TeslaCars" class="img-fluid"></a></div>
+                       <div class="col-lg-2 col-md-4 col-6  border"><a href="MGCars.html"><img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/04/mg-logo-2021-present-768x557.webp" width="150" alt="MGCars" class="img-fluid"></a></div>
                     </div>
                     </div>
                     </center>
@@ -580,8 +646,8 @@
                                 </div>
                     <div class="col-lg-4 col-sm-6">
                     <a href="Datsun-GO.html">
+                    <img src="https://auto.economictimes.indiatimes.com/files/retail_files/redi-go-1503573042-prod-var.png" alt="" class="card-img-top">
                      <div class="card">
-                    <img src="images/Datsun-GO/Datsun-Go-1.jpg" alt="" class="card-img-top">
                     <div class="card-body bg-light text-muted">
                         <h5 class="card-title">Datsun GO</h5>
                        <b>₹ 4.80 Lakh </b><span style="font-size: 13px;"> onwards</span>
@@ -871,19 +937,84 @@
                     </div>
                       </div>
                   </div>
-                  <div class="container-fluid" id="container-footer">
+                                    <div class="container" id="car-api-catalog">
+                                        <h4 class="mt-4">Browse Cars</h4>
+                                        <div class="alert alert-info carworld-state" id="car-api-loading" role="status">Loading cars...</div>
+                                        <div class="alert alert-danger carworld-state" id="car-api-error" role="alert" hidden></div>
+                                        <form class="row mb-3" id="car-search-form">
+                                            <div class="col-md-8 mb-2">
+                                                <label for="car-search-query">Search cars</label>
+                                                <div class="
+                                                input-group">
+                                                    <input class="form-control" id="car-search-query" type="search" placeholder="Search manufacturer, model, or variant">
+                                                    <div class="input-group-append"><button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i> Search</button></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form class="row mb-3" id="car-filter-form">
+                                            <div class="col-md-4 col-sm-6 form-group">
+                                                <label for="filter-manufacturer">Manufacturer</label>
+                                                <select class="form-control" id="filter-manufacturer" name="manufacturer"><option value="">All manufacturers</option></select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 form-group">
+                                                <label for="filter-model">Model</label>
+                                                <select class="form-control" id="filter-model" name="model" disabled><option value="">All models</option></select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 form-group">
+                                                <label for="filter-fuel">Fuel type</label>
+                                                <select class="form-control" id="filter-fuel" name="fuel_type"><option value="">All fuel types</option></select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 form-group">
+                                                <label for="filter-body">Body type</label>
+                                                <select class="form-control" id="filter-body" name="body_type"><option value="">All body types</option></select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 form-group">
+                                                <label for="filter-transmission">Transmission</label>
+                                                <select class="form-control" id="filter-transmission" name="transmission_type"><option value="">All transmissions</option></select>
+                                            </div>
+                                            <div class="col-md-2 col-sm-6 form-group">
+                                                <label for="filter-min-price">Min price (₹)</label>
+                                                <input class="form-control" id="filter-min-price" name="min_price" type="number" min="0" step="1">
+                                            </div>
+                                            <div class="col-md-2 col-sm-6 form-group">
+                                                <label for="filter-max-price">Max price (₹)</label>
+                                                <input class="form-control" id="filter-max-price" name="max_price" type="number" min="0" step="1">
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="filter-sort">Sort by</label>
+                                                <select class="form-control" id="filter-sort" name="sort">
+                                                    <option value="name">Name</option>
+                                                    <option value="price_asc">Price: low to high</option>
+                                                    <option value="price_desc">Price: high to low</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <button class="btn btn-info text-white" type="submit">Apply filters</button>
+                                                <button class="btn btn-outline-secondary" id="car-filter-reset" type="reset">Clear filters</button>
+                                            </div>
+                                        </form>
+                                        <div class="row" id="car-api-results" aria-live="polite"></div>
+                                        <div class="d-flex align-items-center justify-content-between my-3" id="car-api-pagination">
+                                            <button class="btn btn-secondary" id="car-page-previous" type="button" disabled>Previous</button>
+                                            <span id="car-page-label" aria-live="polite"></span>
+                                            <button class="btn btn-secondary" id="car-page-next" type="button" disabled>Next</button>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" id="container-footer">
                       <div class="row">
                           <div class="col-md-6"></div>
                           <div class="col-md-6" >
                               <div class="row justify-content-center mt-5">
                                  <div class="col-sm-8 p-3 m-3" id="search-footer">
                                   <h5 class="text-white">Check On-Road Price</h5>
-                                  <div class="input-group">
-                                      <input type="search" class="form-control" placeholder="Seaech Car">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-light"><i class="fas fa-search"></i></button>
-                                      </div>
-                                     </div>
+                                                                    <form id="car-footer-search-form">
+                                                                        <div class="input-group">
+                                                                            <input type="search" class="form-control" placeholder="Search Car" aria-label="Search cars">
+                                                                            <div class="input-group-append">
+                                                                                    <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
                                      <p class="text-white mt-4" id="search-p">Its private, no need to share your number and email</p>
                                   </div>
                               </div>

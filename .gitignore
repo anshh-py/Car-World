@@ -1,3 +1,21 @@
-venv/
+# Secrets and environment files
 .env
+.env.*
+!.env.example
+!.env.frontend.example
+
+# Python
+.venv/
+.venv-*/
 __pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local frontend configuration
+.env.local
+.env.frontend
+carworld-config.local.js
+apps/carworld-config.js
+
+# Local tooling
+.vscode/
