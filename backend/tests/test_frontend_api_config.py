@@ -50,9 +50,9 @@ def test_car_detail_page_explains_a_missing_catalog_record() -> None:
 def test_legacy_auth_loader_loads_generated_api_config_first() -> None:
 	source = (PROJECT_ROOT / "style.js").read_text(encoding="utf-8")
 
-	assert 'appendScript("apps/carworld-config.js?v=20261013-1"' in source
+	assert 'appendScript("apps/carworld-config.js?v=20261013-2"' in source
 	assert 'appendScript("carworld-api.js?v=20261013-1", loadAuth)' in source
-	assert source.index('appendScript("apps/carworld-config.js?v=20261013-1"') < source.index(
+	assert source.index('appendScript("apps/carworld-config.js?v=20261013-2"') < source.index(
 		'appendScript("carworld-api.js?v=20261013-1", loadAuth)'
 	)
 	assert 'appendScript("carworld-auth.js?v=20261012-1")' in source
@@ -81,9 +81,9 @@ def test_production_frontend_config_requires_public_https_origin() -> None:
 	assert "$parsedUrl.IsLoopback" in source
 
 
-def test_local_frontend_launcher_uses_local_backend_origin() -> None:
+def test_local_frontend_launcher_defaults_to_deployed_backend_origin() -> None:
 	source = (PROJECT_ROOT / "start-frontend.cmd").read_text(encoding="utf-8")
-	assert 'FRONTEND_API_BASE_URL=http://127.0.0.1:8000' in source
+	assert 'FRONTEND_API_BASE_URL=https://radiant-contentment-car-world.up.railway.app' in source
 	assert 'FRONTEND_ENV=development' in source
 
 

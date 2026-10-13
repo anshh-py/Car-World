@@ -24,7 +24,7 @@ $(document).ready(function(){
       if (window.CarWorldAPI) {
          loadAuth();
       } else {
-         appendScript("apps/carworld-config.js?v=20261013-1", function () {
+         appendScript("apps/carworld-config.js?v=20261013-2", function () {
             if (!window.CARWORLD_API_BASE_URL) {
                console.error("CarWorld API URL configuration is unavailable; authentication was not initialized.");
                return;

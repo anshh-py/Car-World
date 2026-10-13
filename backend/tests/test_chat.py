@@ -254,6 +254,7 @@ def test_chat_rate_limits_have_development_and_production_defaults(monkeypatch):
 	monkeypatch.delenv("CHAT_RATE_LIMIT_PER_DAY", raising=False)
 	monkeypatch.setenv("CARWORLD_ENV", "development")
 	development = Settings.from_environment()
+	monkeypatch.setenv("DATABASE_URL", "postgresql://test-user:test-password@db.example.test/carworld")
 	monkeypatch.setenv("CARWORLD_ENV", "production")
 	production = Settings.from_environment()
 

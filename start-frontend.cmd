@@ -3,7 +3,7 @@ setlocal
 cd /d "%~dp0"
 
 set "FRONTEND_ENV=development"
-if not defined FRONTEND_API_BASE_URL set "FRONTEND_API_BASE_URL=http://127.0.0.1:8000"
+if not defined FRONTEND_API_BASE_URL set "FRONTEND_API_BASE_URL=https://radiant-contentment-car-world.up.railway.app"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0backend\scripts\render-frontend-config.ps1"
 if errorlevel 1 (
     echo Failed to configure the frontend API URL.
