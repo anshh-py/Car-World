@@ -1,0 +1,338 @@
+.env.example:1: trailing whitespace.
+[32m+[m[32m# Copy to .env and provide local development credentials before starting Compose.[m[41m[m
+.env.example:2: trailing whitespace.
+[32m+[m[32mPOSTGRES_USER=[m[41m[m
+.env.example:3: trailing whitespace.
+[32m+[m[32mPOSTGRES_PASSWORD=[m[41m[m
+.env.example:4: trailing whitespace.
+[32m+[m[32mPOSTGRES_DB=carworld[m[41m[m
+.env.example:5: trailing whitespace.
+[32m+[m[32mPOSTGRES_HOST=localhost[m[41m[m
+.env.example:6: trailing whitespace.
+[32m+[m[32mPOSTGRES_PORT=5432[m[41m[m
+.env.example:7: trailing whitespace.
+[32m+[m[41m[m
+.env.example:8: trailing whitespace.
+[32m+[m[32m# Supabase Auth project configuration. The anon/publishable key is browser-safe.[m[41m[m
+.env.example:9: trailing whitespace.
+[32m+[m[32mSUPABASE_URL=[m[41m[m
+.env.example:10: trailing whitespace.
+[32m+[m[32mSUPABASE_ANON_KEY=[m[41m[m
+.env.example:11: trailing whitespace.
+[32m+[m[41m[m
+.env.example:12: trailing whitespace.
+[32m+[m[32m# Private server-only AI credentials. Never put these in frontend configuration.[m[41m[m
+.env.example:13: trailing whitespace.
+[32m+[m[32mGROQ_API_KEY=[m[41m[m
+.env.example:14: trailing whitespace.
+[32m+[m[32mTAVILY_API_KEY=[m[41m[m
+.env.example:15: trailing whitespace.
+[32m+[m[41m[m
+.env.example:16: trailing whitespace.
+[32m+[m[32m# Comma-separated browser origins allowed to call this backend.[m[41m[m
+.env.example:17: trailing whitespace.
+[32m+[m[32mFRONTEND_ORIGINS=http://127.0.0.1:5500,http://localhost:5500[m[41m[m
+.env.example:18: trailing whitespace.
+[32m+[m[41m[m
+.env.example:19: trailing whitespace.
+[32m+[m[32m# Development allows more local testing; set production when deploying.[m[41m[m
+.env.example:20: trailing whitespace.
+[32m+[m[32m# Defaults: development 30/minute and 300/day; production 5/minute and 40/day.[m[41m[m
+.env.example:21: trailing whitespace.
+[32m+[m[32mCARWORLD_ENV=development[m[41m[m
+.env.example:22: trailing whitespace.
+[32m+[m[32m# Optional explicit overrides:[m[41m[m
+.env.example:23: trailing whitespace.
+[32m+[m[32m# CHAT_RATE_LIMIT_PER_MINUTE=30[m[41m[m
+.env.example:24: trailing whitespace.
+[32m+[m[32m# CHAT_RATE_LIMIT_PER_DAY=300[m[41m[m
+.gitignore:1: trailing whitespace.
+[32m+[m[32m# Secrets and environment files[m[41m[m
+.gitignore:3: trailing whitespace.
+[32m+[m[32m.env.*[m[41m[m
+.gitignore:4: trailing whitespace.
+[32m+[m[32m!.env.example[m[41m[m
+.gitignore:5: trailing whitespace.
+[32m+[m[32m!.env.frontend.example[m[41m[m
+.gitignore:6: trailing whitespace.
+[32m+[m[41m[m
+.gitignore:7: trailing whitespace.
+[32m+[m[32m# Python[m[41m[m
+.gitignore:8: trailing whitespace.
+[32m+[m[32m.venv/[m[41m[m
+.gitignore:9: trailing whitespace.
+[32m+[m[32m.venv-*/[m[41m[m
+.gitignore:11: trailing whitespace.
+[32m+[m[32m*.py[cod][m[41m[m
+.gitignore:12: trailing whitespace.
+[32m+[m[32m.pytest_cache/[m[41m[m
+.gitignore:13: trailing whitespace.
+[32m+[m[41m[m
+.gitignore:14: trailing whitespace.
+[32m+[m[32m# Local frontend configuration[m[41m[m
+.gitignore:15: trailing whitespace.
+[32m+[m[32m.env.local[m[41m[m
+.gitignore:16: trailing whitespace.
+[32m+[m[32m.env.frontend[m[41m[m
+.gitignore:17: trailing whitespace.
+[32m+[m[32mcarworld-config.local.js[m[41m[m
+.gitignore:18: trailing whitespace.
+[32m+[m[32mapps/carworld-config.js[m[41m[m
+.gitignore:19: trailing whitespace.
+[32m+[m[41m[m
+.gitignore:20: trailing whitespace.
+[32m+[m[32m# Local tooling[m[41m[m
+.gitignore:21: trailing whitespace.
+[32m+[m[32m.vscode/[m[41m[m
+README.md:1: trailing whitespace.
+[32m+[m[32mREADME.md[m[41m[m
+README.md:3: trailing whitespace.
+[32m+[m[32m Car World – Car Listing & Comparison PortalAdd commentMore actions[m[41m[m
+README.md:5: trailing whitespace.
+[32m+[m[32m**Car World** is a BCA Final Year Web Project that allows users to explore, compare, and view detailed information about various cars categorized by brand and model.[m[41m[m
+README.md:7: trailing whitespace.
+[32m+[m[32m## 🌟 Features[m[41m[m
+README.md:8: trailing whitespace.
+[32m+[m[41m[m
+README.md:9: trailing whitespace.
+[32m+[m[32m- Multi-brand car listings (e.g., Audi, BMW, Ferrari)[m[41m[m
+README.md:10: trailing whitespace.
+[32m+[m[32m- Interactive About Us and Contact pages[m[41m[m
+README.md:11: trailing whitespace.
+[32m+[m[32m- Organized car pages with specifications and images[m[41m[m
+README.md:12: trailing whitespace.
+[32m+[m[32m- Hosted online using GitHub Pages[m[41m[m
+README.md:13: trailing whitespace.
+[32m+[m[41m[m
+README.md:14: trailing whitespace.
+[32m+[m[32m## 🛠 Technologies Used[m[41m[m
+README.md:15: trailing whitespace.
+[32m+[m[41m[m
+README.md:16: trailing whitespace.
+[32m+[m[32m- HTML5[m[41m[m
+README.md:17: trailing whitespace.
+[32m+[m[32m- CSS3[m[41m[m
+README.md:18: trailing whitespace.
+[32m+[m[32m- JavaScript[m[41m[m
+README.md:19: trailing whitespace.
+[32m+[m[32m- Bootstrap (optional)[m[41m[m
+README.md:20: trailing whitespace.
+[32m+[m[32m- GitHub Pages (for hosting)[m[41m[m
+README.md:21: trailing whitespace.
+[32m+[m[41m[m
+README.md:22: trailing whitespace.
+[32m+[m[32m## 🎓 Project Purpose[m[41m[m
+README.md:23: trailing whitespace.
+[32m+[m[41m[m
+README.md:24: trailing whitespace.
+[32m+[m[32mThis project was built as part of the BCA Final Year curriculum to showcase website development skills and project structure.[m[41m[m
+README.md:25: trailing whitespace.
+[32m+[m[41m[m
+README.md:26: trailing whitespace.
+[32m+[m[32m## 🔗 Live Demo[m[41m[m
+README.md:27: trailing whitespace.
+[32m+[m[41m[m
+README.md:28: trailing whitespace.
+[32m+[m[32m👉 [Click here to visit the live site](https://ansh9057.github.io/Car-World/)[m[41m[m
+README.md:29: trailing whitespace.
+[32m+[m[41m[m
+README.md:30: trailing whitespace.
+[32m+[m[32m## 📩 Contact[m[41m[m
+README.md:31: trailing whitespace.
+[32m+[m[41m[m
+README.md:32: trailing whitespace.
+[32m+[m[32mFor any queries, contact at:[m[41m  [m
+README.md:33: trailing whitespace.
+[32m+[m[32m📍 137 1st Jagatpura Rd, Prem Nagar, Model Town, Jagatpura, Jaipur, Rajasthan 302017[m[41m  [m
+README.md:34: trailing whitespace.
+[32m+[m[32manshanand317@gmail.com[m[41m[m
+README.md:35: trailing whitespace.
+[32m+[m[41m[m
+README.md:36: trailing whitespace.
+[32m+[m[32m## CarWorld AI chat API[m[41m[m
+README.md:38: trailing whitespace.
+[32m+[m[32mThe existing static HTML, CSS, and JavaScript site calls the FastAPI service. The[m[41m[m
+README.md:39: trailing whitespace.
+[32m+[m[32mservice invokes the same `CarWorldAgent` and tool routing used by the Gradio app.[m[41m[m
+README.md:40: trailing whitespace.
+[32m+[m[32mVisitors can chat as guests; a valid Supabase access token is verified and used[m[41m[m
+README.md:41: trailing whitespace.
+[32m+[m[32mwhen one is supplied. PostgreSQL, Groq, and Tavily credentials stay server-side.[m[41m[m
+README.md:42: trailing whitespace.
+[32m+[m[41m[m
+README.md:43: trailing whitespace.
+[32m+[m[32m### Local setup[m[41m[m
+README.md:44: trailing whitespace.
+[32m+[m[41m[m
+README.md:45: trailing whitespace.
+[32m+[m[32m1. Install Python dependencies from the project root:[m[41m[m
+README.md:46: trailing whitespace.
+[32m+[m[41m[m
+README.md:47: trailing whitespace.
+[32m+[m[32m   ```powershell[m[41m[m
+README.md:48: trailing whitespace.
+[32m+[m[32m   .venv-1\Scripts\python.exe -m pip install -r requirements.txt[m[41m[m
+README.md:49: trailing whitespace.
+[32m+[m[32m   ```[m[41m[m
+README.md:50: trailing whitespace.
+[32m+[m[41m[m
+README.md:51: trailing whitespace.
+[32m+[m[32m2. Use `.env.example` as a template for the root `.env`. Preserve existing PostgreSQL[m[41m[m
+README.md:52: trailing whitespace.
+[32m+[m[32m   values and add `GROQ_API_KEY`; set `TAVILY_API_KEY` for current web fallback.[m[41m[m
+README.md:53: trailing whitespace.
+[32m+[m[32m   `SUPABASE_URL` and `SUPABASE_ANON_KEY` are only needed for optional Google sign-in.[m[41m[m
+README.md:54: trailing whitespace.
+[32m+[m[32m   The existing local `.env` currently contains PostgreSQL settings only.[m[41m[m
+README.md:55: trailing whitespace.
+[32m+[m[32m3. Start PostgreSQL and the API. For the API, from the project root run:[m[41m[m
+README.md:56: trailing whitespace.
+[32m+[m[41m[m
+README.md:57: trailing whitespace.
+[32m+[m[32m   ```powershell[m[41m[m
+README.md:58: trailing whitespace.
+[32m+[m[32m   .venv-1\Scripts\python.exe -m uvicorn --app-dir backend app.main:app --reload --port 8000[m[41m[m
+README.md:59: trailing whitespace.
+[32m+[m[32m   ```[m[41m[m
+README.md:60: trailing whitespace.
+[32m+[m[41m[m
+README.md:61: trailing whitespace.
+[32m+[m[32m   The API is at `http://127.0.0.1:8000`; `GET /health` checks liveness and[m[41m[m
+README.md:62: trailing whitespace.
+[32m+[m[32m   `GET /api/v1/health` remains available for compatibility.[m[41m[m
+README.md:63: trailing whitespace.
+[32m+[m[32m4. Start the static frontend from the project root:[m[41m[m
+README.md:64: trailing whitespace.
+[32m+[m[41m[m
+README.md:65: trailing whitespace.
+[32m+[m[32m   ```powershell[m[41m[m
+README.md:66: trailing whitespace.
+[32m+[m[32m   .\start-frontend.cmd[m[41m[m
+README.md:67: trailing whitespace.
+[32m+[m[32m   ```[m[41m[m
+README.md:68: trailing whitespace.
+[32m+[m[41m[m
+README.md:69: trailing whitespace.
+[32m+[m[32m   The script configures the browser to call `http://127.0.0.1:8000` by default before[m[41m[m
+README.md:70: trailing whitespace.
+[32m+[m[32m   serving the site. To use another backend origin, set `$env:FRONTEND_API_BASE_URL`[m[41m[m
+README.md:71: trailing whitespace.
+[32m+[m[32m   before starting it. Visit `http://127.0.0.1:5500/` and use the CarWorld AI panel[m[41m[m
+README.md:72: trailing whitespace.
+[32m+[m[32m   as a guest. Google / Supabase sign-in remains optional elsewhere on the site. The[m[41m[m
+README.md:73: trailing whitespace.
+[32m+[m[32m   `apps/carworld-config.js` value is public browser configuration; never put server[m[41m[m
+README.md:74: trailing whitespace.
+[32m+[m[32m   credentials there.[m[41m[m
+README.md:75: trailing whitespace.
+[32m+[m[41m[m
+README.md:76: trailing whitespace.
+[32m+[m[32mRun the retained Gradio interface locally with:[m[41m[m
+README.md:79: trailing whitespace.
+[32m+[m[32m.venv-1\Scripts\python.exe app.py[m[41m[m
+README.md:82: trailing whitespace.
+[32m+[m[32m### Backend configuration and deployment[m[41m[m
+README.md:83: trailing whitespace.
+[32m+[m[41m[m
+README.md:84: trailing whitespace.
+[32m+[m[32mThe root `.env.example` lists server settings. `FRONTEND_ORIGINS` is a comma-separated[m[41m[m
+README.md:85: trailing whitespace.
+[32m+[m[32mallowlist; set it to the exact HTTPS origins serving the frontend. The static site[m[41m[m
+README.md:86: trailing whitespace.
+[32m+[m[32mhas no bundler, so configure the public API origin in `apps/carworld-config.js` at[m[41m[m
+README.md:87: trailing whitespace.
+[32m+[m[32mdeployment time by running the config renderer with `FRONTEND_ENV=production` and[m[41m[m
+README.md:88: trailing whitespace.
+[32m+[m[32m`FRONTEND_API_BASE_URL` set to the public HTTPS backend origin. Production rendering[m[41m[m
+README.md:89: trailing whitespace.
+[32m+[m[32mrejects HTTP and loopback origins; the generated local config is ignored by Git and[m[41m[m
+README.md:90: trailing whitespace.
+[32m+[m[32mmust be rendered again as part of deployment. Never publish the local config. Set[m[41m[m
+README.md:91: trailing whitespace.
+[32m+[m[32m`CARWORLD_ENV=production` on the backend to use the production[m[41m[m
+README.md:92: trailing whitespace.
+[32m+[m[32mchat limits (5 per minute / 40 per day by default), and adjust the limit variables[m[41m[m
+README.md:93: trailing whitespace.
+[32m+[m[32monly to match the expected traffic and provider budget. Do not include Groq, Tavily,[m[41m[m
+README.md:94: trailing whitespace.
+[32m+[m[32mPostgreSQL, or Supabase service-role secrets in frontend configuration or browser[m[41m[m
+README.md:95: trailing whitespace.
+[32m+[m[32mcode.[m[41m[m
+README.md:96: trailing whitespace.
+[32m+[m[41m[m
+README.md:97: trailing whitespace.
+[32m+[m[32mFor container deployment, provide the same server settings through the deployment[m[41m[m
+README.md:98: trailing whitespace.
+[32m+[m[32msecret manager / Compose environment and build with the root `Dockerfile`. The API[m[41m[m
+README.md:99: trailing whitespace.
+[32m+[m[32mimage includes the existing `app.py` agent and `car_database.py`; run PostgreSQL[m[41m[m
+README.md:100: trailing whitespace.
+[32m+[m[32mseparately or use the Compose database service. Deploy the static site to any HTTPS[m[41m[m
+README.md:101: trailing whitespace.
+[32m+[m[32mstatic host, set its API origin, and set the backend's `FRONTEND_ORIGINS` to that[m[41m[m
+README.md:102: trailing whitespace.
+[32m+[m[32msite's origin. Keep Supabase URL and anon key configured on the backend for the[m[41m[m
+README.md:103: trailing whitespace.
+[32m+[m[32mexisting browser sign-in bootstrap and backend token verification. Run Alembic and[m[41m[m
+README.md:104: trailing whitespace.
+[32m+[m[32mthe car import script only when provisioning/updating the catalog database.[m[41m[m
+README.md:105: trailing whitespace.
+[32m+[m[41m[m
+README.md:106: trailing whitespace.
+[32m+[m[32mRun the backend suite from `backend/` with `python -m pytest -q`. The chat endpoint[m[41m[m
+README.md:107: trailing whitespace.
+[32m+[m[32mis `POST /api/chat` and accepts `{ "message": "...", "history": [...] }` with a[m[41m[m
+README.md:108: trailing whitespace.
+[32m+[m[32mBearer Supabase access token if available; guests may omit it. It limits message[m[41m[m
+README.md:109: trailing whitespace.
+[32m+[m[32mand history sizes. Guest requests share a rolling per-IP limit, so local visitors[m[41m[m
+README.md:110: trailing whitespace.
+[32m+[m[32mon `127.0.0.1` use the same bucket; verified users are limited by account ID.[m[41m[m
+README.md:111: trailing whitespace.
+[32m+[m[32mDefaults are 30 requests per minute / 300 per day in development and 5 / 40 in[m[41m[m
+README.md:112: trailing whitespace.
+[32m+[m[32mproduction. Set `CHAT_RATE_LIMIT_PER_MINUTE` and `CHAT_RATE_LIMIT_PER_DAY` to[m[41m[m
+README.md:113: trailing whitespace.
+[32m+[m[32moverride them. Concurrent requests are serialized through the limiter lock.[m[41m[m
+README.md:114: trailing whitespace.
+[32m+[m[32mProvider errors are logged with safe diagnostic fields and returned without[m[41m[m
+README.md:115: trailing whitespace.
+[32m+[m[32mcredentials or tool arguments.[m[41m[m
+backend/app/modules/chat/schemas.py:36: new blank line at EOF.
+requirements.txt:1: trailing whitespace.
+[32m+[m[32mfastapi>=0.115,<1.0[m[41m[m
+requirements.txt:2: trailing whitespace.
+[32m+[m[32muvicorn>=0.30,<1.0[m[41m[m
+requirements.txt:3: trailing whitespace.
+[32m+[m[32mSQLAlchemy[asyncio]>=2.0,<3.0[m[41m[m
+requirements.txt:4: trailing whitespace.
+[32m+[m[32masyncpg>=0.29,<1.0[m[41m[m
+requirements.txt:5: trailing whitespace.
+[32m+[m[32mpydantic>=2.7,<3.0[m[41m[m
+requirements.txt:6: trailing whitespace.
+[32m+[m[32malembic>=1.13,<2.0[m[41m[m
+requirements.txt:7: trailing whitespace.
+[32m+[m[32mpytest>=8.0,<10.0[m[41m[m
+requirements.txt:8: trailing whitespace.
+[32m+[m[32mhttpx>=0.27,<1.0[m[41m[m
+requirements.txt:9: trailing whitespace.
+[32m+[m[32mpytest-asyncio>=0.23,<2.0[m[41m[m
+requirements.txt:10: trailing whitespace.
+[32m+[m[32mpython-dotenv>=1.0,<2.0[m[41m[m
+requirements.txt:11: trailing whitespace.
+[32m+[m[32mpsycopg[binary]>=3.2,<4.0[m[41m[m
+requirements.txt:12: trailing whitespace.
+[32m+[m[32mgroq>=0.13,<2.0[m[41m[m
+requirements.txt:13: trailing whitespace.
+[32m+[m[32mtavily-python>=0.5,<1.0[m[41m[m
+requirements.txt:14: trailing whitespace.
+[32m+[m[32mgradio>=4.44,<7.0[m[41m[m
+requirements.txt:15: trailing whitespace.
+[32m+[m[32mlangchain[m[41m[m
+requirements.txt:16: trailing whitespace.
+[32m+[m[32mlangchain-openai[m[41m[m
+requirements.txt:17: trailing whitespace.
+[32m+[m[32mlangchain-groq[m[41m[m
+requirements.txt:18: trailing whitespace.
+[32m+[m[41m[m
+requirements.txt:18: new blank line at EOF.

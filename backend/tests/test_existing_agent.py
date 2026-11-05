@@ -8,6 +8,7 @@ import httpx
 from groq import BadRequestError
 
 from app.modules.chat import agent as agent_loader
+from app.modules.chat.providers import ProviderResponse
 
 
 class FakeCall:
@@ -41,6 +42,37 @@ def assistant(content=None, tool_calls=None):
 	return SimpleNamespace(content=content, tool_calls=tool_calls or [])
 
 
+class MockProviderRouter:
+    """Mock provider router that returns predefined responses."""
+    def __init__(self, responses):
+        self.responses = iter(responses)
+        self.calls = []
+        self._groq_exhausted = False
+
+    def chat_completion(self, messages, tools=None, tool_choice="auto", temperature=0.2):
+        self.calls.append({
+            "messages": copy.deepcopy(messages),
+            "tools": tools,
+            "tool_choice": tool_choice,
+            "temperature": temperature,
+        })
+        return next(self.responses)
+
+    def reset_groq_state(self):
+        self._groq_exhausted = False
+
+
+def tool_payload(content):
+	lines = content.splitlines()
+	assert lines[0] == "[BEGIN_UNTRUSTED_TOOL_RESULT_JSON]"
+	assert lines[-1] == "[END_UNTRUSTED_TOOL_RESULT_JSON]"
+	return json.loads("\n".join(lines[1:-1]))
+
+
+def set_fake_provider_router(agent, provider_router):
+	agent.provider_router = provider_router
+
+
 @pytest.fixture
 def existing_agent(monkeypatch):
 	monkeypatch.setenv("GROQ_API_KEY", "test-key-not-used")
@@ -53,22 +85,20 @@ def existing_agent(monkeypatch):
 	sys.modules.pop("carworld_gradio_agent", None)
 
 
-def set_fake_client(agent, completions):
-	agent.client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
-
-
 def test_regular_question_runs_without_tools(existing_agent):
-	completions = FakeCompletions([assistant("Take regular breaks and share the driving on a long trip.")])
-	set_fake_client(existing_agent.agent, completions)
+	router = MockProviderRouter([
+		ProviderResponse(content="Take regular breaks and share the driving on a long trip.", provider_name="groq"),
+	])
+	set_fake_provider_router(existing_agent.agent, router)
 
 	answer = list(existing_agent.agent.run([{"role": "user", "content": "How can I make a long road trip more comfortable?"}]))
 
 	assert answer == ["Take regular breaks and share the driving on a long trip."]
-	assert "tools" not in completions.calls[0]
-	assert completions.calls[0]["tool_choice"] == "none"
-	assert "calculate_emi" not in completions.calls[0]["messages"][0]["content"]
-	assert "search_car_database" not in completions.calls[0]["messages"][0]["content"]
-	assert "search_car_web" not in completions.calls[0]["messages"][0]["content"]
+	assert router.calls[0]["tools"] is None
+	assert router.calls[0]["tool_choice"] == "none"
+	assert "calculate_emi" not in router.calls[0]["messages"][0]["content"]
+	assert "search_car_database" not in router.calls[0]["messages"][0]["content"]
+	assert "search_car_web" not in router.calls[0]["messages"][0]["content"]
 
 
 def test_bare_scorpio_search_executes_tavily_and_returns_paired_result(existing_agent, monkeypatch):
@@ -89,24 +119,24 @@ def test_bare_scorpio_search_executes_tavily_and_returns_paired_result(existing_
 			"score": web_results[0]["score"],
 		}]}
 	monkeypatch.setattr(existing_agent, "tavily", SimpleNamespace(search=tavily_search))
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("search_car_web", {"query": "Scorpio"}, "scorpio-call")]),
-		assistant("The web results describe Mahindra Scorpio variants and specifications."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "scorpio-call", "type": "function", "function": {"name": "search_car_web", "arguments": '{"query": "Scorpio"}'}}], provider_name="groq"),
+		ProviderResponse(content="The web results describe Mahindra Scorpio variants and specifications.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 
 	answer = list(existing_agent.agent.run([{"role": "user", "content": "Scorpio"}]))
 
 	assert answer == ["The web results describe Mahindra Scorpio variants and specifications."]
 	assert len(searches) == 1
 	assert "Scorpio" in searches[0]["query"]
-	assert completions.calls[0]["tool_choice"] == "auto"
-	assert [tool["function"]["name"] for tool in completions.calls[0]["tools"]] == ["search_car_web"]
-	tool_result = completions.calls[1]["messages"][-1]
+	assert router.calls[0]["tool_choice"] == "auto"
+	assert [tool["function"]["name"] for tool in router.calls[0]["tools"]] == ["search_car_web"]
+	tool_result = router.calls[1]["messages"][-1]
 	assert tool_result["role"] == "tool"
 	assert tool_result["tool_call_id"] == "scorpio-call"
 	assert tool_result["name"] == "search_car_web"
-	assert json.loads(tool_result["content"])["results"] == web_results
+	assert tool_payload(tool_result["content"])["results"] == web_results
 	assert web_results[0]["content"] in tool_result["content"]
 
 
@@ -147,18 +177,18 @@ def test_web_search_failure_returns_safe_no_fabrication_message(existing_agent, 
 			raise tavily_response
 		return tavily_response
 	monkeypatch.setattr(existing_agent, "tavily", SimpleNamespace(search=tavily_search))
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("search_car_web", {"query": "Scorpio latest price"}, "failed-web-call")]),
-		assistant("This must not be used because no search sources were returned."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "failed-web-call", "type": "function", "function": {"name": "search_car_web", "arguments": '{"query": "Scorpio latest price"}'}}], provider_name="groq"),
+		ProviderResponse(content="This must not be used because no search sources were returned.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 
 	answer = list(existing_agent.agent.run([{"role": "user", "content": "Scorpio latest price"}]))
 
 	assert answer == [
 		"I couldn't complete a reliable web search just now, so I can't verify those vehicle details. Please try again later."
 	]
-	assert len(completions.calls) == 1
+	assert len(router.calls) == 1
 
 
 def test_emi_tool_routing_and_calculation(existing_agent):
@@ -169,18 +199,16 @@ def test_emi_tool_routing_and_calculation(existing_agent):
 	assert [tool["function"]["name"] for tool in selected] == ["calculate_emi"]
 	assert existing_agent.calculate_emi(100000, 0, 100)["monthly_emi"] == 1000.0
 
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("calculate_emi", {
-			"principal": 100000, "annual_interest_rate": 0, "tenure_months": 100,
-		})]),
-		assistant("Your monthly EMI is ₹1,000."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "call-1", "type": "function", "function": {"name": "calculate_emi", "arguments": '{"principal": 100000, "annual_interest_rate": 0, "tenure_months": 100}'}}], provider_name="groq"),
+		ProviderResponse(content="Your monthly EMI is ₹1,000.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 	list(existing_agent.agent.run([{"role": "user", "content": "Calculate EMI for a 100000 loan over 100 months at 0%"}]))
-	assert completions.calls[0]["tool_choice"] == "auto"
-	assert [tool["function"]["name"] for tool in completions.calls[0]["tools"]] == ["calculate_emi"]
-	assert completions.calls[1]["tool_choice"] == "auto"
-	messages = completions.calls[1]["messages"]
+	assert router.calls[0]["tool_choice"] == "auto"
+	assert [tool["function"]["name"] for tool in router.calls[0]["tools"]] == ["calculate_emi"]
+	assert router.calls[1]["tool_choice"] == "auto"
+	messages = router.calls[1]["messages"]
 	assistant_tool_message = messages[-2]
 	tool_result_message = messages[-1]
 	assert assistant_tool_message["role"] == "assistant"
@@ -190,7 +218,7 @@ def test_emi_tool_routing_and_calculation(existing_agent):
 	assert tool_result_message["tool_call_id"] == "call-1"
 	assert tool_result_message["name"] == "calculate_emi"
 	tool_result = tool_result_message["content"]
-	assert json.loads(tool_result)["monthly_emi"] == 1000.0
+	assert tool_payload(tool_result)["monthly_emi"] == 1000.0
 
 
 def test_database_miss_uses_web_fallback(existing_agent, monkeypatch):
@@ -202,18 +230,18 @@ def test_database_miss_uses_web_fallback(existing_agent, monkeypatch):
 		return {"status": "results_found", "results": [{"title": "Example", "content": "Car facts"}]}
 
 	monkeypatch.setattr(existing_agent, "execute_tool", execute)
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("search_car_database", {"query": "Honda City"})]),
-		assistant("No stored match was found; web results may help."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "db-call", "type": "function", "function": {"name": "search_car_database", "arguments": '{"query": "Honda City"}'}}], provider_name="groq"),
+		ProviderResponse(content="No stored match was found; web results may help.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 	list(existing_agent.agent.run([{"role": "user", "content": "Search the database for Honda City"}]))
 
 	assert queries == ["search_car_database", "search_car_web"]
-	fallback = json.loads(completions.calls[1]["messages"][-1]["content"])
+	fallback = tool_payload(router.calls[1]["messages"][-1]["content"])
 	assert fallback["status"] == "web_fallback_after_database_miss"
-	assert completions.calls[0]["tool_choice"] == "auto"
-	assert completions.calls[1]["tool_choice"] == "auto"
+	assert router.calls[0]["tool_choice"] == "auto"
+	assert router.calls[1]["tool_choice"] == "auto"
 
 
 def test_multiple_tool_steps_keep_calls_and_results_paired(existing_agent, monkeypatch):
@@ -223,69 +251,71 @@ def test_multiple_tool_steps_keep_calls_and_results_paired(existing_agent, monke
 		"execute_tool",
 		lambda name, arguments: seen.append((name, arguments)) or {"step": len(seen)},
 	)
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("calculate_emi", {"principal": 100000, "annual_interest_rate": 8, "tenure_months": 60}, "call-a")]),
-		assistant(tool_calls=[FakeCall("calculate_emi", {"principal": 200000, "annual_interest_rate": 9, "tenure_months": 48}, "call-b")]),
-		assistant("I completed both calculations."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "call-a", "type": "function", "function": {"name": "calculate_emi", "arguments": '{"principal": 100000, "annual_interest_rate": 8, "tenure_months": 60}'}}], provider_name="groq"),
+		ProviderResponse(content=None, tool_calls=[{"id": "call-b", "type": "function", "function": {"name": "calculate_emi", "arguments": '{"principal": 200000, "annual_interest_rate": 9, "tenure_months": 48}'}}], provider_name="groq"),
+		ProviderResponse(content="I completed both calculations.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 
 	answer = list(existing_agent.agent.run([{"role": "user", "content": "Calculate EMI for both loan options"}]))
 
 	assert answer == ["I completed both calculations."]
 	assert seen[0][0] == seen[1][0] == "calculate_emi"
-	assert all(call["tool_choice"] == "auto" for call in completions.calls)
-	second_step_messages = completions.calls[1]["messages"]
+	assert all(call["tool_choice"] == "auto" for call in router.calls)
+	second_step_messages = router.calls[1]["messages"]
 	assert second_step_messages[-2]["tool_calls"][0]["id"] == "call-a"
 	assert second_step_messages[-1]["tool_call_id"] == "call-a"
 	assert second_step_messages[-1]["name"] == "calculate_emi"
-	final_messages = completions.calls[2]["messages"]
+	final_messages = router.calls[2]["messages"]
 	assert final_messages[-2]["tool_calls"][0]["id"] == "call-b"
 	assert final_messages[-1]["tool_call_id"] == "call-b"
 	assert final_messages[-1]["name"] == "calculate_emi"
 
 
 def test_tool_to_plain_turn_does_not_retain_tool_definitions_or_prompt(existing_agent):
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("calculate_emi", {"principal": 100000, "annual_interest_rate": 0, "tenure_months": 100})]),
-		assistant("The EMI is ₹1,000."),
-		assistant("Regular breaks make long drives more comfortable."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "call-1", "type": "function", "function": {"name": "calculate_emi", "arguments": '{"principal": 100000, "annual_interest_rate": 0, "tenure_months": 100}'}}], provider_name="groq"),
+		ProviderResponse(content="The EMI is ₹1,000.", provider_name="groq"),
+		ProviderResponse(content="Regular breaks make long drives more comfortable.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 	tool_turn = [{"role": "user", "content": "Calculate EMI for a 100000 loan over 100 months at 0%"}]
 	list(existing_agent.agent.run(tool_turn))
 	followup = tool_turn + [{"role": "assistant", "content": "The EMI is ₹1,000."}, {"role": "user", "content": "What makes a long drive comfortable?"}]
 	answer = list(existing_agent.agent.run(followup))
 
 	assert answer == ["Regular breaks make long drives more comfortable."]
-	plain_call = completions.calls[2]
+	plain_call = router.calls[2]
 	assert plain_call["tool_choice"] == "none"
-	assert "tools" not in plain_call
+	assert plain_call["tools"] is None
 	assert "calculate_emi" not in plain_call["messages"][0]["content"]
 
 
 def test_malformed_tool_arguments_are_returned_as_paired_safe_tool_error(existing_agent, monkeypatch):
 	executions = []
 	monkeypatch.setattr(existing_agent, "execute_tool", lambda *_args: executions.append(True))
-	completions = FakeCompletions([
-		assistant(tool_calls=[FakeCall("calculate_emi", "{invalid", "bad-call", raw_arguments=True)]),
-		assistant("I couldn't calculate that because the tool request was invalid."),
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "bad-call", "type": "function", "function": {"name": "calculate_emi", "arguments": '{invalid'}}], provider_name="groq"),
+		ProviderResponse(content="I couldn't calculate that because the tool request was invalid.", provider_name="groq"),
 	])
-	set_fake_client(existing_agent.agent, completions)
+	set_fake_provider_router(existing_agent.agent, router)
 	list(existing_agent.agent.run([{"role": "user", "content": "Calculate EMI for a 100000 loan over 100 months at 0%"}]))
 
-	tool_message = completions.calls[1]["messages"][-1]
+	tool_message = router.calls[1]["messages"][-1]
 	assert not executions
 	assert tool_message["tool_call_id"] == "bad-call"
 	assert tool_message["name"] == "calculate_emi"
-	assert "error" in json.loads(tool_message["content"])
+	assert tool_payload(tool_message["content"])["status"] == "error"
 
 
 def test_unselected_registered_tool_is_not_executed(existing_agent, monkeypatch):
 	executions = []
 	monkeypatch.setattr(existing_agent, "execute_tool", lambda *args: executions.append(args))
-	completions = FakeCompletions([assistant(tool_calls=[FakeCall("search_car_web", {"query": "latest price"})])])
-	set_fake_client(existing_agent.agent, completions)
+	router = MockProviderRouter([
+		ProviderResponse(content=None, tool_calls=[{"id": "web-call", "type": "function", "function": {"name": "search_car_web", "arguments": '{"query": "latest price"}'}}], provider_name="groq"),
+	])
+	set_fake_provider_router(existing_agent.agent, router)
 
 	with pytest.raises(RuntimeError, match="not enabled"):
 		list(existing_agent.agent.run([{"role": "user", "content": "Calculate EMI for a 100000 loan over 100 months at 0%"}]))
@@ -299,12 +329,25 @@ def test_unrelated_groq_400_is_not_retried(existing_agent):
 		response=httpx.Response(400, request=request, json={"error": {"code": "invalid_parameter"}}),
 		body={"error": {"code": "invalid_parameter"}},
 	)
-	completions = FakeCompletions([], exception=error)
-	set_fake_client(existing_agent.agent, completions)
+	router = MockProviderRouter([
+		ProviderResponse(content="", provider_name="groq"),
+	])
+	# Override chat_completion to raise the error
+	original_chat_completion = router.chat_completion
+	def raising_chat_completion(*args, **kwargs):
+		router.calls.append({
+			"messages": copy.deepcopy(args[0]) if args else copy.deepcopy(kwargs.get("messages", [])),
+			"tools": kwargs.get("tools"),
+			"tool_choice": kwargs.get("tool_choice", "auto"),
+			"temperature": kwargs.get("temperature", 0.2),
+		})
+		raise error
+	router.chat_completion = raising_chat_completion
+	set_fake_provider_router(existing_agent.agent, router)
 
 	with pytest.raises(BadRequestError):
 		list(existing_agent.agent.run([{"role": "user", "content": "What is the Honda City?"}]))
-	assert len(completions.calls) == 1
+	assert len(router.calls) == 1
 
 
 def test_postgres_search_uses_parameterized_query(existing_agent, monkeypatch):

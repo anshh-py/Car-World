@@ -3,12 +3,14 @@ import logging
 import re
 import psycopg
 from dotenv import load_dotenv
+from carworld_security import ToolArgumentError, validate_search_query
 
 load_dotenv()
 logger = logging.getLogger("carworld.database")
 
 def search_car_database(query: str):
     try:
+        query = validate_search_query(query)
         # Match each meaningful search term across make, model, and variant.
         # This supports both partial names ("Scorpio") and combined names
         # ("Mahindra Scorpio") even though those values live in separate fields.
@@ -68,6 +70,8 @@ def search_car_database(query: str):
             ],
         }
 
+    except ToolArgumentError:
+        return {"status": "error", "message": "Database search query failed validation."}
     except Exception as error:
         # Database driver errors can contain connection details; keep logs and
         # tool output free of DSNs, hostnames, and credential-adjacent values.

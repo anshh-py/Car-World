@@ -3,19 +3,24 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
-import re
+import sys
 import time
 from collections import defaultdict, deque
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from groq import BadRequestError
+from groq import BadRequestError, RateLimitError
 from starlette.concurrency import run_in_threadpool
 
-from app.core.config import settings
+from app.core.config import PROJECT_ROOT, settings
 from app.modules.auth.dependencies import get_optional_current_user
 from app.modules.auth.schemas import AuthenticatedUser
 from app.modules.chat.agent import get_agent
 from app.modules.chat.schemas import ChatRequest, ChatResponse
+
+project_root_string = str(PROJECT_ROOT)
+if project_root_string not in sys.path:
+    sys.path.insert(0, project_root_string)
+from carworld_security import redact_sensitive_text, validate_model_output
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["chat"])
@@ -70,10 +75,7 @@ def _safe_provider_error_fields(error: BadRequestError) -> tuple[str, str, str, 
     def safe_text(value: object, limit: int = 240) -> str:
         if not isinstance(value, str):
             return ""
-        value = re.sub(r"(?i)bearer\s+[A-Za-z0-9._~-]+", "Bearer [REDACTED]", value)
-        value = re.sub(r"\bgsk_[A-Za-z0-9_-]+\b", "[REDACTED]", value)
-        value = re.sub(r"\btvly-[A-Za-z0-9_-]+\b", "[REDACTED]", value)
-        return value[:limit]
+        return redact_sensitive_text(value)[:limit]
 
     return (
         safe_text(details.get("type")),
@@ -99,9 +101,7 @@ async def chat(
     try:
         agent = get_agent()
         replies = await run_in_threadpool(lambda: list(agent.run(conversation)))
-        reply = replies[-1].strip() if replies else ""
-        if not reply:
-            raise RuntimeError("The agent returned an empty response.")
+        reply = validate_model_output(replies[-1] if replies else None)
         return ChatResponse(reply=reply)
     except BadRequestError as error:
         provider_type, provider_code, provider_param, message, generation_reason = (
@@ -120,10 +120,22 @@ async def chat(
             status_code=502,
             detail="CarWorld AI could not process that request. Please rephrase it and try again.",
         ) from error
+    except RateLimitError as error:
+        logger.warning("Provider rate limit exceeded: %s", error)
+        raise HTTPException(
+            status_code=503,
+            detail="CarWorld AI is temporarily unavailable due to rate limits. Please try again later.",
+        ) from error
     except RuntimeError as error:
         if "GROQ_API_KEY" in str(error):
             logger.error("CarWorld AI is not configured: missing model credentials")
             raise HTTPException(status_code=503, detail="CarWorld AI is not configured.") from error
+        if "no fallback provider configured" in str(error):
+            logger.error("Groq rate limit exceeded and Qwen3 fallback not configured")
+            raise HTTPException(
+                status_code=503,
+                detail="CarWorld AI is temporarily unavailable. Fallback provider not configured.",
+            ) from error
         logger.error("CarWorld AI request failed (%s).", type(error).__name__)
         raise HTTPException(status_code=502, detail="CarWorld AI could not complete the request.") from error
     except Exception as error:
