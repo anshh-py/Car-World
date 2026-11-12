@@ -12,6 +12,7 @@ COPY backend /app/backend
 COPY Data /app/Data
 COPY app.py /app/app.py
 COPY car_database.py /app/car_database.py
+COPY carworld_security.py /app/carworld_security.py
 WORKDIR /app/backend
 
 EXPOSE 8000
