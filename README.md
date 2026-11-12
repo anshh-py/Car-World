@@ -398,14 +398,6 @@ Potential areas for extending the platform include:
 
 ---
 
-## Author
-
-**Ansh**
-
-BCA Student | AI/ML & Software Development
-
-Interested in building practical applications involving artificial intelligence, backend engineering, LLM integrations, and intelligent automation.
-
 **Connect:**
 - GitHub: [@anshh-py](https://github.com/anshh-py)
 - Project: [Car World AI](https://github.com/anshh-py/Car-World)
