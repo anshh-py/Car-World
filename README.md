@@ -1,127 +1,417 @@
-README.md
+# 🚗 Car World AI
+### An AI-Powered Automotive Discovery, Research & Recommendation Platform
 
- Car World – Car Listing & Comparison PortalAdd commentMore actions
+<p align="center">
+  <a href="https://car-world-1.onrender.com/"><strong>Live Demo</strong></a> •
+  <a href="https://github.com/anshh-py/Car-World"><strong>GitHub Repository</strong></a> •
+  <a href="https://huggingface.co/spaces/ansh9057/carworld-qwen3-inference"><strong>AI Model</strong></a>
+</p>
 
-**Car World** is a BCA Final Year Web Project that allows users to explore, compare, and view detailed information about various cars categorized by brand and model.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Groq-000000?style=for-the-badge" alt="Groq"/>
+  <img src="https://img.shields.io/badge/Hugging_Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render"/>
+</p>
 
-## 🌟 Features
+---
 
-- Multi-brand car listings (e.g., Audi, BMW, Ferrari)
-- Interactive About Us and Contact pages
-- Organized car pages with specifications and images
-- Hosted online using GitHub Pages
+## Overview
 
-## 🛠 Technologies Used
+**Car World AI** is an AI-powered automotive discovery and recommendation platform designed to make vehicle research more interactive and accessible.
 
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap (optional)
-- GitHub Pages (for hosting)
+Instead of relying entirely on traditional filters and manual comparisons, users can interact with an AI assistant using natural language to explore vehicles, compare specifications, discover relevant information, and receive recommendations.
 
-## 🎓 Project Purpose
+The project combines **LLM-powered conversational AI, tool-based agent execution, a fine-tuned language model, web search integration, and a structured automotive database** into a unified application.
 
-This project was built as part of the BCA Final Year curriculum to showcase website development skills and project structure.
+A key engineering aspect of the project is its multi-provider AI architecture: Groq powers the primary conversational experience, while a fine-tuned Qwen3-4B model hosted on Hugging Face provides a dedicated fallback when the primary provider encounters rate limits.
 
-## 🔗 Live Demo
+## Live Application
 
-👉 [Click here to visit the live site](https://ansh9057.github.io/Car-World/)
+| Component | Link |
+|---|---|
+| Frontend | [Car World AI](https://car-world-1.onrender.com/) |
+| Backend API | [FastAPI Backend](https://car-world-agoj.onrender.com) |
+| API Health | [Health Endpoint](https://car-world-agoj.onrender.com/health) |
+| GitHub | [Source Code](https://github.com/anshh-py/Car-World) |
+| Hugging Face Space | [Qwen3 Inference](https://ansh9057-carworld-qwen3-inference.hf.space/) |
+| Fine-tuned Model Adapter | [Qwen3-4B LoRA](https://huggingface.co/ansh9057/carworld-qwen3-4b-lora) |
 
-## 📩 Contact
+---
 
-For any queries, contact at:  
-📍 137 1st Jagatpura Rd, Prem Nagar, Model Town, Jagatpura, Jaipur, Rajasthan 302017  
-anshanand317@gmail.com
+## Key Features
 
-## CarWorld AI chat API
+### 🤖 AI-Powered Automotive Assistant
+- Natural-language interaction for automotive queries.
+- Context-aware conversational experience.
+- AI-assisted vehicle discovery and recommendations.
+- Tool-based execution for retrieving structured automotive information.
+- Integrated web search for additional information.
 
-The existing static HTML, CSS, and JavaScript site calls the FastAPI service. The
-service invokes the same `CarWorldAgent` and tool routing used by the Gradio app.
-Visitors can chat as guests; a valid Supabase access token is verified and used
-when one is supplied. PostgreSQL, Groq, and Tavily credentials stay server-side.
+### ⚖️ Vehicle Research & Comparison
+- Explore vehicle specifications through conversational queries.
+- Compare automotive information across different vehicles.
+- Retrieve relevant details from a structured vehicle database.
+- Support for automotive discovery without relying exclusively on manual navigation.
 
-### Local setup
+### 🧠 Multi-Provider AI Architecture
+- Groq-hosted `openai/gpt-oss-120b` as the primary language model.
+- Fine-tuned Qwen3-4B LoRA model as a fallback provider.
+- Hugging Face Space for remote inference.
+- Automatic fallback handling for primary-provider HTTP 429 rate-limit responses.
+- Cooldown-based provider recovery, allowing the primary provider to resume after the cooldown period.
 
-1. Install Python dependencies from the project root:
+### 🔎 Integrated Information Retrieval
+- Structured automotive database backed by PostgreSQL.
+- Tool-based database queries.
+- Tavily-powered web search integration.
+- Backend-managed retrieval and response generation.
 
-   ```powershell
-   .venv-1\Scripts\python.exe -m pip install -r requirements.txt
-   ```
+### 🔐 Authentication & API Management
+- Optional Supabase authentication.
+- Server-side access-token verification.
+- Protected API functionality.
+- Configurable CORS and request rate limiting.
 
-2. Use `.env.example` as a template for the root `.env`. Preserve existing PostgreSQL
-   values and add `GROQ_API_KEY`; set `TAVILY_API_KEY` for current web fallback.
-   `SUPABASE_URL` and `SUPABASE_ANON_KEY` are only needed for optional Google sign-in.
-   The existing local `.env` currently contains PostgreSQL settings only.
-3. Start PostgreSQL and the API. For the API, from the project root run:
+---
 
-   ```powershell
-   .venv-1\Scripts\python.exe -m uvicorn --app-dir backend app.main:app --reload --port 8000
-   ```
+## System Architecture
 
-   The API is at `http://127.0.0.1:8000`; `GET /health` checks liveness and
-   `GET /api/v1/health` remains available for compatibility.
-4. Start the static frontend from the project root:
+Car World AI follows a modular architecture that separates the frontend, API layer, AI orchestration, model providers, and data storage.
 
-   ```powershell
-   .\start-frontend.cmd
-   ```
+```mermaid
+flowchart TD
+    A["User"] --> B["Web Frontend"]
+    B --> C["FastAPI Backend"]
 
-   The script configures the browser to call `http://127.0.0.1:8000` by default before
-   serving the site. To use another backend origin, set `$env:FRONTEND_API_BASE_URL`
-   before starting it. Visit `http://127.0.0.1:5500/` and use the CarWorld AI panel
-   as a guest. Google / Supabase sign-in remains optional elsewhere on the site. The
-   `apps/carworld-config.js` value is public browser configuration; never put server
-   credentials there.
+    C --> D["Authentication & API Controls"]
+    D --> E["AI Agent / Orchestration"]
 
-Run the retained Gradio interface locally with:
+    E --> F["Groq Provider<br/>GPT-OSS-120B"]
 
-```powershell
-.venv-1\Scripts\python.exe app.py
+    F -->|Rate Limit: HTTP 429| G["Provider Fallback Router"]
+    G --> H["Hugging Face Space<br/>Fine-tuned Qwen3-4B"]
+
+    F --> I["Tool Execution"]
+    H --> J["AI Response"]
+
+    I --> K["PostgreSQL Database"]
+    I --> L["Tavily Web Search"]
+
+    K --> M["Retrieved Information"]
+    L --> M
+    M --> E
+
+    J --> N["API Response"]
+    E --> N
+    N --> B
 ```
 
-### Backend configuration and deployment
+### Architecture Highlights
 
-The root `.env.example` lists server settings. For Render, set `CARWORLD_ENV=production`
-and connect the Render PostgreSQL database to the web service so Render provides its
-`DATABASE_URL` connection string. Both FastAPI and Alembic read this same variable;
-production startup fails clearly if it is missing and never falls back to localhost.
-Local development continues to use `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_USER`,
-`POSTGRES_PASSWORD`, and `POSTGRES_DB` from `.env` or Docker Compose.
+- **Frontend:** Provides the user-facing automotive discovery and conversational interface.
+- **FastAPI:** Handles HTTP requests, authentication, API controls, and communication with the AI system.
+- **AI Agent:** Coordinates language-model interaction and tool execution.
+- **Provider Router:** Manages primary-provider errors, fallback selection, and cooldown-based recovery.
+- **PostgreSQL:** Stores structured automotive information.
+- **Hugging Face:** Hosts the fine-tuned Qwen3 inference service.
+- **Tavily:** Supports external information retrieval through web search.
 
-For a Python runtime on Render, use `pip install -r requirements.txt` as the build
-command, `cd backend && alembic upgrade head` as the pre-deploy migration command, and
-`cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT` as the start command.
-For a Docker runtime, the Dockerfile already runs migrations before starting Uvicorn.
+---
 
-`FRONTEND_ORIGINS` is a comma-separated
-allowlist; set it to the exact HTTPS origins serving the frontend. The static site
-has no bundler, so configure the public API origin in `apps/carworld-config.js` at
-deployment time by running the config renderer with `FRONTEND_ENV=production` and
-`FRONTEND_API_BASE_URL` set to the public HTTPS backend origin. Production rendering
-rejects HTTP and loopback origins; the generated local config is ignored by Git and
-must be rendered again as part of deployment. Never publish the local config. Set
-`CARWORLD_ENV=production` on the backend to use the production
-chat limits (5 per minute / 40 per day by default), and adjust the limit variables
-only to match the expected traffic and provider budget. Do not include Groq, Tavily,
-PostgreSQL, or Supabase service-role secrets in frontend configuration or browser
-code.
+## AI Provider Routing
 
-For container deployment, provide the same server settings through the deployment
-secret manager / Compose environment and build with the root `Dockerfile`. The API
-image includes the existing `app.py` agent and `car_database.py`; run PostgreSQL
-separately or use the Compose database service. Deploy the static site to any HTTPS
-static host, set its API origin, and set the backend's `FRONTEND_ORIGINS` to that
-site's origin. Keep Supabase URL and anon key configured on the backend for the
-existing browser sign-in bootstrap and backend token verification. Run Alembic and
-the car import script only when provisioning/updating the catalog database.
+One of the central engineering components is the multi-provider routing system.
 
-Run the backend suite from `backend/` with `python -m pytest -q`. The chat endpoint
-is `POST /api/chat` and accepts `{ "message": "...", "history": [...] }` with a
-Bearer Supabase access token if available; guests may omit it. It limits message
-and history sizes. Guest requests share a rolling per-IP limit, so local visitors
-on `127.0.0.1` use the same bucket; verified users are limited by account ID.
-Defaults are 30 requests per minute / 300 per day in development and 5 / 40 in
-production. Set `CHAT_RATE_LIMIT_PER_MINUTE` and `CHAT_RATE_LIMIT_PER_DAY` to
-override them. Concurrent requests are serialized through the limiter lock.
-Provider errors are logged with safe diagnostic fields and returned without
-credentials or tool arguments.
+Rather than depending entirely on one model provider, the backend uses a primary-and-fallback strategy.
+
+```mermaid
+flowchart TD
+    A["Incoming User Message"] --> B["AI Provider Router"]
+    B --> C["Groq: GPT-OSS-120B"]
+
+    C -->|Successful Response| D["Return AI Response"]
+    C -->|HTTP 429 Rate Limit| E["Activate Fallback"]
+
+    E --> F["Hugging Face Space"]
+    F --> G["Fine-tuned Qwen3-4B"]
+    G --> H["Return Fallback Response"]
+
+    E --> I["Start Cooldown"]
+    I --> J["Primary Provider Available Again"]
+    J --> C
+```
+
+**Provider strategy:**
+
+| Provider | Model | Responsibility |
+|---|---|---|
+| Primary | `openai/gpt-oss-120b` via Groq | Main conversational AI |
+| Fallback | Fine-tuned Qwen3-4B LoRA | Alternative inference during primary-provider rate limits |
+| Hosting | Hugging Face Spaces | Remote fallback model inference |
+
+The routing logic handles provider selection and recovery, keeping model-provider management within the backend rather than exposing it to the frontend.
+
+---
+
+## Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Programming Language | Python |
+| Backend Framework | FastAPI |
+| Frontend | HTML, CSS, JavaScript |
+| Primary LLM | GPT-OSS-120B via Groq |
+| Fine-tuned Model | Qwen3-4B with LoRA |
+| Model Hosting | Hugging Face Spaces |
+| Model Integration | Gradio Client |
+| Database | PostgreSQL |
+| Authentication | Supabase |
+| Web Search | Tavily |
+| Database Migrations | Alembic |
+| Testing | Pytest |
+| Deployment | Render |
+| Version Control | Git, GitHub |
+
+---
+
+## Fine-Tuned AI Model
+
+Car World AI also integrates a fine-tuned Qwen3-4B model using a LoRA adapter.
+
+The model is hosted separately through Hugging Face Spaces and accessed by the backend through the Gradio Client.
+
+**Model resources:**
+
+- [Hugging Face Space – Qwen3 Inference](https://huggingface.co/spaces/ansh9057/carworld-qwen3-inference)
+- [Qwen3-4B LoRA Adapter](https://huggingface.co/ansh9057/carworld-qwen3-4b-lora)
+
+This integration demonstrates experience working with fine-tuned language models, remote inference services, model-provider abstraction, and backend API integration.
+
+---
+
+## Backend API
+
+The application exposes a REST API through FastAPI.
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/health` | GET | Backend health check |
+| `/api/v1/health` | GET | Health compatibility endpoint |
+| `/api/chat` | POST | Conversational AI interaction |
+
+### Example Chat Request
+
+```json
+{
+  "message": "Compare two cars based on their specifications",
+  "history": []
+}
+```
+
+### Example API Usage
+
+```python
+import requests
+
+url = "https://car-world-agoj.onrender.com/api/chat"
+
+payload = {
+    "message": "Recommend a car for city driving",
+    "history": []
+}
+
+response = requests.post(url, json=payload, timeout=60)
+
+print(response.json())
+```
+
+---
+
+## Project Structure
+
+The application is organized into separate frontend, backend, AI, and deployment components.
+
+```text
+Car-World/
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── agents/
+│   │   ├── services/
+│   │   ├── providers/
+│   │   ├── database/
+│   │   └── main.py
+│   │
+│   ├── tests/
+│   └── requirements.txt
+│
+├── apps/
+│   └── Frontend application assets
+│
+├── n8n/
+│   └── Automation workflows
+│
+├── app.py
+├── .env.example
+├── Dockerfile
+└── README.md
+```
+
+---
+
+## Getting Started
+
+Follow these steps to run the application locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/anshh-py/Car-World.git
+cd Car-World
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+Activate it:
+
+**Windows**
+
+```bash
+.venv\Scripts\activate
+```
+
+**Linux / macOS**
+
+```bash
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file using `.env.example` as a reference.
+
+Configure the required credentials and connection details for the services you intend to run:
+
+- Groq API key
+- Hugging Face token and Space ID
+- PostgreSQL connection
+- Supabase credentials, if using authentication
+- Tavily API key, if using web search
+
+Never commit API keys, access tokens, passwords, or other secrets to GitHub.
+
+### 5. Start the Backend
+
+From the project root:
+
+```bash
+python -m uvicorn --app-dir backend app.main:app --reload --port 8000
+```
+
+Backend URL:
+
+```text
+http://127.0.0.1:8000
+```
+
+### 6. Start the Frontend
+
+On Windows, use the provided frontend startup script:
+
+```bash
+start-frontend.cmd
+```
+
+The frontend can then be accessed at:
+
+```text
+http://127.0.0.1:5500
+```
+
+### 7. Run the Tests
+
+```bash
+cd backend
+python -m pytest -q
+```
+
+---
+
+## Deployment
+
+The application uses a separated deployment architecture.
+
+| Service | Platform | Responsibility |
+|---|---|---|
+| Frontend | Render | Web application |
+| Backend | Render | FastAPI application |
+| Database | PostgreSQL | Automotive data storage |
+| Primary AI | Groq | Main LLM inference |
+| Fallback AI | Hugging Face Spaces | Fine-tuned Qwen3 inference |
+
+This separation allows the frontend, backend, database, and AI inference services to operate independently while communicating through defined interfaces.
+
+---
+
+## Engineering Highlights
+
+The project brings together several practical software engineering concepts:
+
+- Designing and integrating an LLM-powered application.
+- Building a modular backend using FastAPI.
+- Implementing tool-based AI agent execution.
+- Integrating structured database retrieval with conversational AI.
+- Working with fine-tuned language models and LoRA adapters.
+- Building a multi-provider LLM routing and fallback mechanism.
+- Connecting remote model inference through the Gradio Client.
+- Integrating external web search.
+- Implementing authentication and API security controls.
+- Managing database migrations and automated tests.
+- Deploying interconnected services using cloud platforms.
+
+---
+
+## Future Development
+
+Potential areas for extending the platform include:
+
+- More advanced automotive recommendation algorithms.
+- Improved vehicle entity recognition and comparison.
+- Expanded automotive datasets.
+- Additional model-provider integrations.
+- Enhanced evaluation of AI responses.
+- Richer vehicle analytics and discovery interfaces.
+
+---
+
+## Author
+
+**Ansh**
+
+BCA Student | AI/ML & Software Development
+
+Interested in building practical applications involving artificial intelligence, backend engineering, LLM integrations, and intelligent automation.
+
+**Connect:**
+- GitHub: [@anshh-py](https://github.com/anshh-py)
+- Project: [Car World AI](https://github.com/anshh-py/Car-World)
+
+---
+
+<p align="center">
+  <strong>Car World AI — Bringing conversational AI to automotive discovery.</strong>
+</p>
