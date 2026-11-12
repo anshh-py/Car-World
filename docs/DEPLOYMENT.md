@@ -34,30 +34,30 @@ secret manager / environment (`CARWORLD_ENV=production`).
 
 **Required in production**
 
-| Variable | Purpose |
-|----------|---------|
-| `CARWORLD_ENV` | Must be `production` (disables `/docs`, tightens chat limits, requires `DATABASE_URL`). |
-| `DATABASE_URL` | PostgreSQL connection string, e.g. `postgresql://USER:PASS@HOST:5432/DB?sslmode=require`. Both the app and Alembic read this. Required when production. |
-| `GROQ_API_KEY` | Groq API key for the primary LLM provider. |
-| `FRONTEND_ORIGINS` | Comma-separated list of exact HTTPS origins serving the frontend (CORS allowlist). |
+| Variable           | Purpose                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CARWORLD_ENV`     | Must be `production` (disables `/docs`, tightens chat limits, requires `DATABASE_URL`).                                                                 |
+| `DATABASE_URL`     | PostgreSQL connection string, e.g. `postgresql://USER:PASS@HOST:5432/DB?sslmode=require`. Both the app and Alembic read this. Required when production. |
+| `GROQ_API_KEY`     | Groq API key for the primary LLM provider.                                                                                                              |
+| `FRONTEND_ORIGINS` | Comma-separated list of exact HTTPS origins serving the frontend (CORS allowlist).                                                                      |
 
 **Optional but recommended**
 
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `GROQ_MODEL` | Groq model id | `openai/gpt-oss-120b` |
-| `GROQ_COOLDOWN_SECONDS` | Cooldown between chat requests | `60` |
-| `TAVILY_API_KEY` | Enables web/tool fallback | (none) |
-| `QWEN3_ENDPOINT_URL` | Qwen3 Gradio Space endpoint | (none) |
-| `QWEN3_SPACE_ID` | Qwen3 Space id | (none) |
-| `QWEN3_MODEL_ID` | Qwen3 model id | `qwen3-4b-finetuned` |
-| `QWEN3_TIMEOUT` | Qwen3 request timeout (seconds) | `60.0` |
-| `QWEN3_SUPPORTS_TOOLS` | Whether the Space supports tools | `false` |
-| `HUGGINGFACE_TOKEN` | HF token for private/gated Space | (none) |
-| `SUPABASE_URL` | Supabase project URL (optional sign-in) | (none) |
-| `SUPABASE_ANON_KEY` | Supabase anon key (public) | (none) |
-| `CHAT_RATE_LIMIT_PER_MINUTE` | Per-minute chat limit | `5` (prod) |
-| `CHAT_RATE_LIMIT_PER_DAY` | Per-day chat limit | `40` (prod) |
+| Variable                     | Purpose                                 | Default               |
+| ---------------------------- | --------------------------------------- | --------------------- |
+| `GROQ_MODEL`                 | Groq model id                           | `openai/gpt-oss-120b` |
+| `GROQ_COOLDOWN_SECONDS`      | Cooldown between chat requests          | `60`                  |
+| `TAVILY_API_KEY`             | Enables web/tool fallback               | (none)                |
+| `QWEN3_ENDPOINT_URL`         | Qwen3 Gradio Space endpoint             | (none)                |
+| `QWEN3_SPACE_ID`             | Qwen3 Space id                          | (none)                |
+| `QWEN3_MODEL_ID`             | Qwen3 model id                          | `qwen3-4b-finetuned`  |
+| `QWEN3_TIMEOUT`              | Qwen3 request timeout (seconds)         | `60.0`                |
+| `QWEN3_SUPPORTS_TOOLS`       | Whether the Space supports tools        | `false`               |
+| `HUGGINGFACE_TOKEN`          | HF token for private/gated Space        | (none)                |
+| `SUPABASE_URL`               | Supabase project URL (optional sign-in) | (none)                |
+| `SUPABASE_ANON_KEY`          | Supabase anon key (public)              | (none)                |
+| `CHAT_RATE_LIMIT_PER_MINUTE` | Per-minute chat limit                   | `5` (prod)            |
+| `CHAT_RATE_LIMIT_PER_DAY`    | Per-day chat limit                      | `40` (prod)           |
 
 > **Local dev difference**: in development the backend reads
 > `POSTGRES_HOST/PORT/USER/PASSWORD/DB` (defaults to `localhost:5432/carworld`)
@@ -69,7 +69,7 @@ secret manager / environment (`CARWORLD_ENV=production`).
 - **Never commit** `.env` or any real secret. `.gitignore` excludes `.env`,
   `.env.*`, and local generated frontend config. The only templates that are
   intentionally keepable are `.env.example` (see below) and
-  `apps/carworld-config.js` is *generated* and always gitignored.
+  `apps/carworld-config.js` is _generated_ and always gitignored.
 - Frontend config (`apps/carworld-config.js`) contains **only** the public API
   origin — never server credentials. The anon Supabase key may appear there
   because it is a public key, but service-role keys and API keys must stay
@@ -82,7 +82,7 @@ secret manager / environment (`CARWORLD_ENV=production`).
 ### `.env.example` template
 
 > Note: the Codvian tooling refuses to write/read any `.env*` path for security,
-> so the canonical template is reproduced *here* in this doc. Copy the block
+> so the canonical template is reproduced _here_ in this doc. Copy the block
 > below into a root `.env.example` file if you want a committed template (the
 > `.gitignore` allows `.env.example`).
 
@@ -166,23 +166,74 @@ Use `docker-compose.yml` for local orchestration (postgres + api). The compose
 - Migrations are async and run against production PostgreSQL without change;
   no filesystem or non-Postgres assumptions are required at runtime.
 
-## 5. Frontend hosting & API URL configuration
+## 5. Frontend hosting — Render Static Site
 
-- Host the static repo root on any HTTPS static host (GitHub Pages, Cloudflare
-  Pages, Netlify, etc.). No build step is required.
-- Configure the API origin **without hardcoding localhost** by rendering the
-  config:
-  ```powershell
-  $env:FRONTEND_ENV = "production"
-  $env:FRONTEND_API_BASE_URL = "https://your-backend.example"
-  powershell -File backend/scripts/render-frontend-config.ps1
+The frontend is a multi-page static site in the repository root. It is deployed
+as a **Render Static Site**, built with the Linux-compatible script
+`scripts/build-frontend.py` (this supersedes the PowerShell-only
+`backend/scripts/render-frontend-config.ps1`, which cannot run in Render's Linux
+build environment).
+
+### Render Static Site settings
+
+- **Build command**:
+  ```bash
+  FRONTEND_ENV=production \
+  FRONTEND_API_BASE_URL=https://car-world-agoj.onrender.com \
+  python scripts/build-frontend.py
   ```
-  This writes `apps/carworld-config.js` (> `window.CARWORLD_API_BASE_URL`).
-  Production rendering rejects HTTP loopback origins. The file is gitignored,
-  so render it during the deploy step (not committed).
-- The frontend fails closed: if the API origin is absent it shows an actionable
-  error rather than calling a static origin.
-- Set backend `FRONTEND_ORIGINS` to exactly the origin(s) serving the frontend.
+- **Publish directory**: `public`
+- **Environment variables** (set in the Render dashboard):
+
+  | Variable                | Value                                                         |
+  | ----------------------- | ------------------------------------------------------------- |
+  | `FRONTEND_ENV`          | `production`                                                  |
+  | `FRONTEND_API_BASE_URL` | `https://car-world-agoj.onrender.com` (public backend origin) |
+  | `FRONTEND_OUTPUT_DIR`   | _(optional)_ defaults to `public`                             |
+
+### What the build does
+
+- Requires `FRONTEND_API_BASE_URL`; fails clearly if it is unset.
+- In production (`FRONTEND_ENV=production`) rejects non-HTTPS origins and
+  loopback hosts (`localhost`, `127.0.0.1`, `*.localhost`).
+- Rejects any origin containing credentials, a path, query, or fragment.
+- Generates `apps/carworld-config.js` (in the output `public/apps/`) with the
+  configured origin, then copies all first-party HTML pages and assets
+  (`images/`, `bootstrap-4.5.3-dist/`, `FontAwsome/`, root CSS/JS) preserving
+  relative paths.
+- Never copies backend source, database/data files, Python, Docker, Git
+  metadata, environment files, secrets, or docs into `public/`.
+
+### CORS on the backend
+
+The backend allows a fixed set of origins. When the Static Site is created,
+add its URL to `FRONTEND_ORIGINS` on the backend service, e.g.:
+
+```
+FRONTEND_ORIGINS=https://car-world.onrender.com
+```
+
+If the Static Site is later given a custom domain, add that HTTPS origin to the
+same list (comma-separated). The frontend itself never hardcodes the backend
+origin — it is injected at build time from `FRONTEND_API_BASE_URL`.
+
+### Deployment & smoke test
+
+1. Push the repository. Render runs the build command above and publishes
+   `public/`.
+2. Open the Static Site URL; confirm the page renders and the chat/catalog
+   widgets load.
+3. In the browser console verify `window.CARWORLD_API_BASE_URL` equals
+   `https://car-world-agoj.onrender.com`.
+4. Confirm the backend `FRONTEND_ORIGINS` includes the Static Site origin and
+   that `GET /health` and `GET /api/v1/health` return `{"status": "ok"}`.
+5. Test `carworld-api.js` requests reach the backend (console Network tab shows
+   200 responses with `Access-Control-Allow-Origin` set to the Static Site
+   origin).
+
+> **Local dev**: run `start-frontend.cmd` or set
+> `FRONTEND_API_BASE_URL` + `FRONTEND_ENV=development` and run
+> `python scripts/build-frontend.py`. Development allows HTTP for local testing.
 
 ## 6. Health checks
 
