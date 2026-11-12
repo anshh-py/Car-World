@@ -36,6 +36,7 @@ class Settings(BaseModel):
     qwen3_timeout: float = 60.0
     qwen3_supports_tools: bool = False
     huggingface_token: str | None = None
+    qwen3_diagnostic_secret: str | None = None
 
     @classmethod
     def from_environment(cls) -> "Settings":
@@ -100,6 +101,7 @@ class Settings(BaseModel):
             qwen3_timeout=float(os.environ.get("QWEN3_TIMEOUT", "60.0")),
             qwen3_supports_tools=os.environ.get("QWEN3_SUPPORTS_TOOLS", "false").lower() == "true",
             huggingface_token=os.environ.get("HUGGINGFACE_TOKEN") or os.environ.get("HF_TOKEN") or None,
+            qwen3_diagnostic_secret=os.environ.get("QWEN3_DIAGNOSTIC_SECRET") or None,
         )
 
     @property
