@@ -1,0 +1,458 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 5,
+  "results": [
+    {
+      "id": "cw-eval-003",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 1,
+              "results": [
+                {
+                  "make": "Hyundai",
+                  "model": "Creta",
+                  "variant": "1.4 Crdi E Plus",
+                  "ex_showroom_price": "999990.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Hyundai Creta 1.4 CRDi E Plus is listed with a diesel engine and an ex‐showroom price of ₹9,99,990."
+      },
+      "score": {
+        "id": "cw-eval-003",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    },
+    {
+      "id": "cw-eval-004",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 2,
+              "results": [
+                {
+                  "make": "Maruti Suzuki",
+                  "model": "Baleno",
+                  "variant": "1.3 Sigma",
+                  "ex_showroom_price": "668611.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "Hatchback"
+                },
+                {
+                  "make": "Maruti Suzuki",
+                  "model": "Baleno",
+                  "variant": "1.2 Sigma",
+                  "ex_showroom_price": "558602.00",
+                  "fuel_type": "Petrol",
+                  "transmission": "Manual",
+                  "body_type": "Hatchback"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Maruti Suzuki Baleno 1.2 Sigma is priced at an ex‐showroom cost of ₹5,58,602 and runs on Petrol."
+      },
+      "score": {
+        "id": "cw-eval-004",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false,
+            "body_type_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    },
+    {
+      "id": "cw-eval-005",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 2,
+              "results": [
+                {
+                  "make": "Mahindra",
+                  "model": "Thar",
+                  "variant": "Crde",
+                  "ex_showroom_price": "959860.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                },
+                {
+                  "make": "Mahindra",
+                  "model": "Thar",
+                  "variant": "Crde Abs",
+                  "ex_showroom_price": "974860.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Mahindra Thar Crde is priced ex‐showroom at ₹9,59,860 and runs on diesel."
+      },
+      "score": {
+        "id": "cw-eval-005",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    },
+    {
+      "id": "cw-eval-006",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 1,
+              "results": [
+                {
+                  "make": "Tata",
+                  "model": "Safari Storme",
+                  "variant": "2.2 Vx 4X4 Varicor 400",
+                  "ex_showroom_price": "1643829.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                }
+              ]
+            }
+          },
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 0,
+              "results": []
+            }
+          },
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Database lookup: what is the ex-showroom price and seating capacity of the Tata Safari Storme 2.2 VX 4X4 Varicor 400?",
+              "results": [
+                {
+                  "title": "Tata Safari Storme Price, Images, Mileage, Reviews, Specs",
+                  "url": "https://www.cardekho.com/carmodels/Tata/Tata_Safari_Storme",
+                  "content": "Specs and Features\n\n## Price list (Variants)\n\nFollowing details are the last recorded, and the prices may vary depending on the car's condition.\n\n| Variant | Ex-Showroom Price |\n --- |\n| Safari Storme LX(Base Model)2179 cc, Manual, Diesel, 14.1 kmpl | ₹10.99 Lakh\\ |  |\n| Safari Storme VX2179 cc, Manual, Diesel, 14.1 kmpl | ₹13.19 Lakh\\ |  |\n| Safari Storme EX2179 cc, Manual, Diesel, 14.1 kmpl | ₹13.31 Lakh\\ |  |\n| Safari Storme VX 4WD2179 cc, Manual, Diesel, 14.1 kmpl | ₹14.52 Lakh\\ |  |\n| Safari Storme VX 4WD Varicor 4002179 cc, Manual, Diesel, 14.1 kmpl | ₹16.46 Lakh\\ |  |\n| Safari Storme VX Varicor 400(Top Model)2179 cc, Manual, Diesel, 14.1 kmpl | ₹16.62 Lakh\\ |  |\n\nView All Variants\n\n## User reviews\n\n4.5/5\n\nBased on178 User Reviews\n\nPopular Mentions [...] 202162,000KmPetrol\n\n  View Seller Details\n\n  \n\n9 Used Safari Storme in New Delhi – from ₹4 Lakh\n\n  \n\nUsed Tata Cars in New Delhi\n\n## Specifications and features\n\n|  |  |\n --- |\n| Engine | 2179 cc |\n| Ground Clearance | 200 mm |\n| Power | 147.94 - 153.86 bhp |\n| Torque | 320 Nm - 400 Nm |\n| Seating Capacity | 7 |\n| Drive Type | RWD / 4WD |\n\n Tata Safari Storme <p>The Varicor400 motor generates a class-leading 400Nm of torque.</p>\n  \n\n  The Varicor400 motor generates a class-leading 400Nm of torque.\n Tata Safari Storme <p>Road presence is practically unmatched. People make way for the Safari!</p>\n  \n\n  Road presence is practically unmatched. People make way for the Safari!\n\n Key Specifications\n Highlights\n\nSpecs and Features\n\n## Price list (Variants) [...] Rs.40 LakhEstimated\n\n  Jan 01, 2027 Expected Launch\n\nUpcoming Tata Cars\n\nGet Diwali Offers\n\nTata Cars\n\nSafari Storme\n\n\\Ex-showroom price in New Delhi\n\n×\n\nWe need your city to customize your experience",
+                  "score": 0.6806664,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Safari Storme 2.2 VX 4X4 Price, Mileage, Specs | Droom",
+                  "url": "https://droom.in/tata-cars/safari-storme/2.2-vx-4x4?amp=2",
+                  "content": "##### Hello User\n\n## Pick Your Location\n\n### Top Cities\n\n# Tata Safari Storme 2.2 VX 4X4\n\nEx-Showroom Price\n\n₹ 9.96 Lacs\n\n10.8 KMPL\n\nMileage\n\nMANUAL\n\nTransmission\n\nDIESEL\n\nFuel Type\n\n140 BHP\n\nMax Power\n\n5 Seater\n\nSeating Capacity\n\n### Tata Safari Storme Specifications\n\n|  |  |\n --- |\n| Front Brake Type | Disc |\n| Rear Brake Type | Drum |\n\n|  |  |\n --- |\n| Wheel Base | 3150 Mm |\n| Overall Width | 1855 Mm |\n| Overall Length | 4655 Mm |\n| Overall Height | 1922 Mm |\n| Ground Clearance | 200 Mm |\n| Boot Space (Liters) | 447 |\n| Kerb Weight (Kgs) | 1825 |\n| Seat Height (mm) | N/A | [...] |  |  |\n --- |\n| Number Of Gears | 5 |\n| Drivetrain | 4WD |\n| Clutch Type | Duel Clutch |\n\n|  |  |\n --- |\n| Wheel Size | 16 Inch |\n| Rear Tyre | 235 / 70 R16 |\n| Front Tyre | 235 / 70 R16 |\n\n### Safari Storme Previous Models\n\n|  |\n\n| Tata Safari Storme 2.2 VX 4x4 Varicor400 2020 Know More |\n| Tata Safari Storme 2.2 VX 4x2 Varicor400 2020 Know More |\n| Tata Safari Storme 2.2 EX 4X2 2020 Know More |\n| Tata Safari Storme 2.2 LX 4x2 2020 Know More |\n\n|  |\n\n| Tata Safari Storme 2.2 VX 4x4 Varicor400 2019 Know More |\n| Tata Safari Storme 2.2 VX 4x2 Varicor400 2019 Know More |\n| Tata Safari Storme 2.2 EX 4X2 2019 Know More |\n| Tata Safari Storme 2.2 LX 4x2 2019 Know More |\n\n|  | [...] |  |\n\n| Tata Safari Storme 2.2 VX 4x4 Varicor400 2018 Know More |\n| Tata Safari Storme 2.2 VX 4x2 Varicor400 2018 Know More |\n| Tata Safari Storme 2.2 EX 4X2 2018 Know More |\n| Tata Safari Storme 2.2 LX 4x2 2018 Know More |\n\n|  |\n\n| Tata Safari Storme 2.2 VX 4x4 Varicor400 2017 Know More |\n| Tata Safari Storme 2.2 VX 4x2 Varicor400 2017 Know More |\n| Tata Safari Storme 2.2 VX 4x2 2017 Know More |\n| Tata Safari Storme 2.2 EX 4X2 2017 Know More |\n| Tata Safari Storme 2.2 EX 4X4 2018 Know More |\n| Tata Safari  [truncated]",
+                  "score": 0.67800725,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Safari Storme 2016 Varicor 400 VX 4x4 - Price in India, Mileage, Reviews, Colours, Specification, Images - Overdrive",
+                  "url": "https://www.overdrive.in/cars/tata/safari-storme/varicor-400-vx-4x4-v3265",
+                  "content": "get app\n Subscribe\n\nTrending: Maruti Suzuki e-Vitara\n Ather Stack 7\n Kawasaki Ninja ZX-6R\n 2025 BMW X5\n Yangwang U9 Track Edition\n Kawasaki KLX 230\n\nFollow us\n\n Cars\n Bikes\n news\n reviews\n compare\n\n Safari Storme\n Varicor 400 VX 4x4\n\n# Tata Safari Storme 2016 Varicor 400 VX 4x4\n\nOverview) Details) Gallery) Other Variants)\n\nTata Safari Storme 2016 Varicor 400 VX 4x4\n\n## 4 Stars\n\n★ ★ ★ ★ ★\n\nOverdrive Rating\n\n#### Price Range\n\nNew Delhi) Mumbai) Kolkata) Chennai)\n\n₹ 15.93 Lakhs (Ex-Showroom)\n\n₹ 19.11 Lakhs (On-Road)\n\n₹ 16.03 Lakhs (Ex-Showroom)\n\n₹ 19.71 Lakhs (On-Road)\n\n₹ 16.01 Lakhs (Ex-Showroom)\n\n₹ 17.97 Lakhs (On-Road)\n\n₹ 15.9 Lakhs (Ex-Showroom)\n\n₹ 19.41 Lakhs (On-Road)\n\n### Tata Safari Storme Varicor 400 VX 4x4 Details\n\n## Overview\n\nFuel type\n\nDiesel\n\nDimension (L x W x H) [...] ## Overview\n\nFuel type\n\nDiesel\n\nDimension (L x W x H)\n\n4655 x 1965 x 1922\n\nEngine displacement\n\n2179cc\n\nTransmission\n\nManual\n\nMaximum Power (ps)\n\n156\n\nChassis type\n\nDiesel\n\nMileage\n\n13.9 Kmpl\n\nSeating Capacity\n\n7\n\n## Specifications\n\nEngine\n\nEngine model\n\nVTT VARICOR\n\nDisplacement (cc)\n\n2179cc\n\nCylinders\n\n4\n\nCylinder config\n\nInline\n\nMaximum power (PS)\n\n156\n\nMaximum torque (Nm)\n\n400\n\nLayout\n\nAWD\n\nValve train\n\nDOHC 16V\n\nBore (mm)\n\nStroke (mm)\n\nCompression ratio (:1)\n\nTransmission\n\nGears\n\n6\n\nTransmission type\n\nManual\n\nClutch Type\n\nSingle\n\nFinal reduction gear ratio\n\nFuel\n\nFuel type\n\nDiesel\n\nFuel system\n\nCommon rail\n\nSuspension\n\nFront suspension\n\nDouble wishbone\n\nRear suspension\n\nCoil spring\n\nChassis type\n\nBrakes\n\nFront brakes\n\nDisc\n\nRear brakes\n\nDisc\n\nTyres\n\nTyres front\n\n235/70 R16 [...] Maximum rear knee room (mm)\n\nMinimum rear knee room (mm)\n\nShoulder room (mm)\n\nFront headroom (mm)\n\nRear headroom (mm)\n\nBoot space (litres)\n\nFuel tank capacity (litres)\n\n63\n\nKerb weight (kg)\n\n2095\n\nGros [truncated]",
+                  "score": 0.65665823,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Safari Storme Varicor 400 launched at Rs. 13.25 lakh",
+                  "url": "https://www.team-bhp.com/news/tata-safari-storme-varicor-400-launched-rs-1325-lakh",
+                  "content": "... Storme (extendable upto 4 years or 1,50,000 kms). Ex-showroom Delhi prices for the Storme Varicor 400 are: 4x2: Rs. 13,25,530 4x4: Rs. 14",
+                  "score": 0.61935616,
+                  "published_date": null
+                },
+                {
+                  "title": "Compare Tata Safari Storme 2019 2.2 LX 4x2 vs 2.2 VX 4x4 Varicor400 | CarTrade",
+                  "url": "https://www.cartrade.com/compare-cars/tata-safari-storme-2019-2-2-lx-4x2-vs-2-2-vx-4x4-varicor-400",
+                  "content": "Compare Tata Safari Storme 2019 Tata Safari Storme 2019 on basis of price, offers, detailed tech specs & other features. The price of Tata Safari Storme 2019 2.2 LX 4x2 and Tata Safari Storme 2019 2.2 VX 4x4 Varicor400 is ₹ 10.97 Lakh and ₹ 16.35 Lakh respectively. The claimed mileage for Tata Safari Storme 2019 2.2 LX 4x2 is 14 kmpl. The claimed mileage for Tata Safari Storme 2019 2.2 VX 4x4 Varicor400 is 13.9 kmpl. In technical specifications, Tata Safari Storme 2019 2.2 LX 4x2 is powered by 2179 cc, 4 Cylinders Inline, 4 Valves/Cylinder, DOHC engine. Tata Safari Storme 2019 2.2 VX 4x4 Varicor400 is powered by 2179 cc, 4 Cylinders Inline, 4 Valves/Cylinder, DOHC engine.\n\n## Compare Safari Storme 2019 with Similar Cars\n\n Tata Safari Storme 2019 Image\n\n  Tata\n\n  Safari Storme 2019 [...] ₹ 14.62 Lakh\n\nAvg. Ex-Showroom price\n\nRight Arrow\n\nCustomise Your EMI\n\nOn-Road Price\n\n₹ BIIND 91,56,499\n\nSelect Down Payment\n\nSelect Loan Tenure (Months)\n\nSelect Bank Interest Rate\n\nTotal Loan Taken\n\n₹BIND 73,25,199\n\nEMI Payable\n\n₹BIND 1,86,843\n\nSelect Your Make or Model\n\nClose button\n\nsearch icon\n\nSelect Your Variant\n\nNo variant available\n\nloader\nloader [...] Leading platform for Used Cars and New Cars in India\n\nRecently Viewed\n\nTrending Searches\n\nPlease Tell Us Your City\n\nlocation icon\n\nlocation iconClose\n\nSorry!! No Matching Results found. Try Again.\n\nClose\n\n Home\n\n  >\n Compare Cars\n\n  >\n Safari Storme 2019 2.2 LX 4x2 vs 2.2 VX 4x4 Varicor400\n\n# Compare Tata Safari Storme 2019 2.2 LX 4x2 vs 2.2 VX 4x4 Varicor400\n\nvs\n\nTata Safari Storme 2019 2.2 LX 4x2Change Car\n\n Tata Safari Storme 2019 2.2 LX 4x2\n\nright arrow\n\n₹ 10.97 Lakh\n\nAvg. Ex-Showroom price\n\nvs\n\nTata Safari Storme 2019 2.2 VX 4x4 Varicor400Change Car\n\n Tata Safari Storme 2019 2.2 VX 4x4 Varicor400\n\nright arrow\n\n₹ 16 [truncated]",
+                  "score": 0.6191835,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Tata Safari Storme 2.2 VX 4×4 Varicor 400 is priced at about ₹16.44 lakh (ex‐showroom) and it seats 7 passengers."
+      },
+      "score": {
+        "id": "cw-eval-006",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false,
+            "seating_capacity_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database",
+              "search_car_database",
+              "search_car_web"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    },
+    {
+      "id": "cw-eval-007",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 4,
+              "results": [
+                {
+                  "make": "Jeep",
+                  "model": "Compass",
+                  "variant": "1.4 Sport",
+                  "ex_showroom_price": "1560000.00",
+                  "fuel_type": "Petrol",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                },
+                {
+                  "make": "Jeep",
+                  "model": "Compass",
+                  "variant": "2.0 Sport",
+                  "ex_showroom_price": "1661000.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                },
+                {
+                  "make": "Jeep",
+                  "model": "Compass",
+                  "variant": "2.0 Sport Plus",
+                  "ex_showroom_price": "1699000.00",
+                  "fuel_type": "Diesel",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                },
+                {
+                  "make": "Jeep",
+                  "model": "Compass",
+                  "variant": "1.4 Sport Plus",
+                  "ex_showroom_price": "1599000.00",
+                  "fuel_type": "Petrol",
+                  "transmission": "Manual",
+                  "body_type": "SUV"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Jeep Compass 1.4 Sport is priced at ₹15,60,000 ex‐showroom and runs on Petrol."
+      },
+      "score": {
+        "id": "cw-eval-007",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    }
+  ]
+}

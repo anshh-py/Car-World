@@ -12,6 +12,7 @@ psycopg[binary]>=3.2,<4.0
 groq>=0.13,<2.0
 tavily-python>=0.5,<1.0
 gradio>=4.44,<7.0
+gradio_client>=2.0,<3.0
 langchain
 langchain-openai
 langchain-groq

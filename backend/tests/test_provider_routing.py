@@ -768,5 +768,67 @@ def test_database_tool_dependent_request_returns_unavailable():
     assert response.provider_name == "qwen3_fallback"
 
 
+def _fake_groq_completion(content="A plain-text answer.", tool_calls=None):
+    """Return a fake Groq completion whose SDK create() records kwargs."""
+    from app.modules.chat.providers import GroqProvider
+
+    fake_client = MagicMock()
+    fake_message = SimpleNamespace(content=content, tool_calls=tool_calls)
+    fake_choice = SimpleNamespace(message=fake_message)
+    fake_completion = SimpleNamespace(choices=[fake_choice])
+    fake_client.chat.completions.create.return_value = fake_completion
+    return GroqProvider, fake_client, fake_completion
+
+
+def test_groq_provider_no_tools_omits_tool_kwargs():
+    """No tools supplied: neither `tools` nor `tool_choice` reaches the SDK.
+
+    Regression: Groq's openai/gpt-oss-120b can ignore tool_choice="none" and still
+    emit a tool call, which Groq rejects with HTTP 400 "Tool choice is none, but
+    model called a tool" (cw-eval-015). When no tools are supplied the request must
+    carry neither argument so the model answers as plain text.
+    """
+    GroqProvider, fake_client, _ = _fake_groq_completion()
+
+    with patch("app.modules.chat.providers.Groq", return_value=fake_client):
+        provider = GroqProvider(api_key="test-key")
+        response = provider.chat_completion(
+            messages=[{"role": "user", "content": "Recommend a new SUV under ₹15 lakh."}],
+            tools=None,
+            tool_choice="none",
+        )
+
+    create_kwargs = fake_client.chat.completions.create.call_args.kwargs
+    assert "tools" not in create_kwargs
+    assert "tool_choice" not in create_kwargs
+    assert create_kwargs["messages"][0]["content"] == "Recommend a new SUV under ₹15 lakh."
+    assert response.content == "A plain-text answer."
+    assert response.provider_name == "groq"
+
+
+def test_groq_provider_tools_supplied_sends_both_kwargs():
+    """Tools supplied: both `tools` and the requested `tool_choice` are sent."""
+    GroqProvider, fake_client, _ = _fake_groq_completion()
+
+    tools = [{
+        "type": "function",
+        "function": {"name": "calculate_emi", "parameters": {"type": "object"}},
+    }]
+
+    with patch("app.modules.chat.providers.Groq", return_value=fake_client):
+        provider = GroqProvider(api_key="test-key")
+        response = provider.chat_completion(
+            messages=[{"role": "user", "content": "Calculate EMI for 500000 at 8% for 60 months."}],
+            tools=tools,
+            tool_choice="auto",
+        )
+
+    create_kwargs = fake_client.chat.completions.create.call_args.kwargs
+    assert create_kwargs["tools"] == tools
+    assert create_kwargs["tool_choice"] == "auto"
+    assert response.content == "A plain-text answer."
+    assert response.provider_name == "groq"
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

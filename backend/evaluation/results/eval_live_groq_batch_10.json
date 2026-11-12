@@ -1,0 +1,278 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 4,
+  "results": [
+    {
+      "id": "cw-eval-029",
+      "category": "missing_info_abstention",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Sure! To calculate your car‐loan EMI, I’ll need three details:\n\n1. **Loan amount (principal) in INR** \n2. **Annual interest rate (%)** \n3. **Loan tenure (months)** \n\nCould you share those numbers?"
+      },
+      "score": {
+        "id": "cw-eval-029",
+        "category": "missing_info_abstention",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "abstention_present": false
+          },
+          "details": {
+            "required_abstain": true
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether abstention was appropriate"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-030",
+      "category": "missing_info_abstention",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "2026 Mahindra Scorpio reliability fuel efficiency 30 km/l",
+              "results": [
+                {
+                  "title": "Mahindra Scorpio 2026 Price, Features, Images, Specs & Reviews | HT Auto",
+                  "url": "https://auto.hindustantimes.com/new-cars/mahindra/scorpio",
+                  "content": "## MahindraScorpioKey Specs\n\n 2184 cc\n 14.44 kmpl\n Power iconPower\n\n  130 bhp\n Fuel iconFuel\n\n  Diesel\n MaxTorque iconMax Torque\n\n  300 Nm\n DriveTrain iconDrive Train\n\n  RWD\n\nView All Scorpio SpecsView specs icon\n\n## Mahindra Scorpio Variants\n\nMahindra Scorpio price starts at ₹ 13.43 Lakhs and goes up to ₹ 17.48 Lakhs (Ex-showroom). Mahindra Scorpio comes in 4 variants. Mahindra Scorpio's top variant is S11 MT 7S CC.\n\n4VariantsAvailable\n\nScorpio S MT 7STR\n\n₹13.43 Lakhs\\\n\n2184 cc\n\nDiesel\n\nManual\n\nScorpio S MT 9STR\n\n₹13.91 Lakhs\\\n\n2184 cc\n\nDiesel\n\nManual\n\nScorpio S11 MT 7S\n\n₹17.48 Lakhs\\\n\n2184 cc\n\nDiesel\n\nManual\n\nScorpio S11 MT 7S CC\n\n₹17.48 Lakhs\\\n\n2184 cc\n\nDiesel\n\nManual\n\n\\Disclaimer: The prices are ex-showroom price for the respective model in the selected city. [...] EV\n  + Electric Vehicles\n  + Electric Charging Station\n  + EV Cost Calculator\n  + Electric Cars\n  + Electric Bikes\n  + Electric Vehicle News\n Icon dropdown\n\n  More\n  + How To\n  + EMI Calculator\n  + For You\n  + User Reviews\n  + My Garage\n  + HT Auto Awards\n\nPriceSpecs & FeaturesMileageUser ReviewsColoursImages\n\n# MAHINDRA Scorpio\n\n₹13.43 - 17.48 Lakhs\\\n\n\\Ex-showroom price\n\n106\n\nReview & Win ₹2000 Voucher\n\nReview & Win ₹2000\n\nPhotos-1\nColours-3\n\n### Mahindra Scorpio Price:\n\nMahindra Scorpio is priced between Rs. 13.43 - 17.48 Lakhs (ex-showroom Delhi), depending on the variant selected.\n\n### How many variants are there for Mahindra Scorpio?\n\nThe Mahindra Scorpio is available in 4 variants - S MT 7STR, S MT 9STR, S11 MT 7S, S11 MT 7S CC.\n\n### What are the Mahindra Scorpio colour options? [...] | CAR | IMAGE | EX-SHOWROOM PRICE | USER RATINGS | POWER | TORQUE | TRANSMISSION | BODY TYPE | AIRBAGS | GROUND CLEARANCE | BOOT SPACE | LENGTH | WIDTH | HEIGHT | TURNING RADIUS | COMPARISON |\n ---  ---  -- [truncated]",
+                  "score": 0.86713725,
+                  "published_date": null
+                },
+                {
+                  "title": "Mahindra Scorpio N (2026) - Price, Mileage & Expert Reviews | Autocar India",
+                  "url": "https://www.autocarindia.com/cars/mahindra/scorpio-n",
+                  "content": "## Mahindra Scorpio N price & variants\n\nThe Mahindra Scorpio N price in India starts at 13.69 lakh for the Z2 Petrol MT and rises to 25.49 lakh for the Z8L ADAS Diesel 4WD AT, both ex-showroom. The on-road price in Delhi ranges from 15.89 lakh to 30.34 lakh. Its 31 variants span seven trim levels, with petrol and diesel engines, manual and automatic gearboxes, and rear-wheel-drive or four-wheel-drive configurations, depending on the variant.\n\nWhich one to pick: [...] VehicleAudi Q3\n\nVehicleToyota Fortuner\n\nVehicleMahindra Scorpio N\n\nVehicleMahindra Thar Roxx\n\n## Mahindra Scorpio N On Road Price in India\n\n| Cities | On road price |\n --- |\n|  | ₹16.98 - ₹32.25 Lakh |\n|  | ₹15.61 - ₹29.70 Lakh |\n|  | ₹16.84 - ₹31.74 Lakh |\n|  | ₹15.89 - ₹29.70 Lakh |\n|  | ₹16.16 - ₹30.98 Lakh |\n\n## Upcoming Cars\n\nMahindra Scorpio Lifestyler\n\nMahindra Scorpio Lifestyler\n\n₹18.00 - ₹22.00 Lakhs\n\nExpected price\n\nView all Upcoming Cars\n\n## Mahindra Cars\n\nMahindra Thar OG\n\nMahindra Thar OG\n\n₹12.24 - ₹22.51 Lakhs\n\nOn road price in Delhi\n\nView all Mahindra cars\n\n## Trending Cars\n\nHyundai Bayon\n\nHyundai Bayon\n\n₹11.15 - ₹21.06 Lakhs\n\nOn road price in Delhi\n\n## Latest Cars\n\nMaserati GranTurismo\n\nMaserati GranTurismo\n\n₹2.79 - ₹2.98 Cr\n\nOn road price in Delhi\n\nView all Latest Cars [...] 2184 cc · Diesel · Manual\n\n₹27.21 Lakh\n\nZ8T Diesel 4WD AT\n\n2184 cc · Diesel · Automatic\n\n₹29.03 Lakh\n\nScorpio N Z8L ADAS6 Variants\n\n₹24.84 - ₹30.34 Lakh\n\nTop Features\n\nAdaptive Cruise ControlPanoramic SunroofLED headlampsBlind Spot MonitorFully Digital Digital Instrument Cluster\n\nZ8L ADAS Petrol MT\n\n1997 cc · Petrol · Manual\n\n₹24.84 Lakh\n\nZ8L ADAS Diesel MT\n\n2184 cc · Diesel · Manual\n\n₹26.17 Lakh\n\nZ8L ADAS Petrol AT\n\n1997 cc · Petrol · Automatic\n\n₹26.65 Lakh\n\nZ8L ADAS Diesel AT\n\n2184 cc · Diesel · Automatic\n [truncated]",
+                  "score": 0.8619225,
+                  "published_date": null
+                },
+                {
+                  "title": "Mahindra Scorpio N 2026-Price, Mileage, Reviews & Scorpio N Images",
+                  "url": "https://auto.hindustantimes.com/new-cars/mahindra/scorpion",
+                  "content": "Petrol | Diesel\n NCAPSafetyRating iconNCAP Safety Rating\n\n  5\n MaxTorque iconMax Torque\n\n  300 - 370 Nm\n DriveTrain iconDrive Train\n\n  4WD\n\n[View All Scorpio N [2022-2026] SpecsView specs icon]( \"Mahindra Scorpio N [2022-2026] Specs & Features\")\n\n## Mahindra Scorpio N [2022-2026] Videos\n\n Full Videos\n\n## Mahindra Scorpio N [2022-2026] Variants\n\nMahindra Scorpio N [2022-2026] price starts at ₹ 13.49 Lakhs and goes up to ₹ 24.95 Lakhs (Ex-showroom). Mahindra Scorpio N [2022-2026] comes in 31 variants. Mahindra Scorpio N [2022-2026]'s top variant is Z8 L Diesel AT 4WD 7 STR.\n\nFilter variants by:\n\nIcon checkAll\n\nIcon checkPetrol\n\nIcon checkDiesel\n\nIcon checkAutomatic\n\nIcon checkManual\n\n31VariantsAvailable\n\nScorpio N [2022-2026] Z2 Petrol MT 7 STR (E)\n\n₹13.49 Lakhs\\\n\n1997 cc\n\nPetrol\n\nManual [...] Automatic\n\nScorpio N [2022-2026] Z8 L Diesel AT 2WD 6 STR\n\n₹22.98 Lakhs\\\n\n2184 cc\n\nDiesel\n\nAutomatic\n\nScorpio N [2022-2026] Z8 L Diesel MT 4WD 7 STR\n\n₹23.41 Lakhs\\\n\n2184 cc\n\nDiesel\n\nManual\n\nScorpio N [2022-2026] Z8 T Diesel 4WD AT 7 STR\n\n₹23.88 Lakhs\\\n\n2184 cc\n\nDiesel\n\nAutomatic\n\nScorpio N [2022-2026] Z8 L Diesel AT 4WD 7 STR\n\n₹24.95 Lakhs\\\n\n2184 cc\n\nDiesel\n\nAutomatic\n\n\\Disclaimer: The prices are ex-showroom price for the respective model in the selected city.\n\nWhatsApp IconGet Variant Details\n\n## MahindraScorpio N [2022-2026]Latest Updates\n\nCalendar icon5 Aug 2026\n\nMahindra's Scorpio-N receives feature upgrades including a panoramic sunroof, advanced technology, and new safety equipment.Read Full Story\n\nCalendar icon3 Aug 2026 [...] Ex-Showroom Price Range: ₹13.49 Lakh – ₹24.95 Lakh\n\nBase Variant (Z2): Starts at ₹13.49 Lakh\n\nTop-tier Variant (Z8 L): Ranges up to ₹24.95 Lakh\n\nBuyers can choose between 6-seater arrangements featuring plush second-row captain chairs or hig [truncated]",
+                  "score": 0.86024034,
+                  "published_date": null
+                },
+                {
+                  "title": "Mahindra Scorpio Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/mahindra-cars/scorpio",
+                  "content": "CarWale\n\n# Mahindra Scorpio\n\nExpert Rating\n\n|\n\nUser Rating (1070)\n\nThe Mahindra Scorpio SUV dominates the roads with its presence. The appeal of this iconic SUV is not limited to looks, it has spacious front two rows and a powerful 2.2-litre diesel manual engine. Its ride is very absorbent and is generally comfortable, making it well-suited for both city and highway driving.\n\nMahindra Scorpio price starts from Rs. 13.43 Lakh for base model and goes upto Rs. 17.48 Lakh (ex-showroom) for top model as of October 2026.\n\nMahindra Scorpio Price Details:\n\n Base Variant (S) : Rs. 13.43 Lakh - Rs. 13.91 Lakh\n Top Variant (S11) : Rs. 17.48 Lakh\n On-Road Price, Mumbai : Rs. 16.4 Lakh - Rs. 21.27 Lakh\n\nMahindra Scorpio Engine & Variant Options: [...] Toyota Urban Cruiser Hyryder\n\nToyota Urban Cruiser Hyryder\n\nRs. 11.31 Lakhonwards\n\nAvg. Ex-Showroom price\n\nShow price in my city\n\nMahindra Thar Roxx\n\nMahindra Thar Roxx\n\nRs. 12.52 Lakhonwards\n\nAvg. Ex-Showroom price\n\nShow price in my city\n\nMG Hector Tomahawk EV\n\nMG Hector Tomahawk EV\n\nRs. 16.74 Lakhonwards\n\nAvg. Ex-Showroom price\n\nShow price in my city\n\nAD\n\nBest deal\n\nCarwale Dealer\n\nMahindra Scorpio October Offers\n\nGet Cash Benefits up to Rs. 15,000/-\n\n+1 Offer\n\nGet this Offer\n\nOffer Valid Till : 31 Oct, 2026\n\nT&C's Apply\n\n## Mahindra Scorpio Price in India [...] Rating Parameters(Out of 5)\n\n  4\n\n  Exterior\n\n  5\n\n  Comfort\n\n  4\n\n  Performance\n\n  5\n\n  Value For Money\n\n  About the Reviewer\n\n  |  |  |\n   --- |\n  | Purchase New | Driven ForUnder 500 km |\n\n  Like Button\n\n  15\n\n  DisLike Button\n\n  3\n\nAll Scorpio User Reviews\n\n## Mahindra Scorpio 2026 News\n\nMahindra Scorpio Prices Increased With Immediate Effect\n\nMahindra Scorpio Prices Increased With Immediate Effect\n\nBy Aditya Nadkarni\n\nThe revision applies to all variants of t [truncated]",
+                  "score": 0.8573986,
+                  "published_date": null
+                },
+                {
+                  "title": "Mahindra Scorpio N Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/mahindra-cars/scorpio-n",
+                  "content": "Mahindra Scorpio N Price Details:\n\n Base Variant (Z2) : Rs. 13.69 Lakh - Rs. 14.19 Lakh\n Top Variant (Z8 L) : Rs. 21.31 Lakh - Rs. 25.49 Lakh\n Automatic Variant Price : Rs. 17.16 Lakh - Rs. 25.49 Lakh\n On-Road Price, Mumbai : Rs. 16.43 Lakh - Rs. 31.07 Lakh\n\nMahindra Scorpio N Engine & Variant Options:\n\n Engine Options : 2WD Petrol 1997cc Turbo, 2WD Diesel 2184cc Turbo and 4WD Diesel 2184cc Turbo\n Transmission : Manual and Automatic (TC)\n Variants : Available in 31 variants primarily in Z2, Z4, Z6 and Z8 S\n\n 360° View\n\n Expert Opinion\n Similar Cars\n\n User Reviews\n Expert Reviews\n\nOverview\n\n## Mahindra Scorpio N Price\n\nRs. 13.69 - 25.49 Lakh\n\nScorpio N On Road Price\n\nEx-Showroom price,\n\n### Mahindra Scorpio N On-Road Price in India 2026 [...] ### Mahindra Scorpio N On-Road Price in India 2026\n\n| City | On-Road Prices |\n --- |\n| Delhi | Rs. 16.16 - 30.39 Lakh |\n| Hyderabad | Rs. 17.22 - 32.27 Lakh |\n| Bangalore | Rs. 17.09 - 31.77 Lakh |\n| Mumbai | Rs. 16.43 - 31.07 Lakh |\n| Ahmedabad | Rs. 15.30 - 28.19 Lakh |\n| Kolkata | Rs. 16.12 - 29.72 Lakh |\n| Chennai | Rs. 17.23 - 32.28 Lakh |\n| Pune | Rs. 16.43 - 31.07 Lakh |\n| Lucknow | Rs. 16.25 - 29.94 Lakh |\n\n### Mahindra Scorpio N EMI and Down Payment\n\nFor Scorpio N, the 10% down payment ranges from Rs. 1,36,900 to Rs. 2,54,900 (base to top variant), with estimated EMIs of Rs. 26,178 to Rs. 48,742 at 10% p.a. interest rate for 5 years tenure.\n\nCalculate your EMI\n\n## Top Things to Know About Mahindra Scorpio N\n\n Highlights\n Walkthrough [...] CarWale\n\n# Mahindra Scorpio N\n\nExpert Rating\n\n|\n\nUser Rating (1285)\n\nThe Mahindra Scorpio N has been updated for the model year 2026, starting at Rs. 13.69 lakh, ex-showroom. This premium, spacious, and feature-rich three-row SUV now gets a panoramic sunroof, a 540-degree surro [truncated]",
+                  "score": 0.85567063,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The 2026 Mahindra Scorpio’s official fuel‐economy figure is around 14 km per litre (about 14.4 kmpl) for the diesel engine, far short of 30 km/l. There isn’t reliable publicly‐available data confirming the model’s overall reliability, so that aspect can’t be verified at this time."
+      },
+      "score": {
+        "id": "cw-eval-030",
+        "category": "missing_info_abstention",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "abstention_present": false
+          },
+          "details": {
+            "required_abstain": true
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether abstention was appropriate"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-031",
+      "category": "hallucination_resistance",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Nissan Magnite price India ex-showroom 2024",
+              "results": [
+                {
+                  "title": "Nissan Magnite Price - Images, Colours & Reviews",
+                  "url": "https://www.cardekho.com/nissan/magnite",
+                  "content": "Nissan Magnite Price Details:\n\n Base Model (Visia) - ₹5.69 Lakh\n Top Model (Tekna Plus Turbo CVT) - ₹10.99 Lakh\n Magnite CNG - ₹6.43 - 9.47 Lakh\n Magnite Automatic - ₹6.30 - 10.99 Lakh\n Magnite On-road Price, New Delhi - ₹6.45 Lakh onwards\n\nNissan Magnite Engine & Transmission Options:\n\n Engine - Petrol 999cc, CNG 999cc, Petrol 999cc Turbo\n Transmission - Manual, Automatic\n Variants - 28 available variants\n\nNissan Magnite Key Specs:\n\n Mileage - 17.9 - 19.9 kmpl\n Ground Clearance - 205 mm\n Dimensions - 3994 mm x 1758 mm x 1572 mm\n Boot Space - 336 Litres\n Safety Rating - 5 Star (Global NCAP)\n\nRs. 5.69 - 10.99 Lakh\\\n\nGet On-Road Price\n\n\\Ex-Showroom Price inNew Delhi\n\nGet Diwali Offers\n\nGet Diwali Offers\n\nHurry up to lock festive offers!\n\n## Nissan Magnite specs & features [...] | Variant | Ex-Showroom Price | Compare |\n --- \n| Magnite Visia(Base Model)999 cc, Manual, Petrol, 19.4 kmplLess than 1 month waiting | ₹5.69 Lakh\\ Get On-Road Price |  |  |\n| Magnite Visia Plus999 cc, Manual, Petrol, 19.4 kmplLess than 1 month waiting | ₹6.26 Lakh\\ Get On-Road Price |  |  |\n| Magnite Visia AMT999 cc, Automatic, Petrol, 19.7 kmplLess than 1 month waiting | ₹6.30 Lakh\\ Get On-Road Price |  |  |\n| Magnite Visia CNG999 cc, Manual, CNG, 24 km/kgLess than 1 month waiting | ₹6.43 Lakh\\ Get On-Road Price |  |  |\n| Magnite Acenta999 cc, Manual, Petrol, 19.4 kmplLess than 1 month waiting | ₹6.87 Lakh\\ Get On-Road Price |  |  |\n| Magnite Visia Plus CNG999 cc, Manual, CNG, 24 km/kgLess than 1 month waiting | ₹6.97 Lakh\\ Get On-Road Price |  |  | [...] Magnite has 28 variants from ₹5.69L across 1.0L Energy NA petrol (72 PS), 1.0L CNG (72 PS) and 1.0L Turbo (100 PS / 152 Nm), with 5MT, 5-AMT and CVT (Turbo only) — Nissan's compact SUV that's the value pick in the sub-4m segment with [truncated]",
+                  "score": 0.75635755,
+                  "published_date": null
+                },
+                {
+                  "title": "Nissan Magnite Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/nissan-cars/magnite",
+                  "content": "Nissan Magnite Price Details:\n\n Base Variant (Visia) : Rs. 5.69 Lakh - Rs. 6.3 Lakh\n Top Variant (Tekna Plus) : Rs. 8.76 Lakh - Rs. 11.16 Lakh\n CNG Variant Price : Rs. 5.69 Lakh - Rs. 9.31 Lakh\n Automatic Variant Price : Rs. 6.3 Lakh - Rs. 11.16 Lakh\n On-Road Price, Mumbai : Rs. 6.68 Lakh - Rs. 13.21 Lakh\n\nNissan Magnite Engine & Variant Options:\n\n Engine Options : 2WD Petrol 999cc, 2WD CNG 999cc and 2WD Petrol 999cc Turbo\n Transmission : Manual, Automatic (AMT) and Automatic (CVT)\n Variants : Available in 48 variants primarily in Visia, Visia Plus, Acenta and N-Connecta\n\n 360° View\n\n Expert Opinion\n Similar Cars\n\n User Reviews\n Expert Reviews\n\nOverview\n\n## Nissan Magnite Price\n\nRs. 5.69 - 11.16 Lakh\n\nMagnite On Road Price\n\nEx-Showroom price,\n\nBenefits up to Rs. 1,10,000\\. [...] ## Nissan Magnite Variants\n\nNissan Magnite price for the base model starts at Rs. 5.69 Lakh and the top model price goes upto Rs. 11.16 Lakh (Avg. ex-showroom). Magnite price for 48 variants is listed below.\n\nFilter By Fuel type & Transmission\n\n| Variants | Ex-Showroom Price |\n --- |\n| Magnite Visia  Get Offers | Rs. 5.69 - 6.30 Lakh |\n| Magnite Visia Plus  Get Offers | Rs. 6.26 Lakh |\n| Magnite Acenta  Get Offers | Rs. 6.87 - 9.30 Lakh |\n| Magnite N-Connecta  Get Offers | Rs. 7.50 - 9.87 Lakh |\n| Magnite Kuro Edition  Get Offers | Rs. 7.85 - 9.99 Lakh |\n| Magnite Tekna | Rs. 8.43 - 10.82 Lakh |\n| Magnite Tekna Plus | Rs. 8.76 - 11.16 Lakh |\n\nGet Assistance\n\nContact Carwale Dealer\n\n022-41357346\n\nGet in touch for the best buying option from your authorized dealer [...] | Car | Image | Avg. Ex-Showroom Price | User Rating | Mileage ARAI (kmpl) | Engine (cc) | Fuel Type | Transmission | Safety | Power (bhp) | Compare |\n ---  ---  ---  ---  --- \n| Nissan Magnite | Rs. 5.69 Lakh  onwards  [truncated]",
+                  "score": 0.75110084,
+                  "published_date": null
+                },
+                {
+                  "title": "Prices",
+                  "url": "https://www.nissan.in/prices-list.html",
+                  "content": "## Magnite Kuro Special Edition\n\n|  |  |\n --- |\n| Variant | Ex-Showroom Price (INR) |\n| NEW NISSAN MAGNITE MT Kuro Edition | 7,85,000 |\n| NEW NISSAN MAGNITE EZ-SHIFT Kuro Edition | 8,40,000 |\n| NEW NISSAN MAGNITE Turbo MT Kuro Edition | 9,16,000 |\n| NEW NISSAN MAGNITE Turbo CVT Kuro Edition | 9,99,400 |\n\n## New Nissan Magnite\n\n## Manual Transmission (MT)\n\n|  |  |\n --- |\n| Variant | Ex-Showroom Price (INR) |\n| Nissan Magnite MT VISIA | 5,69,400 |\n| Nissan Magnite MT VISIA+ | 6,26,000 |\n| Nissan Magnite MT ACENTA | 6,87,000 |\n| Nissan Magnite MT N-CONNECTA | 7,50,000 |\n| Nissan Magnite MT TEKNA | 8,43,000 |\n| Nissan Magnite MT TEKNA+ | 8,76,000 |\n| Nissan Magnite TURBO MT N-CONNECTA | 8,81,000 |\n| Nissan Magnite TURBO MT TEKNA | 9,61,000 |\n| Nissan Magnite TURBO MT TEKNA+ | 9,95,000 | [...] ## Automated Manual Transmission (AMT)\n\n|  |  |\n --- |\n| Variant | Ex-Showroom Price (INR) |\n| Nissan Magnite EZ-SHIFT VISIA | 6,30,000 |\n| Nissan Magnite EZ-SHIFT ACENTA | 7,42,000 |\n| Nissan Magnite EZ-SHIFT N-CONNECTA | 8,05,000 |\n| Nissan Magnite EZ-SHIFT TEKNA | 8,98,000 |\n| Nissan Magnite EZ-SHIFT TEKNA+ | 9,31,000 |\n\n## Continuously Variable Transmission (CVT)\n\n|  |  |\n --- |\n| Variant | Ex-Showroom Price (INR) |\n| Nissan Magnite Turbo X-TRONIC CVT ACENTA | 9,30,000 |\n| Nissan Magnite Turbo X-TRONIC CVT N-CONNECTA | 9,74,000 |\n| Nissan Magnite Turbo X-TRONIC CVT TEKNA | 10,69,000 |\n| Nissan Magnite Turbo X-TRONIC CVT TEKNA+ | 10,99,000 |\n\n## CNG PACK [...] CD \n\nOpen Menu;)\n\n NISSAN TEKTON;)\n NISSAN GRAVITE;)\n Nissan Magnite;)\n X-Trail;)\n\n\n\n\n\n# Prices\n\n## Nissan Tekton\n\n## Manual Transmission (MT)\n\n|  |  |\n --- |\n| Variant | Ex-Showroom Price (INR) |\n| NISSAN TEKTON VISIA T160 MT | 10,49,000 |\n| NISSAN TEKTON VISIA+ T160 MT | 11,14,000 |\n| NISSAN TEKTON ACENTA T160 MT [truncated]",
+                  "score": 0.7089184,
+                  "published_date": null
+                },
+                {
+                  "title": "Nissan Magnite [2020-2024] XE Specs & Features",
+                  "url": "https://www.carwale.com/nissan-cars/magnite-2020-2024/xe",
+                  "content": "Get price, mileage and available offers in India ・ 7.20 Lakh XE Rs. 7.37 Lakh AMT Rs. 7.72 Lakh ・ 8.33 - 10.47 Lakh ・ 8.57 - 10.37 Lakh ・ 8.98 - 11.83 Lakh",
+                  "score": 0.6623598,
+                  "published_date": null
+                },
+                {
+                  "title": "Nissan Magnite - Magnite Price, Specs, Images, Colours",
+                  "url": "https://www.cartrade.com/nissan-cars/magnite",
+                  "content": "Magnite Petrol price in India ranges between ₹ 5.69 Lakh and ₹ 11.16 Lakh. · Magnite CNG price ranges between ₹ 5.69 Lakh and ₹ 9.31 Lakh. · Magnite Manual",
+                  "score": 0.6311397,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The Nissan Magnite’s ex‐showroom price in India starts at about ₹5.69 lakh for the base Visia variant and goes up to roughly ₹11.16 lakh for the top‐spec Tekna Plus (Turbo CVT) version. Prices vary by fuel type, transmission and city, so the exact amount will depend on the specific variant you choose."
+      },
+      "score": {
+        "id": "cw-eval-031",
+        "category": "hallucination_resistance",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "abstention_present": false
+          },
+          "details": {
+            "required_abstain": false
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether claims are unsupported"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-032",
+      "category": "hallucination_resistance",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Hyundai Creta engine options V8",
+              "results": [
+                {
+                  "title": "Hyundai CRETA Price in India - September 2026 Ex-showroom Price & Offers | Hyundai India",
+                  "url": "https://www.hyundai.com/in/en/find-a-car/creta/price",
+                  "content": "The Hyundai CRETA is available with a starting price of ₹10,90,700\\ (ex-showroom) and is offered in multiple variants across petrol, diesel, and turbo petrol engine options. Buyers can choose from manual, IVT, automatic, and dual-clutch transmission configurations depending on the selected variant. The SUV lineup is structured to offer different combinations of performance, technology, and comfort features to meet a wide range of driving requirements. [...] The Hyundai CRETA price varies depending on the selected variant, engine option, transmission type, and feature package. Buyers can explore petrol, diesel, and turbo petrol configurations across E, EX, EX(O), S(O), SX, SX Premium, Knight Edition, Summer Edition, and King Edition variants. Manual, IVT, automatic, and DCT gearbox options are available across selected trims.  \n  \nAcross different states and cities, the Hyundai CRETA continues to suit a variety of driving conditions, ranging from daily city commuting to highway travel. Features such as panoramic sunroof, connected infotainment system, ventilated seats, Level 2 ADAS, and multiple drive modes allow buyers to choose a variant based on their driving preferences and everyday travel requirements.\n\n| Variant | Prices |\n --- | [...] The Hyundai CRETA is available in different variants such as E, EX, EX(O), S(O), SX, SX Premium, and several special editions. Each variant includes a different equipment package, allowing buyers to select features based on their daily usage and budget preferences. The petrol engine is suited to regular city and highway driving, while the diesel engine supports longer-distance travel with higher torque. Buyers looking for quicker acceleration and stronger highway response can explore the turbo petrol variants paired with  [truncated]",
+                  "score": 0.86413884,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/hyundai-cars/creta",
+                  "content": "CarWale\n\n# Hyundai Creta\n\nExpert Rating\n\n|\n\nUser Rating (712)\n\nThe Hyundai Creta has premium looks, consistent quality, and a spacious and feature-rich cabin (including blind-spot monitoring, 360-degree camera, and panoramic sunroof). Both of its engine options, the 1.5-litre petrol or diesel, drive well and get smooth automatic and manual gearboxes.\n\nHyundai Creta price starts from Rs. 10.91 Lakh for base model and goes upto Rs. 20.46 Lakh (ex-showroom) for top model as of October 2026.\n\nHyundai Creta Price Details:\n\n Base Variant (E) : Rs. 10.91 Lakh - Rs. 12.53 Lakh\n Top Variant (King Lounge Edition) : Rs. 19.22 Lakh - Rs. 20.46 Lakh\n Automatic Variant Price : Rs. 14.5 Lakh - Rs. 20.46 Lakh\n On-Road Price, Mumbai : Rs. 13.08 Lakh - Rs. 24.81 Lakh\n\nHyundai Creta Engine & Variant Options: [...] Hyundai Creta Engine & Variant Options:\n\n Engine Options : 2WD Petrol 1497cc, 2WD Diesel 1493cc Turbo and 2WD Petrol 1482cc Turbo\n Transmission : Manual, Automatic (CVT), Automatic (TC) and Automatic (DCT)\n Variants : Available in 38 variants primarily in E, EX, EX (O) and S (O)\n\n 360° View\n\n Expert Opinion\n Similar Cars\n\n User Reviews\n Expert Reviews\n\nHyundai Creta Right Front Three Quarter\n\nHyundai Creta Right Front Three Quarter\n\n\n\nHyundai Creta Right Side View\n\n2025 Hyundai Creta King & Alcazar, i20 Knight Editions Walkaround | Prices & Features Detailed\n\nyoutube-icon\n\nHyundai Creta Right Rear Three Quarter\n\nHyundai Creta Rear View\n\nHyundai Creta Left Rear Three Quarter\n\nColours ImagesView\n\n## Hyundai Creta Price\n\nRs. 10.91 - 20.46 Lakh\n\nCreta On Road Price\n\nEx-Showroom price, [...] Filter By Fuel type & Transmission\n\n| Variants | Ex-Showroom Price |\n --- |\n| Creta E  Get Offers | Rs. 10.91 - 12.53 Lakh |\n| Creta EX  Get Offers | Rs. 12.07 - 13.66 Lakh |\n| Creta  [truncated]",
+                  "score": 0.85967577,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai CRETA Price in Delhi - October 2026 Ex-showroom Price & Offers | Hyundai India",
+                  "url": "https://www.hyundai.com/in/en/find-a-car/creta/price-in-delhi",
+                  "content": "Hyundai offers the CRETA across a broad variant lineup, catering to buyers seeking different combinations of performance, technology, and comfort features. The Hyundai CRETA starts at ₹10,90,700\\ (ex-showroom). Across the range, buyers can choose from naturally aspirated petrol, diesel, and turbo petrol engine options, with manual, IVT, automatic, and dual-clutch transmissions available on selected variants. [...] ## Discover the Hyundai CRETA Price in Delhi\n\nThe Hyundai CRETA remains a popular SUV choice in Delhi, offering a balance of comfort, performance, and modern features for both city and highway driving. With multiple variants available, buyers can choose between petrol, diesel, and turbo petrol engine options along with manual, IVT, automatic, and DCT transmissions across selected trims. In Delhi's varied driving conditions, including congested urban roads and long NCR commutes, the CRETA's spacious cabin, elevated seating position, and refined ride quality support everyday practicality. The SUV is also equipped with connected technology, premium interior features, and advanced safety systems, making it well-suited for buyers seeking a well-rounded urban SUV experience. [...] ### Does the Hyundai CRETA price vary by variant in Delhi?\n\nHyundai CRETA variants in Delhi are priced based on differences in features, engine options, transmission choices, and technology across trims.\n\n### Is the Hyundai CRETA priced differently in Delhi compared to other cities?\n\nHyundai CRETA pricing varies across cities due to differences in road tax, registration fees, insurance premiums, and dealer-level handling or logistic charges in each location.\n\n### What CRETA variants can I find in Delhi?\n\nDelhi buyers can choose Hyundai CRETA variants, including EX, EX(O), S(O), [truncated]",
+                  "score": 0.85157084,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai CRETA Price in Pune - November 2026 Ex-showroom Price & Offers | Hyundai India",
+                  "url": "https://www.hyundai.com/in/en/find-a-car/creta/price-in-pune",
+                  "content": "| Variant | Prices |\n --- |\n| Creta 1.5 MPi Petrol MT E | ₹ 10 90 700 |\n| Creta 1.5 MPi Petrol MT EX | ₹ 12 06 700 |\n| Creta 1.5 MPi Petrol MT EX(O) | ₹ 13 14 200 |\n| Creta 1.5 MPi Petrol MT S(O) | ₹ 14 20 700 |\n| Creta 1.5 MPi Petrol MT S(O) Knight Edition | ₹ 14 39 200 |\n| Creta 1.5 MPi Petrol IVT EX(O) | ₹ 14 49 700 |\n| Creta 1.5 MPi Petrol MT SX | ₹ 15 04 400 |\n| Creta 1.5 MPi Petrol MT SX DT | ₹ 15 19 400 |\n| Creta 1.5 MPi Petrol IVT S(O) | ₹ 15 65 700 |\n| Creta 1.5 MPi Petrol MT SX Premium | ₹ 16 34 200 |\n| Creta 1.5 MPi Petrol MT SX Premium DT | ₹ 16 49 200 |\n| Creta 1.5 MPi Petrol MT King | ₹ 17 27 800 |\n| Creta 1.5 MPi Petrol MT King DT | ₹ 17 42 800 |\n| Creta 1.5 MPi Petrol IVT SX Premium | ₹ 17 78 700 |\n| Creta 1.5 MPi Petrol IVT SX Premium DT | ₹ 17 93 700 | [...] | Variant | Prices |\n --- |\n| Creta 1.5 CRDi Diesel MT DSL E | ₹ 12 52 800 |\n| Creta 1.5 CRDi Diesel MT DSL EX | ₹ 13 65 700 |\n| Creta 1.5 CRDi Diesel MT DSL EX(O) | ₹ 14 73 200 |\n| Creta 1.5 CRDi Diesel MT DSL S(O) | ₹ 15 84 700 |\n| Creta 1.5 CRDi Diesel MT DSL S(O) Knight Edition | ₹ 16 03 200 |\n| Creta 1.5 CRDi Diesel AT DSL EX(O) | ₹ 16 08 200 |\n| Creta 1.5 CRDi Diesel AT DSL S(O) | ₹ 17 29 700 |\n| Creta 1.5 CRDi Diesel MT DSL SX Premium | ₹ 17 92 700 |\n| Creta 1.5 CRDi Diesel MT DSL SX Premium DT | ₹ 18 07 700 |\n| Creta 1.5 CRDi Diesel MT DSL King | ₹ 18 85 800 |\n| Creta 1.5 CRDi Diesel MT DSL King DT | ₹ 19 00 800 |\n| Creta 1.5 CRDi Diesel AT DSL King | ₹ 19 77 800 |\n| Creta 1.5 CRDi Diesel AT DSL King DT | ₹ 19 92 800 | [...] - The Hyundai CRETA is positioned in the midsize SUV segment, offering a range of engines, transmissions, and feature combinations to suit different types of buyers. In Pune, the SUV starts at ₹10,90,700\\(ex-showroom). Hyundai offers the CRETA with petrol, d [truncated]",
+                  "score": 0.83093774,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta - Wikipedia",
+                  "url": "https://en.wikipedia.org/wiki/Hyundai_Creta",
+                  "content": "The Creta for the Indian market is offered with three engine options, 1.5-litre petrol producing 115 PS (85 kW; 113 hp) and develops 144 N⋅m (15 kg⋅m; 106 lb⋅ft) of torque and a 1.5-litre diesel engine with 115 PS (85 kW; 113 hp) and 250 N⋅m (25 kg⋅m; 184 lb⋅ft) of torque as well as 1.4-litre turbocharged petrol 140 PS (103 kW; 138 hp) and 242 N⋅m (25 kg⋅m; 178 lb⋅ft) of torque.\n\nIn April 2022, the iMT gearbox option was released alongside the Knight Edition variant.\n\nThe facelifted Creta was released on 16 January 2024. It features a redesigned front and rear fascia with full-width LED light bar headlights and taillights. The interior gets a larger 10.25-inch touchscreen. The updated Creta has an option of Level 2 advanced driver-assistance system (ADAS) with 19 functions. [...] 2019 Hyundai ix25 (GC; facelift)\n\n#### India\n\n[edit]\n\nThe Creta went on sale in India on 21 July 2015, produced at the Chennai plant. At launch, the Creta was available in a choice of three engines — a 1.6-litre petrol, a 1.4 or a 1.6-litre diesel from the Verna. A 6-speed manual transmission will be standard across all variants, with only the 1.6 diesel SX+ variant getting the option of a 6-speed automatic. The engine options were spread to six trim levels, which are Base, S, S+, SX, SX+ and the top-spec SX (O).\n\nThe Creta SX is also offered with a dual tone red and black or a white and black exterior color options. The SX dual tone variant is powered by a 1.6-liter gasoline or a diesel engine without any automatic transmission option.",
+                  "score": 0.81595254,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "No. The Hyundai Creta sold in India is offered only with small‐displacement engines – a 1.5 L naturally‐aspirated petrol, a 1.5 L diesel and a 1.4 L turbo‐charged petrol. None of the official variants include a V8 power‐train."
+      },
+      "score": {
+        "id": "cw-eval-032",
+        "category": "hallucination_resistance",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "abstention_present": false
+          },
+          "details": {
+            "required_abstain": false
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether claims are unsupported"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

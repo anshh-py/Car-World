@@ -19,3 +19,8 @@ apps/carworld-config.js
 
 # Local tooling
 .vscode/
+
+# Pytest temporary directories
+backend/.pytest-temp-*/
+backend/.pytest-tmp-*/
+backend/.pytest_basetemp*/

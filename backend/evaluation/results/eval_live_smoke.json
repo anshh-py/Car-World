@@ -1,0 +1,51 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 1,
+  "results": [
+    {
+      "id": "cw-eval-019",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": null,
+        "model_error": "RecursionError: maximum recursion depth exceeded"
+      },
+      "score": {
+        "id": "cw-eval-019",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": false,
+          "details": "no EMI tool output captured",
+          "criteria": [
+            "EMI computed",
+            "within tolerance"
+          ]
+        },
+        "tool_selection": {
+          "pass": false,
+          "criteria": {
+            "expected_tool_selected": false
+          },
+          "details": "no tool selected"
+        },
+        "tool_execution": {
+          "pass": false,
+          "criteria": {
+            "executed": false
+          },
+          "details": "expected tool not executed"
+        }
+      },
+      "outcome": "error"
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 5,
+  "results": [
+    {
+      "id": "cw-eval-019",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "calculate_emi",
+            "status": "ok",
+            "result": {
+              "loan_amount": 500000.0,
+              "annual_interest_rate_percent": 8.5,
+              "tenure_months": 60,
+              "monthly_emi": 10258.27,
+              "total_interest": 115495.94,
+              "total_payment": 615495.94,
+              "currency": "INR"
+            }
+          }
+        ],
+        "tool_output": {
+          "loan_amount": 500000.0,
+          "annual_interest_rate_percent": 8.5,
+          "tenure_months": 60,
+          "monthly_emi": 10258.27,
+          "total_interest": 115495.94,
+          "total_payment": 615495.94,
+          "currency": "INR"
+        },
+        "reported_facts": {},
+        "reply": "The EMI for a ₹5,00,000 car loan at 8.5% annual interest over 60 months is about **₹10,258 per month**. You’ll pay roughly **₹1,15,496** as interest, making the total repayment around **₹6,15,496**."
+      },
+      "score": {
+        "id": "cw-eval-019",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "monthly_emi_within_tolerance": true,
+            "total_interest_within_tolerance": true,
+            "total_payment_within_tolerance": true
+          },
+          "details": {
+            "tool_output": {
+              "loan_amount": 500000.0,
+              "annual_interest_rate_percent": 8.5,
+              "tenure_months": 60,
+              "monthly_emi": 10258.27,
+              "total_interest": 115495.94,
+              "total_payment": 615495.94,
+              "currency": "INR"
+            },
+            "expected": {
+              "monthly_emi": 10258.27,
+              "total_interest": 115495.94,
+              "total_payment": 615495.94
+            },
+            "tolerance_inr": 50.0
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "calculate_emi"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "pass"
+    },
+    {
+      "id": "cw-eval-020",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "calculate_emi",
+            "status": "ok",
+            "result": {
+              "loan_amount": 1200000.0,
+              "annual_interest_rate_percent": 9.0,
+              "tenure_months": 84,
+              "monthly_emi": 19306.89,
+              "total_interest": 421779.09,
+              "total_payment": 1621779.09,
+              "currency": "INR"
+            }
+          }
+        ],
+        "tool_output": {
+          "loan_amount": 1200000.0,
+          "annual_interest_rate_percent": 9.0,
+          "tenure_months": 84,
+          "monthly_emi": 19306.89,
+          "total_interest": 421779.09,
+          "total_payment": 1621779.09,
+          "currency": "INR"
+        },
+        "reported_facts": {},
+        "reply": "The monthly EMI for a ₹12 00 000 loan at 9 % interest over 84 months is about **₹19,307**."
+      },
+      "score": {
+        "id": "cw-eval-020",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "monthly_emi_within_tolerance": true,
+            "total_interest_within_tolerance": true,
+            "total_payment_within_tolerance": true
+          },
+          "details": {
+            "tool_output": {
+              "loan_amount": 1200000.0,
+              "annual_interest_rate_percent": 9.0,
+              "tenure_months": 84,
+              "monthly_emi": 19306.89,
+              "total_interest": 421779.09,
+              "total_payment": 1621779.09,
+              "currency": "INR"
+            },
+            "expected": {
+              "monthly_emi": 19306.89,
+              "total_interest": 421779.09,
+              "total_payment": 1621779.09
+            },
+            "tolerance_inr": 50.0
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "calculate_emi"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "pass"
+    },
+    {
+      "id": "cw-eval-021",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "calculate_emi",
+            "status": "ok",
+            "result": {
+              "loan_amount": 800000.0,
+              "annual_interest_rate_percent": 7.5,
+              "tenure_months": 48,
+              "monthly_emi": 19343.12,
+              "total_interest": 128469.83,
+              "total_payment": 928469.83,
+              "currency": "INR"
+            }
+          }
+        ],
+        "tool_output": {
+          "loan_amount": 800000.0,
+          "annual_interest_rate_percent": 7.5,
+          "tenure_months": 48,
+          "monthly_emi": 19343.12,
+          "total_interest": 128469.83,
+          "total_payment": 928469.83,
+          "currency": "INR"
+        },
+        "reported_facts": {},
+        "reply": "The EMI for an ₹8,00,000 loan at 7.5% annual interest over 48 months is about ₹19,343 per month. You’ll pay roughly ₹1,28,470 in interest, making the total repayment around ₹9,28,470."
+      },
+      "score": {
+        "id": "cw-eval-021",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "monthly_emi_within_tolerance": true,
+            "total_interest_within_tolerance": true,
+            "total_payment_within_tolerance": true
+          },
+          "details": {
+            "tool_output": {
+              "loan_amount": 800000.0,
+              "annual_interest_rate_percent": 7.5,
+              "tenure_months": 48,
+              "monthly_emi": 19343.12,
+              "total_interest": 128469.83,
+              "total_payment": 928469.83,
+              "currency": "INR"
+            },
+            "expected": {
+              "monthly_emi": 19343.12,
+              "total_interest": 128469.83,
+              "total_payment": 928469.83
+            },
+            "tolerance_inr": 50.0
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "calculate_emi"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "pass"
+    },
+    {
+      "id": "cw-eval-022",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "calculate_emi",
+            "status": "ok",
+            "result": {
+              "loan_amount": 1000000.0,
+              "annual_interest_rate_percent": 10.0,
+              "tenure_months": 60,
+              "monthly_emi": 21247.04,
+              "total_interest": 274822.68,
+              "total_payment": 1274822.68,
+              "currency": "INR"
+            }
+          }
+        ],
+        "tool_output": {
+          "loan_amount": 1000000.0,
+          "annual_interest_rate_percent": 10.0,
+          "tenure_months": 60,
+          "monthly_emi": 21247.04,
+          "total_interest": 274822.68,
+          "total_payment": 1274822.68,
+          "currency": "INR"
+        },
+        "reported_facts": {},
+        "reply": "The EMI for a ₹10 lakh loan at 10 % annual interest over 60 months is about **₹21,247 per month**. You’ll pay roughly **₹2.75 lakh** as interest, making the total repayment around **₹12.75 lakh**."
+      },
+      "score": {
+        "id": "cw-eval-022",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "monthly_emi_within_tolerance": true,
+            "total_interest_within_tolerance": true,
+            "total_payment_within_tolerance": true
+          },
+          "details": {
+            "tool_output": {
+              "loan_amount": 1000000.0,
+              "annual_interest_rate_percent": 10.0,
+              "tenure_months": 60,
+              "monthly_emi": 21247.04,
+              "total_interest": 274822.68,
+              "total_payment": 1274822.68,
+              "currency": "INR"
+            },
+            "expected": {
+              "monthly_emi": 21247.04,
+              "total_interest": 274822.68,
+              "total_payment": 1274822.68
+            },
+            "tolerance_inr": 50.0
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "calculate_emi"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "pass"
+    },
+    {
+      "id": "cw-eval-023",
+      "category": "emi_calculations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "calculate_emi",
+            "status": "ok",
+            "result": {
+              "loan_amount": 600000.0,
+              "annual_interest_rate_percent": 0.0,
+              "tenure_months": 36,
+              "monthly_emi": 16666.67,
+              "total_interest": 0.0,
+              "total_payment": 600000.0,
+              "currency": "INR"
+            }
+          }
+        ],
+        "tool_output": {
+          "loan_amount": 600000.0,
+          "annual_interest_rate_percent": 0.0,
+          "tenure_months": 36,
+          "monthly_emi": 16666.67,
+          "total_interest": 0.0,
+          "total_payment": 600000.0,
+          "currency": "INR"
+        },
+        "reported_facts": {},
+        "reply": "The EMI would be ₹ 16,666.67 per month, with no interest, for a total repayment of ₹ 600,000 over 36 months."
+      },
+      "score": {
+        "id": "cw-eval-023",
+        "category": "emi_calculations",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "monthly_emi_within_tolerance": true,
+            "total_interest_within_tolerance": true,
+            "total_payment_within_tolerance": true
+          },
+          "details": {
+            "tool_output": {
+              "loan_amount": 600000.0,
+              "annual_interest_rate_percent": 0.0,
+              "tenure_months": 36,
+              "monthly_emi": 16666.67,
+              "total_interest": 0.0,
+              "total_payment": 600000.0,
+              "currency": "INR"
+            },
+            "expected": {
+              "monthly_emi": 16666.67,
+              "total_interest": 0.0,
+              "total_payment": 600000.0
+            },
+            "tolerance_inr": 1.0
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "calculate_emi"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "pass"
+    }
+  ]
+}

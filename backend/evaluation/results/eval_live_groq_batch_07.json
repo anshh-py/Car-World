@@ -1,0 +1,181 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 3,
+  "results": [
+    {
+      "id": "cw-eval-014",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Uneven wear on the front tyres is usually a sign that something isn’t aligned or balanced correctly. Common culprits are:\n\n* **Wheel‐alignment issues** – especially incorrect toe or camber settings. \n* **Improper tyre pressure** – over‐inflated tyres wear the centre, under‐inflated ones wear the edges. \n* **Worn or damaged suspension components** (ball joints, tie‐rods, bushings) that can’t keep the wheels steady. \n* **Sticking brake calipers** – they can scrub one side of the tyre more than the other. \n\nIt’s best to get a professional check‐up: have the alignment and tyre pressure verified, inspect the suspension and brakes, and rotate the tyres if needed. This will help restore even wear and improve safety."
+      },
+      "score": {
+        "id": "cw-eval-014",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-015",
+      "category": "buying_recommendations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": null,
+        "model_error": "BadRequestError: Error code: 400 - {'error': {'message': 'Tool choice is none, but model called a tool', 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '{\"name\": \"web.run\", \"arguments\": {\\n  \"q\": \"new SUV under 15 lakh price India family of five 2024\",\\n  \"top_n\": 10,\\n  \"source\": \"news\"\\n}}'}}"
+      },
+      "score": {
+        "id": "cw-eval-015",
+        "category": "buying_recommendations",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "recommendations are preference-dependent; no single correct answer"
+        }
+      },
+      "outcome": "error"
+    },
+    {
+      "id": "cw-eval-016",
+      "category": "buying_recommendations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Tata Nexon price mileage variants 2024 India city fuel efficiency dimensions safety features",
+              "results": [
+                {
+                  "title": "Tata Nexon - Price, Images, Colours & Reviews",
+                  "url": "https://www.cardekho.com/tata/nexon",
+                  "content": "Tata Nexon Price Details:\n\n Base Model (Smart) - ₹7.40 Lakh\n Top Model (Fearless Plus PS Red Dark Diesel AMT) - ₹14.52 Lakh\n Nexon CNG - ₹8.35 - 13.72 Lakh\n Nexon Automatic - ₹8.92 - 14.52 Lakh\n Nexon On-road Price, New Delhi - ₹8.62 Lakh onwards\n\nTata Nexon Engine & Transmission Options:\n\n Engine - Petrol 1199cc Turbo, CNG 1199cc Turbo, Diesel 1497cc Turbo\n Transmission - Manual, Automatic\n Variants - 82 available variants\n\nTata Nexon Key Specs:\n\n Mileage - 17.01 - 24.08 kmpl\n Ground Clearance - 208 mm\n Dimensions - 3995 mm x 1804 mm x 1620 mm\n Boot Space - 382 Litres\n Safety Rating - 5 Star (Global NCAP), 5 Star (Bharat NCAP)\n\nRs. 7.40 - 14.52 Lakh\\\n\nGet On-Road Price\n\n\\Ex-Showroom Price inNew Delhi\n\nGet Diwali Offers\n\nGet Diwali Offers\n\nHurry up to lock festive offers! [...] View All Variants\n\n## Tata Nexon Specifications and features\n\n|  |  |\n --- |\n| Engine | 1199 cc - 1497 cc |\n| Ground Clearance | 208 mm |\n| Power | 99 - 118.27 bhp |\n| Torque | 170 Nm - 260 Nm |\n| Seating Capacity | 5 |\n| Drive Type | FWD |\n| Global NCAP Safety Rating | 5 Star |\n\n Tata Nexon <p><strong>Built Safe: </strong>The 5-star BNCAP rating is its strongest asset along with 6 airbags, Level-1 ADAS and more.</p>\n\n  Built Safe: The 5-star BNCAP rating is its strongest asset along with 6 airbags, Level-1 ADAS and more.\n Tata Nexon <p><strong>Choice: </strong>Only car in segment with petrol, diesel, CNG, and EV  options. Lots of variants on offer too. </p> [...] | Fuel Type | Transmission | ARAI Mileage |\n --- \n| Diesel | Automatic | 24.08 kmpl |\n| Diesel | Manual | 23.23 kmpl |\n| Petrol | Manual | 17.44 kmpl |\n| Petrol | Automatic | 17.18 kmpl |\n| CNG | Manual | 17.44 km/kg |\n\nTata Nexon Mileage Details\n\nMore options to consider\n\n SUV Cars\n\n  SUV Cars\n  Cars Between 5 to 10 Lakh\n\n  [truncated]",
+                  "score": 0.74372685,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Nexon Specifications - Dimensions, Configurations, Features, Engine cc",
+                  "url": "https://www.cardekho.com/tata/nexon/specs",
+                  "content": "CarDekho\n\n Login / Register\n\nTata Nexon Specifications\n\n# Tata Nexon Specifications\n\nThe Tata Nexon has 1 Diesel Engine, 1 Petrol Engine and 1 CNG Engine on offer. The Diesel engine is 1497 cc, the Petrol engine is 1199 cc while the CNG engine is 1199 cc . It is available with Manual & Automatic transmission.Depending upon the variant and fuel type the Nexon has a mileage of 17.01 to 24.08 kmpl & Ground clearance of Nexon is 208 mm. The Nexon is a 5 seater 4 cylinder car and has length of 3995 mm, width of 1804 mm and a wheelbase of 2498 mm.\n\nRead More\n\n4.6886 Reviews\n\nRs.7.40 - 14.52 Lakh\\\n\nEMI starts @ ₹19,611\n\nGet Diwali Offers\n\n## Tata Nexon specifications\n\n### Engine & Transmission [...] ## Tata Nexon specifications\n\n### Engine & Transmission\n\n|  |  |\n --- |\n| Engine Type | 1.5L Turbocharged Revotorq |\n| Displacement | 1497 cc |\n| Max Power | 113.31bhp@3750rpm |\n| Max Torque | 260Nm@1500-2750rpm |\n| No. of Cylinders | 4 |\n| Valves Per Cylinder | 4 |\n| Turbo Charger | Yes |\n| Transmission Type | Automatic |\n| Gearbox | 6-Speed AMT |\n| Drive Type | FWD |\n| Report Incorrect Specs |\n\nTata\n\nDon't miss out on the best offers for this Month\n\nGet Diwali Offers\n\n### Fuel & Performance\n\n|  |  |\n --- |\n| Fuel Type | Diesel |\n| Diesel Mileage ARAI | 24.08 kmpl |\n| Diesel Fuel Tank Capacity | 44 Litres |\n| Emission Norm Compliance | BS VI 2.0 |\n| Top Speed | 180 kmph |\n| Report Incorrect Specs |\n\nTata\n\nDon't miss out on the best offers for this Month\n\nGet Diwali Offers [...] This Is What Each Variant Of The Tata Nexon CNG Offers\n\n  It is available in four variant lines and is the first CNG car in India to be powered by a turbo-petrol engine\n\n  By AnshSep 24, 2024\n Tata Nexon Review: Potential To Be The Best\n\n  Tata Nexon Review: Potential To Be The Best\n\n  With its  [truncated]",
+                  "score": 0.6818327,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Nexon Specifications - Engine, Mileage, Features, Dimensions & More",
+                  "url": "https://www.cars24.com/new-cars/tata/nexon/specifications",
+                  "content": "Cars24 Logo\n\nPopular brands\n\nPopular cars\n\nCars by body type\n\nCars by price range\n\nNew Delhi\n\n# Tata Nexon Specifications\n\nThe Tata Nexon is a SUV built for buyers who want practicality without giving up comfort or convenience. Its 1199cc (Petrol), 1199cc (CNG) & 1497cc (Diesel) engine and Manual,Automatic transmission choices make it a versatile pick for everything from daily office runs to weekend getaways. Whether you’re navigating busy city streets or planning a longer road trip, the Tata Nexon is designed to adapt to the way you drive.\n\nPrice Range  \nEx-showroom prices start at Rs. 7.32 lakh Lakh for the base variant and go up to Rs. 13.87 lakh Lakh for the top variant, as of 2026. The maximum on-road price in Delhi is around Rs. 16.24 lakh Lakh. [...] Variants Available  \nChoose from 84 variants to find the right balance of features and budget.\n\nEngine & Transmission  \nEngine options: 1199cc (Petrol), 1199cc (CNG) & 1497cc (Diesel)  \nTransmission: Manual,Automatic\n\nKey Features  \nLength: 3995 mm  \nWidth: 1804 mm  \nHeight: 1620 mm\n\n## Select Variants of Tata Nexon\n\n### Engine & Transmission\n\n### Engine & Transmission\n\n### Ex-Showroom Price\n\n### Ex-Showroom Price\n\n### Comfort and convenience\n\n### Comfort and convenience\n\n### Dimension & Capacity\n\n### Dimension & Capacity\n\n### Entertainment\n\n### Entertainment\n\n### Interior\n\n### Interior\n\n### Performance & Fuel\n\n### Performance & Fuel\n\n### Safety & Security\n\n### Safety & Security\n\n### Suspension\n\n### Suspension\n\n## Tata Nexon Variants Comparison\n\n### NexonSmart Petrol Manual [...] ### What is the wheelbase measurement of the Tata Nexon?\n\nThe Tata Nexon has a wheelbase of 2498 mm.\n\n### What are the similar cars to the Tata Nexon in India?\n\nSimilar cars to the Tata Nexon in India include FRONX, Brezza, XUV 3 [truncated]",
+                  "score": 0.6572085,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Nexon Models Price - Images, Specs & Reviews",
+                  "url": "https://caronphone.com/tata-cars/nexon",
+                  "content": "## Key Specifications\n\nEngine\n\nEngine\n\n1199-1497 cc\n\nFuel\n\nFuel\n\nCNG/Diesel/Petrol\n\nMileage\n\nMileage\n\n17.01-24.08 kmpl\n\nTransmission\n\nTransmission\n\nAutomatic/Dual Clutch Auto/Manual\n\n## Tata Nexon Specs, Features & Safety\n\nEngine\nFuel\nTransmission\nPerformance\nSuspension & Steering\nWheels\nDimensions\nWeights & Capacity\nWarranty\nEngine\nFuel\nTransmission\nPerformance\nSuspension & Steering\nWheels\nDimensions\nWeights & Capacity\nWarranty\n\nNo specifications available for this category\n\n## Tata Nexon Variants\n\nNexon 1.2P Smart\n\nNexon 1.2P Smart +\n\nNexon 1.2 Smart iCNG\n\nNexon 1.2P Smart + S\n\nNexon 1.2P Smart + AMT\n\n## Compare cars\n\n### My comparison(0)\n\n## Tata Nexon Safety [...] ## Tata Nexon Safety 5.0\n\nSafety is deeply ingrained in the Nexon's DNA. It proudly boasts a 5-star safety rating from both Global NCAP and Bharat NCAP (BNCAP) for adult and child occupant protection. Standard safety kit across all variants includes six airbags, electronic stability control (ESC), and ISOFIX child-seat mounts. Higher variants add a 360-degree surround-view camera, blind-spot monitoring, tire pressure monitoring system (TPMS), and front parking sensors.\n\n## Tata Nexon Variants 4.0\n\nThe variant lineup is structured around new \"Personas\" to suit different buyer needs:\n\n1. Smart (Starting at approx. Rs 7.40 lakh)\n\n2. Pure (Starting at approx. Rs 9.07 lakh)\n\n3. Creative (Starting at approx. Rs 10.17 lakh)\n\n4. Fearless (Starting at approx. Rs 12.42 lakh)\n\n## Tata Nexon Verdict [...] ## Tata Nexon Powertrain 4.0\n\nThe DCA provides a seamless shifting experience for petrol buyers, while the AMT options handle dense city traffic well, though the diesel AMT can occasionally feel slightly hesitant at crawling speeds.\n\n## Tata Nexon Mileage 4.0\n\nReal-world figures will differ: petrol varian [truncated]",
+                  "score": 0.6533481,
+                  "published_date": null
+                },
+                {
+                  "title": "Tata Nexon Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/tata-cars/nexon",
+                  "content": "The avg ex-showroom price of  Tata Nexon top model is Rs. 14.52 Lakh which includes a registration cost of Rs. 215504, insurance premium of Rs. 67460 and additional charges of Rs. 500.\n\nPerformance\n\nQ: What is the real world versus claimed mileage of Tata Nexon?\n\nThe company claimed mileage of Tata Nexon is 24.08 kmpl. As per users, the mileage came to be 16 kmpl in the real world.\n\nSpecifications\n\nQ: What is the seating capacity in Tata Nexon?\n\nTata Nexon is a 5 seater car.\n\nQ: What are the dimensions of Tata Nexon?\n\nThe dimensions of Tata Nexon include its length of 3995 mm, width of 1804 mm and height of 1620 mm. The wheelbase of the Tata Nexon is 2498 mm.\n\nFeatures\n\nQ: Does Tata Nexon get a sunroof?\n\nYes, 61 out of 84 variants of Tata Nexon have Sunroof. [...] Tata Nexon Price Details:\n\n Base Variant (Smart) : Rs. 7.4 Lakh - Rs. 8.35 Lakh\n Top Variant (Fearless Plus A (PS)) : Rs. 13.77 Lakh - Rs. 14.07 Lakh\n CNG Variant Price : Rs. 8.35 Lakh - Rs. 13.72 Lakh\n Automatic Variant Price : Rs. 8.92 Lakh - Rs. 14.52 Lakh\n On-Road Price, Mumbai : Rs. 8.7 Lakh - Rs. 17.5 Lakh\n\nTata Nexon Engine & Variant Options:\n\n Engine Options : 2WD Petrol 1199cc Turbo, 2WD CNG 1199cc Turbo and 2WD Diesel 1497cc Turbo\n Transmission : Manual, Automatic (AMT) and Automatic (DCT)\n Variants : Available in 84 variants primarily in Smart, Smart Plus, Smart Plus (S) and Pure Plus\n\n 360° View\n\n Expert Opinion\n Similar Cars\n\n User Reviews\n Expert Reviews\n\nTata Nexon Right Front Three Quarter\n\nTata Nexon Right Front Three Quarter\n\nTata Nexon Right Side View [...] Tata Nexon Front Centre Arm Rest\n\nDepending on the trim, you get a reasonably short gear lever, finished smartly and offering decent gear shifts.\n\nWho Should Buy?\n\n7.3\n\nFirst-Time Buyer\n\n7\n\nHighway\n\n7.7\n\nCompare Buyer Fit\n\nWas [truncated]",
+                  "score": 0.65102214,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          },
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Kia Seltos price mileage variants 2024 India city fuel efficiency dimensions safety features",
+              "results": [
+                {
+                  "title": "Kia Seltos [2024-2026] mileage (17 - 19.1 kmpl) - Seltos [2024-2026] mileage | HT Auto",
+                  "url": "https://auto.hindustantimes.com/new-cars/kia/seltos-2024-2026/mileage",
+                  "content": "| Fuel Type | Transmission | ARAI Mileage |\n --- \n| Petrol | Manual | 17 kmpl |\n| Diesel | Manual | 20.7 kmpl |\n| Petrol | Automatic | 17.7 kmpl |\n| Diesel | Automatic | 19.1 kmpl |\n\n## Kia Seltos [2024-2026] Variants Wise Mileage\n\nKia Seltos [2024-2026] price starts at ₹ 10.79 Lakhs and goes up to ₹ 20.39 Lakhs (Ex-showroom). Kia Seltos [2024-2026] comes in 28 variants. Kia Seltos [2024-2026]'s top variant is X-Line (O) Diesel 1.5L Turbo Automatic (TC).\n\nFilter variants by:\n\nSeltos [2024-2026] HTE (O) 1.5 Petrol MT\n\n1497 cc\n\nPetrol\n\nManual\n\n₹10.79 Lakhs\\\n\nSeltos [2024-2026] HTE (O) 1.5 Diesel MT\n\n1493 cc\n\nDiesel\n\nManual\n\n₹12.32 Lakhs\\\n\nSeltos [2024-2026] HTK (O) 1.5 Petrol MT\n\n1497 cc\n\nPetrol\n\nManual\n\n₹12.57 Lakhs\\\n\nSeltos [2024-2026] HTK 1.5 Petrol MT\n\n17 kmpl Mileage (Company Claimed) [...] 1493 cc\n\nDiesel\n\nManual\n\n₹15.43 Lakhs\\\n\nSeltos [2024-2026] HTX (O) 1.5 Petrol MT\n\n17 kmpl Mileage (Company Claimed)\n\n1497 cc\n\nPetrol\n\nManual\n\n₹16.15 Lakhs\\\n\nSeltos [2024-2026] HTX 1.5 Petrol CVT\n\n17.7 kmpl Mileage (Company Claimed)\n\n1497 cc\n\nPetrol\n\nAutomatic\n\n₹16.64 Lakhs\\\n\nSeltos [2024-2026] HTK Plus (O) 1.5 Diesel AT\n\n19.1 kmpl Mileage (Company Claimed)\n\n1493 cc\n\nDiesel\n\nAutomatic\n\n₹16.65 Lakhs\\\n\nSeltos [2024-2026] HTX 1.5 Diesel MT\n\n20.7 kmpl Mileage (Company Claimed)\n\n1493 cc\n\nDiesel\n\nManual\n\n₹16.75 Lakhs\\\n\nSeltos [2024-2026] HTX (O) 1.5 Petrol CVT\n\n17.7 kmpl Mileage (Company Claimed)\n\n1497 cc\n\nPetrol\n\nAutomatic\n\n₹17.44 Lakhs\\\n\nSeltos [2024-2026] HTX (O) 1.5 Diesel MT\n\n20.7 kmpl Mileage (Company Claimed)\n\n1493 cc\n\nDiesel\n\nManual\n\n₹17.74 Lakhs\\\n\nSeltos [2024-2026] HTX 1.5 Diesel AT [...] EV\n  + Electric Vehicles\n  + Electric Charging Station\n  + EV Cost Calculator\n  + Electric Cars\n  + Electric Bikes\n  + Electric Vehicle News\n Icon dropdown\n\n  More\n  + How To\n  + E [truncated]",
+                  "score": 0.933969,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia Seltos (2026) - Price, Mileage & Expert Reviews | Autocar India",
+                  "url": "https://www.autocarindia.com/cars/kia/seltos",
+                  "content": "Powertrain\n\n1.5L Diesel Turbocharged Engine\n\nEntertainment\n\nWireless AA + Apple CarPlay\n\nExterior\n\nAuto Pop-out door handle\n\nInterior\n\nFront Only Ventilated Seats\n\nColors\n\n+7\n\nVariants\n\n44\n\nView all Specifications\n\n## Kia Seltos On Road Price in India\n\n| Cities | On road price |\n --- |\n| Chennai | ₹13.64 - ₹27.61 Lakh |\n| Gurgaon | ₹12.54 - ₹25.43 Lakh |\n| Hyderabad | ₹13.53 - ₹27.17 Lakh |\n| Kolkata | ₹12.76 - ₹25.43 Lakh |\n| Mumbai | ₹12.98 - ₹26.52 Lakh |\n\n## Upcoming Cars\n\nRenault Bigster\n\nRenault Bigster\n\n₹14.00 - ₹18.00 Lakhs\n\nExpected price\n\nView all Upcoming Cars\n\n## Kia Cars\n\nKia Sorento\n\nKia Sorento\n\n₹33.31 - ₹47.06 Lakhs\n\nOn road price in Delhi\n\nView all Kia cars\n\n## Trending Cars\n\nMahindra Scorpio N\n\nMahindra Scorpio N\n\n₹15.89 - ₹30.34 Lakhs\n\nOn road price in Delhi [...] The Kia Seltos has secured a 5-star safety rating in BNCAP crash tests.\n Seltos gets six airbags as standard, ESC, rear parking sensors, front and rear disc brakes, TPMS, traction control, ABS with EBD, ISOFIX child seat anchor points, a 360-degree camera and Level 2 ADAS in higher variants, etc.\n At 190 mm, the Seltos ground clearance is adequate to deal with Indian road conditions.\n The Kia Seltos boot space is 433 litres, ample for luggage and daily use.\n In terms of dimensions, the Seltos measures 4,315 mm in length, 1,800 mm in width, 1,620 mm in height, and 2,610 mm in wheelbase. [...] ## Kia Seltos Latest Updates\n\n 30 March 2026: Seltos secures 5-star BNCAP rating.\n 18 Feb 2026: Seltos crosses 6 lakh sales milestone.\n\nSeltos Specifications\n\nMileage\n\n15.6 kmpl - 19.4 kmpl\n\nEngine\n\n1482 cc - 1497 cc\n\nFuel\n\nDiesel, Petrol\n\nTransmission\n\nTorque Converter, CVT, DCT, Manual, IMT\n\nSeating\n\n5\n\nPower\n\n116 hp\n\nNCAP Rating\n\n5\n\nMax Torque\n\n250 Nm\n\nView price breakup\n\nSeltosVariants\n\nB [truncated]",
+                  "score": 0.82117355,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia Seltos Variants HTE to X-Line | Kia India",
+                  "url": "https://www.kia.com/in/our-vehicles/seltos/specs/compare-trims.html",
+                  "content": "#### Which Kia Seltos variants have a sunroof?\n\nThe Kia Seltos has a Dual Pane Panoramic Sunroof from the HTK(O) variant upwards. The HTE, HTE(O) and HTK variants do not have it.\n\n### SUMMARY\n\n Kia Seltos variants are priced at HTE ₹11,24,900/-, HTE(O) ₹12,41,900, HTK ₹13,41,900, HTK(O) ₹14,51,900, HTX ₹15,91,900, HTX(A) ₹17,01,900, GTX and X-line ₹18,71,900, GTX(A) and X-line(A) ₹19,81,900, and GTX(O) and X-line(O) ₹21,56,900.\n Powertrains listed include Smartstream G1.5 6MT, Smartstream G1.5 IVT, Smartstream G1.5 T-GDi 6iMT, Smartstream G1.5 T-GDi 7DCT, 1.5l CRDi VGT 6MT and 1.5L CRDi VGT 6AT.\n Front Dual Airbags, Front Seat Side Airbags, Side Curtain Airbags, Highline Tyre Pressure Monitor, HAC, ESS and ABS are included on every variant. [...] Kia Connect 2.0 \n\n  + Kia Digital Key\n  + Kia Connect Home\n  + Kia AI Assistant\n  + Over-the-Air Software\n  + Home To Car\n  + Kia Connect Store New\n Kia Careers\n Find a Dealer\n\nBack\n\n## SELTOS\n\n Standard\n Optional\n Not included\n\n HTE\n\n  ₹11,24,900\n HTE(O)\n\n  ₹12,41,900\n HTK\n\n  ₹13,41,900\n HTK(O)\n\n  ₹14,51,900\n HTX\n\n  ₹15,91,900\n HTX(A)\n\n  ₹17,01,900\n GTX\n\n  ₹18,71,900\n X-line\n\n  ₹18,71,900\n GTX(A)\n\n  ₹19,81,900\n X-line(A)\n\n  ₹19,81,900\n GTX(O)\n\n  ₹21,56,900\n X-line(O)\n\n  ₹21,56,900\n\n## Color\n\n ### Exterior [...] - not-included\n    - not-included\n    - not-included\n    - not-included\n    - included\n    - included\n    - included\n    - included\n    - included\n    - included\n    - included\n    - included\n\n### FAQ\n\n-\n\n#### What is the price of the entry Kia Seltos variant?\n\nThe entry Kia Seltos variant, HTE, is priced at ₹11,24,900/- in the page’s variant table, and the range runs up to ₹21,56,900/- for the GTX(O) and X-line(O) variants (as of October 2026). Other prices include HTK at ₹13,41,900/-, HTX at ₹15,91,900/-,  [truncated]",
+                  "score": 0.80405265,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia Seltos Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/kia-cars/seltos",
+                  "content": "Q: What is the on-road price of Kia Seltos top model?\n\nThe on-road price of  Kia Seltos top model in Mumbai is Rs. 26.69 Lakh, which includes registration (RTO) charges of Rs. 3.49 Lakh, insurance of Rs. 95,058 and other charges of Rs. 500.\n\nPerformance\n\nQ: What is the real world mileage of Kia Seltos?\n\nAs per users, the mileage came to be 17 kmpl in the real world.\n\nSpecifications\n\nQ: What is the seating capacity in Kia Seltos?\n\nKia Seltos is a 5 seater car.\n\nQ: What are the dimensions of Kia Seltos?\n\nThe dimensions of Kia Seltos include its length of 4460 mm, width of 1830 mm and height of 1635 mm. The wheelbase of the Kia Seltos is 2690 mm.\n\nFeatures\n\nQ: Is Kia Seltos available in 4x4 variant?\n\nNo, Kia Seltos doesn't come with four wheel drive option.\n\nSafety [...] Kia Seltos Price Details:\n\n Base Variant (HTE) : Rs. 11.25 Lakh - Rs. 12.94 Lakh (ex-showroom)\n Top Variant (X-Line (O)) : Rs. 21.57 Lakh - Rs. 21.82 Lakh (ex-showroom)\n Diesel Variant Price : Rs. 12.94 Lakh - Rs. 22.02 Lakh (ex-showroom)\n Automatic Variant Price : Rs. 13.72 Lakh - Rs. 22.02 Lakh (ex-showroom)\n On-Road Price, Mumbai : Rs. 13.38 Lakh - Rs. 26.69 Lakh\n\nKia Seltos Key Highlights: [...] Get Assistance\n\nContact Carwale Dealer\n\n022-41357346\n\nGet in touch for the best buying option from your authorized dealer\n\nAdRecommended\n\nVolkswagen Taigun\n\nVolkswagen Taigun\n\nRs. 11.00 Lakhonwards\n\nAvg. Ex-Showroom price\n\n5 reasons the new Taigun stands out from the rest\n\nBuilt on German Engineering\n\nBuilt on German Engineering\n\n## Kia Seltos Latest Updates\n\n Hybrid Showcased\n\n  The Kia Seltos Hybrid was showcased at the 2026 Paris Motor Show. It could make its way to India in 2027.\n We tested the Kia Seltos diesel-automatic. It returned a fuel efficiency of 10.7kmpl (city) and 16.65kmpl (highways) [truncated]",
+                  "score": 0.8021998,
+                  "published_date": null
+                },
+                {
+                  "title": "All-New Kia Seltos Specs, Dimensions and Safety Features | Kia India",
+                  "url": "https://www.kia.com/in/our-vehicles/seltos/specs.html",
+                  "content": "Kia Connect 2.0 \n\n  + Kia Connect Home\n  + Kia AI Assistant\n Kia Careers\n Find a Dealer\n\nBack  Compare Trims\n\nSeltos\n\nHTE HTE(O) HTK HTK(O) HTX HTX(A) GTX GTX(A) X-Line (A) GTX(O) X-Line (O)  Compare Trims\n\n# Kia Seltos Specifications\n\n₹15,29,000\n\nExterior Interior\n\n0 %\n\nColour:\n\nInterior: [...] 30.48 cm (12”) Full Segment LCD Cluster with Advanced 10.5 cm (4.2”) Color TFT MID\n 26.04cm (10.25”) HD Touchscreen\n Smartphone Wireless Charger\n Wireless Android Auto/Apple CarPlay\n 6 Speakers\n Traction Control Mode [Sand / Mud / Snow] (IVT/AT/DCT Only)\n Drive Mode Select [Eco / Normal / Sport] (IVT/AT/DCT Only) [...] R16 - 40.56 cm (16”) Style Steel Wheels (G1.5 MT Only)\n Electric Adjust Outside Mirrors with Auto Fold\n Hidden Rear Wiper\n Rear Defogger\n Streamline Door Handles (Automatic)\n Smart Key with Push Button Start & Motion Sensor\n Smart Key Proximity Unlock Function\n Rear Door Sunshade Curtains\n Tilt & Telescopic Steering Wheel\n Rear Parcel Shelf",
+                  "score": 0.78014404,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Both the Tata Nexon and Kia Seltos are five‐seat compact SUVs that carry a 5‐star BNCAP safety rating and six airbags, but they differ in size, price and city‐fuel efficiency. \n\nThe Nexon is the smaller of the two (3995 mm × 1804 mm × 1620 mm) with a higher ground clearance of 208 mm, a mileage envelope of 17–24 km / L (diesel up to 24 km / L) and an ex‐showroom price range of roughly ₹7.4 – 14.5 Lakh, making it easier to park, cheaper to run and more budget‐friendly for a young couple. \n\nThe Seltos is larger (4315 mm × 1800 mm × 1620 mm), offers a bigger boot (≈433 L) and more premium tech – a 12‐inch LCD cluster, wireless charging and a panoramic sunroof on higher trims – but its ground clearance is lower (≈190 mm), its mileage is around 15.6–19.4 km / L, and it starts at about ₹11.2 Lakh and tops out near ₹21.5 Lakh, so it demands a higher budget. \n\nIn short, if affordability, tighter city manoeuvrability and better fuel economy matter most, the Nexon is the more practical choice; if extra interior space, upscale features and a more premium feel are priorities and the budget allows, the Seltos could be worth the extra spend."
+      },
+      "score": {
+        "id": "cw-eval-016",
+        "category": "buying_recommendations",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "recommendations are preference-dependent; no single correct answer"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

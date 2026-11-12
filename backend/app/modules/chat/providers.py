@@ -2,14 +2,22 @@
 
 from __future__ import annotations
 
+import json
 import logging
+import re
 import threading
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any
 
+import httpx
 from groq import APIStatusError, Groq, RateLimitError
+
+try:  # Gradio client is optional at import time; a missing install is reported per-request.
+    import gradio_client
+except ImportError:  # pragma: no cover - environment dependent
+    gradio_client = None  # type: ignore[assignment]
 
 from app.core.config import settings
 
@@ -76,8 +84,11 @@ class GroqProvider(Provider):
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = tool_choice
-        else:
-            kwargs["tool_choice"] = "none"
+        # When no tools are supplied for the request, omit tool_choice entirely.
+        # Groq's openai/gpt-oss-120b can ignore tool_choice="none" and still emit a
+        # tool call, which the API rejects with HTTP 400 "Tool choice is none, but
+        # model called a tool". Omitting the argument lets a no-tool request be
+        # answered as plain text without a contradictory tool_choice.
 
         response = self._client.chat.completions.create(**kwargs)
         message = response.choices[0].message
@@ -104,27 +115,38 @@ class GroqProvider(Provider):
 
 
 class Qwen3Provider(Provider):
-    """Fine-tuned Qwen3-4B provider via Hugging Face Inference API or local endpoint.
+    """Fine-tuned Qwen3-4B provider via Hugging Face Gradio Space or local endpoint.
 
-    This provider implements the fallback path. Tool calling support depends on
-    the deployed model and endpoint capabilities. If the endpoint does not support
-    tool calling, tools will be ignored and only text completion will be used.
+    This provider implements the fallback path. When QWEN3_SPACE_ID is configured,
+    requests are sent through the gradio_client to the private Hugging Face Space,
+    whose chat_completion function returns both base_model_response and
+    finetuned_model_response; only the finetuned response is exposed.
+
+    When QWEN3_SPACE_ID is unset and QWEN3_ENDPOINT_URL is set, the provider
+    falls back to an OpenAI-compatible HTTP endpoint (/v1/chat/completions).
+
+    Tool calling support depends on the deployed model and endpoint capabilities.
+    If the endpoint does not support tool calling, tools will be ignored and only
+    text completion will be used.
     """
 
     def __init__(
         self,
-        endpoint_url: str,
+        endpoint_url: str | None = None,
+        space_id: str | None = None,
         hf_token: str | None = None,
         model_id: str = "qwen3-4b-finetuned",
         timeout: float = 60.0,
         supports_tool_calling: bool = False,
     ):
-        self._endpoint_url = endpoint_url.rstrip("/")
+        self._http_endpoint = endpoint_url.rstrip("/") if endpoint_url else None
+        self._space_id = space_id
         self._hf_token = hf_token
         self._model_id = model_id
         self._timeout = timeout
         self._supports_tool_calling = supports_tool_calling
-        self._session = None
+        self._gradio_client = None
+        self._client_lock = threading.Lock()
 
     @property
     def name(self) -> str:
@@ -133,15 +155,41 @@ class Qwen3Provider(Provider):
     def supports_tools(self) -> bool:
         return self._supports_tool_calling
 
-    def _get_session(self):
-        """Lazy-initialize HTTP session."""
-        if self._session is None:
-            import httpx
-            headers = {"Content-Type": "application/json"}
-            if self._hf_token:
-                headers["Authorization"] = f"Bearer {self._hf_token}"
-            self._session = httpx.Client(timeout=self._timeout, headers=headers)
-        return self._session
+    def _get_gradio_client(self):
+        """Lazy, thread-safe initialization of the Gradio Client.
+
+        The client is created once and reused for subsequent requests. It is not
+        created at import time or during app startup — only when the provider
+        receives its first request, and only if QWEN3_SPACE_ID is configured.
+
+        QWEN3_SPACE_ID takes precedence: when a Space ID is configured the client
+        is always built, even if QWEN3_ENDPOINT_URL is also set. The HTTP endpoint
+        is only used when no Space ID is configured.
+        """
+        if self._space_id is None:
+            return None
+
+        if gradio_client is None:
+            raise RuntimeError(
+                "The Gradio client is not installed. "
+                "Install it with: pip install gradio_client"
+            )
+
+        with self._client_lock:
+            if self._gradio_client is None:
+                try:
+                    self._gradio_client = gradio_client.Client(
+                        src=self._space_id,
+                        token=self._hf_token,
+                        httpx_kwargs={"timeout": self._timeout},
+                        verbose=False,
+                    )
+                except ImportError as e:
+                    raise RuntimeError(
+                        "The Gradio client is not installed. "
+                        "Install it with: pip install gradio_client"
+                    ) from e
+        return self._gradio_client
 
     def chat_completion(
         self,
@@ -150,8 +198,146 @@ class Qwen3Provider(Provider):
         tool_choice: str | dict = "auto",
         temperature: float = 0.2,
     ) -> ProviderResponse:
-        session = self._get_session()
+        """Execute a chat completion request via Gradio Space or HTTP endpoint."""
+        gradio_client = self._get_gradio_client()
 
+        if gradio_client is not None:
+            return self._call_gradio(messages, tools, temperature, tool_choice)
+
+        if self._http_endpoint is None:
+            raise RuntimeError(
+                "Qwen3 provider configured without a valid endpoint or Gradio Space ID"
+            )
+
+        return self._call_http(messages, tools, temperature, tool_choice)
+
+    def _call_gradio(
+        self,
+        messages: list[dict],
+        tools: list[dict] | None,
+        temperature: float,
+        tool_choice: str | dict = "auto",
+    ) -> ProviderResponse:
+        """Send the request through the Gradio Space's chat_completion function.
+
+        The Space's Gradio input is a gr.Code component that expects JSON text.
+        We serialize the messages (and optional tool definitions) into a single
+        JSON payload string and call client.predict(payload_text, api_name="/chat_completion").
+        """
+        payload: dict[str, Any] = {
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": 1024,
+        }
+
+        if tools and self._supports_tool_calling:
+            payload["tools"] = tools
+            payload["tool_choice"] = tool_choice
+
+        payload_text = json.dumps(payload)
+
+        # Resolve the client outside the try block: a missing dependency raises a
+        # RuntimeError that names the package and must not be folded into the
+        # generic "temporarily unavailable" message.
+        client = self._get_gradio_client()
+
+        try:
+            result = client.predict(payload_text, api_name="/chat_completion")
+        except ImportError as e:
+            raise RuntimeError(
+                "The Gradio client is not installed. Install it with: pip install gradio_client"
+            ) from e
+        except Exception as e:
+            # Do not propagate raw Gradio exception messages (they may contain HF tokens).
+            # Classify failures without mislabeling them as Groq 429s.
+            self._log_gradio_error(type(e).__name__, str(e))
+            raise RuntimeError(
+                "CarWorld AI fallback model is temporarily unavailable. Please try again later."
+            ) from e
+
+        return self._parse_gradio_response(result)
+
+    def _parse_gradio_response(self, result: Any) -> ProviderResponse:
+        """Extract finetuned_model_response from the Gradio prediction result.
+
+        The Space returns a prediction result object containing
+        base_model_response and finetuned_model_response. Only the fine-tuned
+        response is exposed; it must be a non-empty string.
+
+        If finetuned_model_response is missing or invalid, we do NOT silently
+        substitute the base-model output: we raise a RuntimeError so the caller
+        can surface a safe fallback.
+        """
+        try:
+            if isinstance(result, dict):
+                fine = result.get("finetuned_model_response")
+                base = result.get("base_model_response")
+            else:
+                fine = getattr(result, "finetuned_model_response", None)
+                base = getattr(result, "base_model_response", None)
+
+            if isinstance(fine, str) and fine.strip():
+                return ProviderResponse(
+                    content=fine.strip(),
+                    tool_calls=None,  # QWEN3_SUPPORTS_TOOLS is currently false
+                    provider_name=self.name,
+                )
+
+            if base is not None and isinstance(base, str) and base.strip():
+                # Diagnostic: base-model output is present but we must never expose it.
+                logger.warning(
+                    "Qwen3 Gradio Space returned a base_model_response but no "
+                    "finetuned_model_response; not exposing diagnostic output."
+                )
+            else:
+                logger.warning(
+                    "Qwen3 Gradio Space returned an unexpected prediction result: %s",
+                    type(result).__name__,
+                )
+
+        except Exception as e:
+            self._log_gradio_error("parse", str(e))
+
+        raise RuntimeError(
+            "CarWorld AI fallback model returned an unexpected response. Please try again later."
+        )
+
+    def _log_gradio_error(self, stage: str, message: str) -> None:
+        """Log a Gradio failure without leaking HF tokens or request payloads."""
+        safe_message = self._redact(message)
+        logger.error("Qwen3 Gradio provider error [%s]: %s", stage, safe_message)
+
+    @staticmethod
+    def _redact(message: str) -> str:
+        """Remove HF token-like values from error strings."""
+        redacted = message
+        if isinstance(message, str):
+            # Bearer headers first so the credential that follows is masked as a
+            # bearer token rather than by the generic API-key pattern.
+            redacted = re.sub(r"Bearer\s+[A-Za-z0-9._\-]+", "Bearer [REDACTED]", redacted)
+            # Hugging Face access tokens use the "hf_" prefix (underscore).
+            redacted = re.sub(
+                r"\bhf_[A-Za-z0-9]{10,}\b", "[HUGGINGFACE_TOKEN_REDACTED]", redacted
+            )
+            redacted = re.sub(
+                r"\bhf-[A-Za-z0-9]{20,}\b", "[HUGGINGFACE_TOKEN_REDACTED]", redacted
+            )
+            # GitHub / Groq / Tavily style keys.
+            redacted = re.sub(
+                r"\b(?:ghp_|gsk_|tvly_|sk-)[A-Za-z0-9]{8,}\b",
+                "[API_KEY_REDACTED]",
+                redacted,
+            )
+        return redacted[:1024]
+
+    def _call_http(
+        self,
+        messages: list[dict],
+        tools: list[dict] | None,
+        temperature: float,
+        tool_choice: str | dict = "auto",
+    ) -> ProviderResponse:
+        """Send an OpenAI-compatible request to a local /v1/chat/completions endpoint."""
         payload: dict[str, Any] = {
             "model": self._model_id,
             "messages": messages,
@@ -164,15 +350,14 @@ class Qwen3Provider(Provider):
             payload["tools"] = tools
             payload["tool_choice"] = tool_choice
 
-        logger.info("Calling Qwen3 fallback provider at %s", self._endpoint_url)
-
         try:
-            response = session.post(
-                f"{self._endpoint_url}/v1/chat/completions",
-                json=payload,
-            )
-            response.raise_for_status()
-            data = response.json()
+            with httpx.Client(timeout=self._timeout) as session:
+                response = session.post(
+                    f"{self._http_endpoint}/v1/chat/completions",
+                    json=payload,
+                )
+                response.raise_for_status()
+                data = response.json()
 
             choice = data.get("choices", [{}])[0]
             message = choice.get("message", {})
@@ -186,13 +371,16 @@ class Qwen3Provider(Provider):
                 tool_calls=tool_calls,
                 provider_name=self.name,
             )
-
         except httpx.HTTPStatusError as e:
             if e.response.status_code == 429:
-                raise RateLimitError("Qwen3 rate limit exceeded", response=e.response, body=e.response.json() if e.response.content else {})
+                raise RateLimitError(
+                    "Qwen3 rate limit exceeded",
+                    response=e.response,
+                    body=e.response.json() if e.response.content else {},
+                ) from e
             raise
         except Exception as e:
-            logger.error("Qwen3 provider error: %s", type(e).__name__)
+            logger.error("Qwen3 HTTP provider error: %s", type(e).__name__)
             raise
 
 
@@ -381,13 +569,22 @@ def create_groq_provider() -> GroqProvider:
 
 
 def create_qwen3_provider() -> Qwen3Provider | None:
-    """Create Qwen3 provider from settings. Returns None if not configured."""
-    if not settings.qwen3_endpoint_url:
+    """Create Qwen3 provider from settings. Returns None if not configured.
+
+    QWEN3_SPACE_ID takes precedence: when set, the provider routes through the
+    Hugging Face Gradio Space. Otherwise QWEN3_ENDPOINT_URL is used for a
+    local/OpenAI-compatible endpoint. If neither is set, the fallback is disabled.
+    """
+    space_id = settings.qwen3_space_id or None
+    endpoint_url = settings.qwen3_endpoint_url or None
+
+    if not space_id and not endpoint_url:
         logger.info("QWEN3_ENDPOINT_URL not set; Qwen3 fallback disabled")
         return None
 
     return Qwen3Provider(
-        endpoint_url=settings.qwen3_endpoint_url,
+        endpoint_url=endpoint_url,
+        space_id=space_id,
         hf_token=settings.huggingface_token,
         model_id=settings.qwen3_model_id,
         timeout=settings.qwen3_timeout,

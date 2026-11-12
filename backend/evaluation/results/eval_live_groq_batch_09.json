@@ -1,0 +1,172 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 4,
+  "results": [
+    {
+      "id": "cw-eval-025",
+      "category": "hinglish_understanding",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Here are a few popular SUVs you can get for ≤ ₹10 lakh (ex‐showroom) in India:\n\n- **Maruti Suzuki Vitara Brezza** – 1.5 L petrol, around ₹7.5‐9.5 L; mileage ≈ 17‐18 km/l; features include dual‐tone alloy wheels, touchscreen infotainment and dual‐air‐bags. \n- **Hyundai Venue** – 1.2 L petrol or 1.5 L diesel, price ≈ ₹7‐9.8 L; mileage ≈ 17‐21 km/l; offers a 10.25‐inch touchscreen, wireless charging (top trim) and rear‐camera‐based parking assist. \n- **Kia Sonet** – 1.2 L petrol or 1.5 L diesel, starting around ₹7‐9.9 L; mileage ≈ 17‐20 km/l; comes with LED DRLs, a 10.25‐inch infotainment system and up to six airbags in higher trims. \n- **Tata Nexon** – 1.2 L petrol or 1.5 L diesel, base price ≈ ₹8‐9.5 L; mileage ≈ 16‐21 km/l; features a robust safety cell, dual‐air‐bags and a 7‐inch touchscreen. \n- **Mahindra XUV300** – 1.2 L turbo‐petrol or 1.5 L diesel, starting near ₹8‐9.8 L; mileage ≈ 16‐18 km/l; includes front‐parking sensors, dual‐air‐bags and a 7‐inch infotainment screen.\n\nAll these models fit the budget, offer decent fuel efficiency and come with essential safety and tech features—pick the one that matches your preferred engine type and styling."
+      },
+      "score": {
+        "id": "cw-eval-025",
+        "category": "hinglish_understanding",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "intent-understanding quality is qualitative; requires human judgement"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-026",
+      "category": "hinglish_understanding",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Car insurance premiums in India vary a lot based on the car’s price, age, where you live and the type of cover you choose. \n\n- For a small hatchback (₹5‐7 lakh on‐road price) a comprehensive policy usually costs between ₹4,000 and ₹7,000 per year. \n- For a midsize sedan or SUV (₹10‐15 lakh) the same cover typically ranges from ₹8,000 to ₹15,000 annually. \n\nIf you opt for only the mandatory third‐party cover, the premium is much lower—generally ₹2,500 to ₹3,500 a year. The exact amount will be calculated by the insurer after considering factors like your claim history, voluntary deductible, and any add‐on covers you select."
+      },
+      "score": {
+        "id": "cw-eval-026",
+        "category": "hinglish_understanding",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "intent-understanding quality is qualitative; requires human judgement"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-027",
+      "category": "missing_info_abstention",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Maruti Suzuki Alto on road price Bangalore 2024",
+              "results": [
+                {
+                  "title": "Maruti Suzuki Alto K10 On Road Price in Bangalore starts Rs.3.70 Lakh",
+                  "url": "https://www.cardekho.com/maruti/alto-k10/price-in-bangalore",
+                  "content": "| Variants | On-Road Price |\n --- |\n| Maruti Suzuki Alto K10 STD (O).htm \"Maruti Suzuki Alto K10 STD (O) price\") | Rs.4.46 Lakh\\ |\n| Maruti Suzuki Alto K10 LXI (O).htm \"Maruti Suzuki Alto K10 LXI (O) price\") | Rs.4.82 Lakh\\ |\n| Maruti Suzuki Alto K10 VXI (O).htm \"Maruti Suzuki Alto K10 VXI (O) price\") | Rs.5.43 Lakh\\ |\n| Maruti Suzuki Alto K10 LXI (O) S-CNG_S-CNG.htm \"Maruti Suzuki Alto K10 LXI (O) S-CNG price\") | Rs.5.81 Lakh\\ |\n| Maruti Suzuki Alto K10 VXI (O) AT_AT.htm \"Maruti Suzuki Alto K10 VXI (O) AT price\") | Rs.5.97 Lakh\\ |\n| Maruti Suzuki Alto K10 VXI Plus (O).htm \"Maruti Suzuki Alto K10 VXI Plus (O) price\") | Rs.5.99 Lakh\\ |\n| Maruti Suzuki Alto K10 VXI (O) S-CNG_S-CNG.htm \"Maruti Suzuki Alto K10 VXI (O) S-CNG price\") | Rs.6.46 Lakh\\ | [...] |  |  |\n --- |\n| LXI (O) S-CNG (CNG)  (Base Model)Top Selling | |\n| Ex-Showroom Price | Rs.4,84,400 |\n| Registration ChargesRegistration charges include RTO, Road Cess, Welfare Fund Cess, Road Safety Cess | Rs.71,898 |\n| InsuranceThe Insurance amount is calculated based the engine size/battery size of the car and also different for metro cities and other cities. It can also differ from dealer to dealer depending on the insurance provider & commissions. | Rs.24,874 |\n| Optional | Rs.18,400 |\n|  |  |\n --- |\n| On-Road Price : in Bangalore | Rs.5,99,572\\ |\n| EMI ₹13,633/month |  | [...] |  |  |\n --- |\n| VXI (O) S-CNG (CNG)  (Top Model) | |\n| Ex-Showroom Price | Rs.5,34,400 |\n| Registration ChargesRegistration charges include RTO, Road Cess, Welfare Fund Cess, Road Safety Cess | Rs.85,045 |\n| InsuranceThe Insurance amount is calculated based the engine size/battery size of the car and also different for metro cities and other cities. It can also differ from dealer to dealer depending on the insurance provider & comm [truncated]",
+                  "score": 0.6974029,
+                  "published_date": null
+                },
+                {
+                  "title": "Maruti Alto K10 Price in Bangalore | CarWale",
+                  "url": "https://www.carwale.com/maruti-suzuki-cars/alto-k10/price-in-bangalore",
+                  "content": "| Variant | Ex-Showroom Price | On Road Price |\n --- \n| STD (O) Petrol Manual 5 STR | Rs. 3.70 Lakh | Rs. 4.51 Lakh |\n| LXi (O) Petrol Manual 5 STR | Rs. 4.00 Lakh | Rs. 4.86 Lakh |\n| VXi (O) Petrol Manual 5 STR | Rs. 4.52 Lakh | Rs. 5.48 Lakh |\n| LXi (O) CNG Manual 4 STR | Rs. 4.84 Lakh | Rs. 5.89 Lakh |\n| VXi (O) Petrol Automatic 5 STR | Rs. 4.97 Lakh | Rs. 6.01 Lakh |\n| VXi Plus (O) Petrol Manual 5 STR | Rs. 5.00 Lakh | Rs. 6.04 Lakh |\n| VXi (O) CNG Manual 4 STR | Rs. 5.34 Lakh | Rs. 6.54 Lakh |\n| VXi Plus (O) Petrol Automatic 5 STR | Rs. 5.45 Lakh | Rs. 6.63 Lakh |\n\nMaruti Suzuki Alto K10 STD (O) Petrol Manual 5 STR Petrol Manual 5 STR\")\n\nRs. 4.51 - 6.63 Lakh\n\nOn-Road Price, Bangalore\n\n## Maruti Alto K10 On Road Price in Bangalore\n\nVariant: STD (O) Petrol Manual 5 STR [...] CarWale\n\n# Maruti Alto K10 Price in Bangalore\n\nThe Maruti Alto K10 on road price in Bangalore ranges from Rs. 4.51 Lakh to Rs. 6.63 Lakh. The ex-showroom price is between Rs. 3.70 Lakh and Rs. 5.45 Lakh.\n\nTop Variant VXi Plus (O): Rs. 6.04 Lakh - Rs. 6.63 Lakh\n\nThe top model, the Alto K10 VXi Plus (O), is priced at Rs. 6.04 Lakh for the petrol manual variant. The highest-priced VXi Plus (O) Petrol Automatic 5 STR costs Rs. 6.63 Lakh.\n\nCNG Variant: Rs. 5.89 Lakh - Rs. 6.54 Lakh\n\nThe Alto K10 CNG range starts from Rs. 5.89 Lakh for the LXi (O) CNG Manual 4 STR variant. The top CNG variant, the VXi (O) CNG Manual 4 STR, is priced at Rs. 6.54 Lakh. The Alto K10 CNG is offered in only manual transmission option.\n\nAutomatic Variant: Rs. 6.01 Lakh - Rs. 6.63 Lakh [...] Variant: STD (O) Petrol Manual 5 STR\n\n|  |  |\n --- |\n| Ex-Showroom Price | Rs. 3,69,900 |\n| Individual Registration | Rs. 57,239 |\n| Insurance | Rs. 23,003 |\n| Other Charges | Rs. 850 |\n| Optional Packages | Add |\n| Offers | S [truncated]",
+                  "score": 0.6900372,
+                  "published_date": null
+                },
+                {
+                  "title": "Maruti Suzuki Alto Price, Images, Mileage, Reviews, Specs",
+                  "url": "https://www.cardekho.com/carmodels/Maruti/Maruti_Alto_800",
+                  "content": "| Variant | Ex-Showroom Price |\n --- |\n| Alto 800 STD BSIV(Base Model)796 cc, Manual, Petrol, 24.7 kmpl | ₹2.94 Lakh\\ |  |\n| Alto 800 STD Opt BSIV796 cc, Manual, Petrol, 24.7 kmpl | ₹2.97 Lakh\\ |  |\n| Alto 800 STD796 cc, Manual, Petrol, 22.05 kmpl | ₹3.25 Lakh\\ |  |\n| Alto 800 VXI BSIV796 cc, Manual, Petrol, 24.7 kmpl | ₹3.44 Lakh\\ |  |\n| Alto 800 LXI BSIV796 cc, Manual, Petrol, 24.7 kmpl | ₹3.50 Lakh\\ |  |\n| Alto 800 STD Opt796 cc, Manual, Petrol, 22.05 kmpl | ₹3.54 Lakh\\ |  |\n| Alto 800 STD Opt BSVI796 cc, Manual, Petrol, 22.05 kmpl | ₹3.54 Lakh\\ |  |\n| Alto 800 LXI Opt BSIV796 cc, Manual, Petrol, 24.7 kmpl | ₹3.55 Lakh\\ |  |\n| Alto 800 LXI796 cc, Manual, Petrol, 22.05 kmpl | ₹3.94 Lakh\\ |  |\n| Alto 800 LXI Opt796 cc, Manual, Petrol, 22.05 kmpl | ₹4.23 Lakh\\ |  | [...] | Alto 800 LXI Opt BSVI796 cc, Manual, Petrol, 22.05 kmpl | ₹4.23 Lakh\\ |  |\n| Alto 800 LXI CNG(Base Model)796 cc, Manual, CNG, 33 km/kg | ₹4.33 Lakh\\ |  |\n| Alto 800 LXI Opt CNG796 cc, Manual, CNG, 33 km/kg | ₹4.36 Lakh\\ |  |\n| Alto 800 VXI796 cc, Manual, Petrol, 22.05 kmpl | ₹4.43 Lakh\\ |  |\n| Alto 800 VXI BSVI796 cc, Manual, Petrol, 22.05 kmpl | ₹4.43 Lakh\\ |  |\n| Alto 800 VXI Plus796 cc, Manual, Petrol, 22.05 kmpl | ₹4.57 Lakh\\ |  |\n| Alto 800 VXI Plus BSVI(Top Model)796 cc, Manual, Petrol, 22.05 kmpl | ₹4.57 Lakh\\ |  |\n| Alto 800 LXI S-CNG796 cc, Manual, CNG, 31.59 km/kg | ₹4.89 Lakh\\ |  |\n| Alto 800 LXI Opt S-CNG796 cc, Manual, CNG, 31.59 km/kg | ₹5.13 Lakh\\ |  |\n| Alto 800 LXI Opt S-CNG BSVI(Top Model)796 cc, Manual, CNG, 31.59 km/kg | ₹5.13 Lakh\\ |  | [...] View Seller Details\n Maruti Suzuki Alto 800 LXI S-CNG\n\n  Maruti Suzuki Alto 800 LXI S-CNG\n\n  Rs3.30 Lakh\n\n  202274,000KmCNG\n\n  View Seller Details\n Maruti Suzuki Alto 800 LXI\n\n  Maruti Suzuki Alto 800 LXI\n\n  Rs3.65 Lakh\n\n  202249, [truncated]",
+                  "score": 0.62303287,
+                  "published_date": null
+                },
+                {
+                  "title": "Maruti Suzuki Alto K10 On Road Price in Bangalore",
+                  "url": "https://auto.hindustantimes.com/new-cars/marutisuzuki/altok10/on-road-price-bangalore",
+                  "content": "Alto K10 Price in ; Maruti Suzuki Alto K10 Std (O), ₹ 4.53 Lakhs ; Maruti Suzuki Alto K10 LXi (O), ₹ 4.89 Lakhs ; Maruti Suzuki Alto K10 VXi (O), ₹ 5.50 Lakhs.",
+                  "score": 0.61589676,
+                  "published_date": null
+                },
+                {
+                  "title": "Maruti Suzuki Alto - Specs, Features & Model Details",
+                  "url": "https://www.cars24.com/new-cars/maruti-suzuki/alto",
+                  "content": "Alto variants : price & spec cards ; STD Opt · ₹3.54 Lakh · Key features ; LXI Opt · ₹4.23 Lakh · Pay moreto get these features ; VXI · ₹4.43 Lakh · Pay moreto get",
+                  "score": 0.5781505,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "In Bangalore, the Maruti Suzuki Alto K10’s on‐road price starts at roughly ₹ 4.5 lakh for the base STD (petrol, manual) version and goes up to about ₹ 6.6 lakh for the top‐spec VXi Plus (automatic or CNG) variant. The exact amount varies with the chosen trim, transmission, fuel type and any optional accessories."
+      },
+      "score": {
+        "id": "cw-eval-027",
+        "category": "missing_info_abstention",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "abstention_present": false
+          },
+          "details": {
+            "required_abstain": true
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether abstention was appropriate"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-028",
+      "category": "missing_info_abstention",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "The “best” car really depends on what you value most—speed, comfort, fuel efficiency, technology, or price. In India, the top picks in different categories are:\n\n* **Performance:** The Mercedes‐AMG C 63 or BMW M3 offer super‐charged V8 power and track‐ready handling. \n* **Luxury & Comfort:** The Mercedes‐EQ S 580 (electric) and the BMW 7 Series provide premium interiors and advanced driver‐assist features. \n* **Fuel Efficiency:** The Maruti Suzuki Swift and Hyundai i20 are among the most fuel‐savvy petrol hatchbacks, while the Tata Nexon EV leads among affordable electric cars. \n\nIf you let me know which criteria matter most to you, I can suggest a model that fits those priorities."
+      },
+      "score": {
+        "id": "cw-eval-028",
+        "category": "missing_info_abstention",
+        "scoring": {
+          "pass": true,
+          "criteria": {
+            "abstention_present": true
+          },
+          "details": {
+            "required_abstain": true
+          }
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "requires human check of whether abstention was appropriate"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

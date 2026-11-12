@@ -1,0 +1,167 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 3,
+  "results": [
+    {
+      "id": "cw-eval-008",
+      "category": "indian_car_specifications",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_database",
+            "status": "ok",
+            "result": {
+              "status": "ok",
+              "count": 0,
+              "results": []
+            }
+          },
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "From the database, what is the ex-showroom price of the Kia Seltos HTK 1.5?",
+              "results": [
+                {
+                  "title": "Kia New Seltos HTK 1.5 D MT Price - Images, Specs & Reviews",
+                  "url": "https://caronphone.com/kia-cars/seltos/htk-15-d-mt",
+                  "content": "EMI ₹ 31,263iFor 5 Years\n\n## Kia SeltosVariants\n\nThe new Kia Seltos is available in a total of 44 variants, with ex-showroom prices starting from Rs. 10.99 to Rs. 21.81 Lakh. It features manual and automatic transmission options to match diverse driving preferences.\n\nVariants\n\nEx-showroom price\n\nCompare\n\nOffers\n\nSeltos HTE 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 10.99 Lakh\\\n\nGet On-Road price\n\nSeltos HTE(O) 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 12.11 Lakh\\\n\nGet On-Road price\n\nSeltos HTE 1.5 D MT\n\n1493 cc,Diesel,Manual,19.4 kmpl\n\n₹ 12.61 Lakh\\\n\nGet On-Road price\n\nSeltos HTE(O) 1.5 P Turbo iMT\n\n1482 cc,Petrol,Manual,17.7 kmpl\n\n₹ 12.91 Lakh\\\n\nGet On-Road price\n\nSeltos HTK 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 13.11 Lakh\\\n\nGet On-Road price\n\n## Compare cars\n\n### My comparison(0) [...] Engine\n\n1482-1497 cc\n\nFuel\n\nFuel\n\nDiesel/Petrol\n\nMileage\n\nMileage\n\n17.00-19.40 kmpl\n\nTransmission\n\nTransmission\n\nAutomatic/Manual\n\n# Kia Seltos HTK 1.5 D MT- Highlights\n\nPrice: Kia Seltos HTK 1.5 D MT is priced at ₹ 14.71 Lakh (ex-showroom) in .\n\nMileage: The Seltos delivers a certified mileage of approx 19.4 kmpl.\n\nEngine & Transmission: Powered by a 1493 cc Diesel engine paired with a Manual transmission generating 114 bhp @ 4000 rpm and 250 Nm @ 1500-2750 rpm.\n\nAd\n\n## Kia Seltos HTK 1.5 D MTSpecs, Features & Safety\n\nNo specifications available for this category\n\n# KiaSeltosHTK 1.5 D MTPrice\n\nEx-showroom Price--\n\nRTO--\n\nInsurance--\n\nTotal On-Road Price--\n\nEMI ₹ 31,263iFor 5 Years\n\n## Kia SeltosVariants [...] CarOnPhone: Drive Dreams Home\n\nCarOnPhone: Drive Dreams Home\n\nSelect City\n\nLogin or Register\n\nKia New Seltos HTK 1.5 D MT Price - Images, Specs & Reviews\n\nSeltos\n\nHTK 1.5 D MT\n\nSpecs\n\nPrice\n\nVariants\n\nImages\n\nMileage\n\nUser Reviews\n\n24 Photos9 Colors\n\nKia Seltos P [truncated]",
+                  "score": 0.81420064,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia New Seltos HTK 1.5 P IVT Price - Images, Specs & Reviews",
+                  "url": "https://caronphone.com/kia-cars/seltos/htk-15-p-ivt",
+                  "content": "EMI ₹ 30,625iFor 5 Years\n\n## Kia SeltosVariants\n\nThe new Kia Seltos is available in a total of 44 variants, with ex-showroom prices starting from Rs. 10.99 to Rs. 21.81 Lakh. It features manual and automatic transmission options to match diverse driving preferences.\n\nVariants\n\nEx-showroom price\n\nCompare\n\nOffers\n\nSeltos HTE 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 10.99 Lakh\\\n\nGet On-Road price\n\nSeltos HTE(O) 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 12.11 Lakh\\\n\nGet On-Road price\n\nSeltos HTE 1.5 D MT\n\n1493 cc,Diesel,Manual,19.4 kmpl\n\n₹ 12.61 Lakh\\\n\nGet On-Road price\n\nSeltos HTE(O) 1.5 P Turbo iMT\n\n1482 cc,Petrol,Manual,17.7 kmpl\n\n₹ 12.91 Lakh\\\n\nGet On-Road price\n\nSeltos HTK 1.5 P MT\n\n1497 cc,Petrol,Manual,17 kmpl\n\n₹ 13.11 Lakh\\\n\nGet On-Road price\n\n## Compare cars\n\n### My comparison(0) [...] Engine\n\nEngine\n\n1482-1497 cc\n\nFuel\n\nFuel\n\nDiesel/Petrol\n\nMileage\n\nMileage\n\n17.00-19.40 kmpl\n\nTransmission\n\nTransmission\n\nAutomatic/Manual\n\n# Kia Seltos HTK 1.5 P IVT- Highlights\n\nPrice: Kia Seltos HTK 1.5 P IVT is priced at ₹ 14.41 Lakh (ex-showroom) in .\n\nMileage: The Seltos delivers a certified mileage of approx 17.7 kmpl.\n\nEngine & Transmission: Powered by a 1497 cc Petrol engine paired with a Automatic transmission generating 113 bhp @ 6300 rpm and 144 Nm @ 4500 rpm.\n\nAd\n\n## Kia Seltos HTK 1.5 P IVTSpecs, Features & Safety\n\nNo specifications available for this category\n\n# KiaSeltosHTK 1.5 P IVTPrice\n\nEx-showroom Price--\n\nRTO--\n\nInsurance--\n\nTotal On-Road Price--\n\nEMI ₹ 30,625iFor 5 Years\n\n## Kia SeltosVariants [...] CarOnPhone: Drive Dreams Home\n\nCarOnPhone: Drive Dreams Home\n\nSelect City\n\nLogin or Register\n\nKia New Seltos HTK 1.5 P IVT Price - Images, Specs & Reviews\n\nSeltos\n\nHTK 1.5 P IVT\n\nSpecs\n\nPrice\n\nVariants\n\nImages\n\nMileage\n\nUser Reviews\n\n24 Photos9 Colors\n\n [truncated]",
+                  "score": 0.81375694,
+                  "published_date": null
+                },
+                {
+                  "title": "Seltos HTK On Road Price | Kia Seltos HTK Specs & Features",
+                  "url": "https://www.carwale.com/kia-cars/seltos/htk",
+                  "content": "| Variant | HTK Petrol 1.5L Manual | HTK Petrol 1.5L Turbo Clutchless Manual (IMT) | HTK Petrol 1.5L Automatic (CVT) | HTK Diesel 1.5L Turbo Manual | HTK Diesel 1.5L Turbo Automatic (TC) |\n ---  ---  --- |\n| Transmission | Manual | Clutchless Manual (IMT) | Automatic (CVT) | Manual | Automatic (TC) |\n| Fuel type | Petrol | Petrol | Petrol | Diesel | Diesel |\n| Engine | 1497 cc | 1482 cc Turbo | 1497 cc | 1493 cc Turbo | 1493 cc Turbo |\n| Ex-Showroom Price | Rs. 13.42 Lakh | Rs. 14.22 Lakh | Rs. 14.72 Lakh | Rs. 15.04 Lakh | Rs. 16.34 Lakh |\n| On-Road Price, Mumbai | Rs. 15.92 Lakh | Rs. 16.85 Lakh | Rs. 17.44 Lakh | Rs. 18.16 Lakh | Rs. 19.70 Lakh |\n| On-Road Price, Delhi | Rs. 15.72 Lakh | Rs. 16.63 Lakh | Rs. 17.21 Lakh | Rs. 17.93 Lakh | Rs. 19.45 Lakh | [...] 360° View\n Specs & Features\n\n User Reviews\n\nKia Seltos HTK Petrol 1.5L Manual\n\nKia Seltos Right Front Three Quarter\n\nShot for HTK\n\n\n\nKia Seltos Left Rear Three Quarter\n\nShot for HTK\n\nKia Seltos Diesel Automatic Real-World Review | Best Buy under ₹25 Lakh?\n\nyoutube-icon\n\nKia New Seltos Dashboard\n\nKia Seltos Infotainment System\n\nKia Seltos Front Row Seats\n\nColours ImagesView\n\nVariant\n\nHTK Petrol 1.5L Manual\n\nRs. 15.92 Lakh\n\nSeltos On Road Price\n\nOn-Road Price,\n\nCalculate your EMI\n\nGet Assistance\n\nContact Carwale Dealer\n\nGet in touch for the best buying option from your authorized dealer\n\nAdRecommended\n\nVolkswagen Taigun\n\nVolkswagen Taigun\n\nRs. 11.00 Lakhonwards\n\nAvg. Ex-Showroom price\n\n5 reasons the new Taigun stands out from the rest\n\nBuilt on German Engineering [...] Filter By Fuel type & Transmission\n\n| Variants | Ex-Showroom Price |\n --- |\n| Seltos HTE  Get Offers | Rs. 13.38 - 15.62 Lakh |\n| Seltos HTE (O)\")  Get Offers | Rs. 14.75 - 18.50 Lakh |\n| Seltos HTK (O)\")  Get Offers | Rs. 17.20 - 21.01 [truncated]",
+                  "score": 0.8039445,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia seltos Pricelist",
+                  "url": "https://www.advaithkia.com/seltos/price-list",
+                  "content": "Ex-Showroom Price On-Road. Seltos HTK 1.5 Petrol ₹ 12,63,900 ₹ 1572798 Seltos HTK (O) 1.5 Petrol ₹ 13,04,900 ₹ 1623228. HTK 1.5 Diesel ₹ 14,11,900 ₹ 1754836 1.",
+                  "score": 0.7841538,
+                  "published_date": null
+                },
+                {
+                  "title": "Kia Seltos price in November 2026 – Images, Specs, Colours & Reviews | Cars24",
+                  "url": "https://www.cars24.com/new-cars/kia/seltos",
+                  "content": "|  |  |  |  |\n ---  --- |\n| Variant | Engine / Power / Torque / Transmission | Claimed Mileage | Ex-Showroom Price |\n| HTE Petrol (Base Model) | 1.5L Petrol / 113 bhp / 144 Nm / 6-speed MT | 17.00 kmpl | ₹11.00 lakh |\n| HTE (O) Petrol | 1.5L Petrol / 113 bhp / 144 Nm / 6-speed MT | 17.00 kmpl | ₹12.42 lakh |\n| HTK (O) Turbo Petrol | 1.5L Turbo Petrol / 158 bhp / 253 Nm / 6-speed iMT | 17.70 kmpl | ₹14.52 lakh |\n| HTX Petrol | 1.5L Petrol / 113 bhp / 144 Nm / 6-speed MT | 17.00 kmpl | ₹15.92 lakh |\n| HTX (A) Diesel | 1.5L Diesel / 114 bhp / 250 Nm / 6-speed AT | 19.10 kmpl | ₹17.02 lakh |\n| GTX (A) Turbo Petrol | 1.5L Turbo Petrol / 158 bhp / 253 Nm / 7-speed DCT | 17.90 kmpl | ₹19.82 lakh |\n| X-Line (A) Diesel | 1.5L Diesel / 114 bhp / 250 Nm / 6-speed AT | 19.10 kmpl | ₹19.82 lakh | [...] Cars24 Logo\n\nPopular brands\n\nPopular cars\n\nCars by body type\n\nCars by price range\n\nNew Delhi\n\nmodel-details-bg\n\n# Kia Seltos\n\nThe Kia Seltos is one of the most comprehensive packages in India's midsize SUV segment, available with different engines, gearboxes, and feature configurations. With the Kia Seltos price starting from ₹11.00 lakh (ex-showroom) and reaching up to ₹21.57 lakh, the lineup offers a wide price bracket. In it, buyers can pick between a 1.5L naturally aspirated petrol, a punchier 1.5L turbo-petrol and a frugal 1.5L diesel engine. Every single model gets a 24-feature standard safety pack containing six airbags, all-wheel disc brakes, and Electronic Stability Control (ESC). You also get a practical 447-litre boot.",
+                  "score": 0.7641884,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "I’m sorry, but the database doesn’t contain an entry for the ex‐showroom price of the Kia Seltos HTK 1.5."
+      },
+      "score": {
+        "id": "cw-eval-008",
+        "category": "indian_car_specifications",
+        "scoring": {
+          "pass": false,
+          "criteria": {
+            "ex_showroom_price_matches": false,
+            "fuel_type_matches": false
+          }
+        },
+        "tool_selection": {
+          "pass": true,
+          "criteria": {
+            "expected_tool_selected": true,
+            "any_tool_selected": true
+          },
+          "details": {
+            "selected": [
+              "search_car_database",
+              "search_car_web"
+            ]
+          }
+        },
+        "tool_execution": {
+          "pass": true,
+          "criteria": {
+            "executed": true,
+            "status_ok": true
+          },
+          "details": {
+            "status": "ok",
+            "count": null
+          }
+        }
+      },
+      "outcome": "fail"
+    },
+    {
+      "id": "cw-eval-009",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "A vibration that shows up only when you brake at higher speeds is most often caused by **warped brake rotors** – the discs can develop uneven thickness after heavy use or heat cycling, making the pads grab unevenly. It can also be due to **worn or uneven brake pads**, a **sticking caliper**, or **wheel‐tire issues** such as out‐of‐balance wheels or a bent rim. If the suspension or steering components (like ball joints or tie‐rod ends) are loose, they can amplify the feeling as well. Have a trusted mechanic check the rotors, pads, calipers and wheel balance to pinpoint and fix the exact source."
+      },
+      "score": {
+        "id": "cw-eval-009",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-010",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Car overheating usually means the cooling system isn’t doing its job. Pull over safely, turn off the engine, and let it cool for at least 10‐15 minutes before checking anything. Then look at these basics:\n\n1. **Coolant level** – low coolant is the most common cause; top it up with the correct mix (usually 50 % water, 50 % antifreeze) if it’s low. \n2. **Radiator & hoses** – inspect for leaks, cracks or loose clamps; a blocked radiator or a kinked hose can stop flow. \n3. **Thermostat** – a stuck‐closed thermostat prevents coolant from circulating, causing rapid heat buildup. \n4. **Water pump & fan** – ensure the pump is turning and the electric or belt‐driven fan engages when the engine warms up. \n\nIf everything looks okay but the problem persists, it’s best to have a mechanic check the radiator cap, pressure‐test the system for hidden leaks, and verify the temperature sensor and ECU alerts. Driving with an overheating engine can cause serious damage, so avoid long trips until the issue is fixed."
+      },
+      "score": {
+        "id": "cw-eval-010",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

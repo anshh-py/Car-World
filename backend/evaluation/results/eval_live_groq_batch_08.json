@@ -1,0 +1,207 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 4,
+  "results": [
+    {
+      "id": "cw-eval-015",
+      "category": "buying_recommendations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "For a family of five, a good pick under ₹15 lakh is the **Tata Nexon** (top‐spec AT variant). It offers a roomy five‐seat cabin, a strong 1.2‐L turbo‐petrol or 1.5‐L diesel engine, good ground clearance for Indian roads, and a 5‐star safety rating. Other viable choices in the same price band are the **Kia Sonet**, **Hyundai Venue**, **Mahindra XUV300**, and **Renault Kiger**, all of which stay below the ₹15 lakh mark and provide five‐seat comfort."
+      },
+      "score": {
+        "id": "cw-eval-015",
+        "category": "buying_recommendations",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "recommendations are preference-dependent; no single correct answer"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-017",
+      "category": "buying_recommendations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "I couldn't complete a reliable web search just now, so I can't verify those vehicle details. Please try again later."
+      },
+      "score": {
+        "id": "cw-eval-017",
+        "category": "buying_recommendations",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "recommendations are preference-dependent; no single correct answer"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-018",
+      "category": "buying_recommendations",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "India electric car city use benefits subsidies cost of ownership 2024",
+              "results": [
+                {
+                  "title": "A Guide to the Benefits of Electric Cars in 2024",
+                  "url": "https://www.southindianbank.bank.in/blog/car-loan/a-guide-to-the-benefits-of-electric-cars-in-2024",
+                  "content": "8,250 per month, which amounts to Rs.99,000 in savings over a year. Lower Maintenance Costs: All electric vehicles generally need less",
+                  "score": 0.7361925,
+                  "published_date": null
+                },
+                {
+                  "title": "[PDF] Electric vehicle demand incentives in India",
+                  "url": "https://theicct.org/wp-content/uploads/2024/06/ID-169-FAME-opps_report_final.pdf",
+                  "content": "Three-wheelers ₹10,000 20% of ex-showroom price ₹500,000 500,000 155,536 Four-wheelers ₹10,000 20% of ex-showroom price ₹1,500,000 55,000 30,461 Bus ₹20,000 40% of ex-showroom price ₹20,000,000 7,090 7,262 Source: Ministry of Heavy industries, Government of India Note: The incentive amount and maximum incentive for the electric two-wheeler segment was updated twice (see Footnote 2); the incentive amounts for electric two-wheelers presented in the table reflect the policy in effect at the end of the program. There has been no official announcement by the government about the implementation of a third phase of the scheme. In March 2024, the government launched the Electric Mobility Promotion Scheme (EMPS) 2024, wherein purchase subsidies are offered for electric two-wheelers and electric [...] Financing cost Interest rate (per annum) 11% 11% 11% 11% 11% 11% 11% 11% 11% 11% State Bank of India (2024) Repayment period 5 years 5 years 5 years 5 years 5 years 5 years 5 years 5 years 5 years 5 years Financed amount 85% 85% 85% 85% 85% 85% 85% 85% 85% 85% Depreciation Depreciation by year 8 85% 65% 65% 85% 65% 65% 65% 85% 65% 65% EV loan income tax benefit Annual income ₹1,500,000 ₹1,500,000 ₹1500,000 ₹1,500,000 ₹1,500,000 ₹1,500,000 ₹1,500,000 ₹1,500,000 ₹1,500,000 ₹1,500,000 Annual increment in income 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% Cleartax (2024) Note: Electric models considered are the best-selling models in their respective vehicle segments. Representative conventional models have specifications comparable to the electric models. www.theicct.org [...] 6 ICCT REPORT | ELECTRIC VEHICLE DEMAND INCENTIVES IN INDIA Figure 2 Annual EV uptake in new vehicle sales from FY 2019–20 to FY 2023–24 0% 0% 2% 5% 5% 0% 0% 0% 1% 2% 1% 1% 2% 4% 4% 1% 1% 2% 5% 7% 0% 1% 2 [truncated]",
+                  "score": 0.644248,
+                  "published_date": null
+                },
+                {
+                  "title": "Affordable Electric Cars in India for Daily City and Family Use",
+                  "url": "https://www.mahindrafinance.com/blogs/car-loan/the-most-affordable-electric-cars-in-india",
+                  "content": "The PM E-DRIVE scheme and state subsidies can reduce the effective price by up to ₹1.5 lakh per vehicle, alongside tax rebates and reduced GST rates, making",
+                  "score": 0.56575525,
+                  "published_date": null
+                },
+                {
+                  "title": "Top 10 Benefits of Buying an Electric Car in India 2026",
+                  "url": "https://www.hyundai.com/in/en/blog/benefits-of-buying-an-electric-car",
+                  "content": "### Reduced Maintenance Expenses\n\nElectric cars have fewer moving parts, which means fewer components that can wear out or break. They don’t require oil changes, spark plug replacements, or complex engine servicing. This simplicity leads to lower service costs and less frequent visits to the workshop, reducing overall maintenance expenses.\n\n### Zero Tailpipe Emissions for Environmental Sustainability\n\nElectric vehicles produce no tailpipe emissions, making them ideal for reducing urban air pollution. This advantage contributes directly to cleaner air quality and lower greenhouse gas emissions, aligning with India’s environmental targets under the Sustainable Mobility Mission.\n\n### Government Incentives and Subsidies [...] ### Government Incentives and Subsidies\n\nIndian government initiatives like the FAME II scheme offer subsidies and tax rebates for electric vehicle buyers, helping reduce the upfront purchase cost. Additional benefits include exemptions or reductions in road tax and registration fees, as well as state-specific incentives to encourage EV adoption.\n\n### Enhanced Driving Experience\n\nElectric cars provide a quieter ride with minimal noise from the electric motor. The instant torque delivery offers swift acceleration and a seamless driving experience without the gear shifts associated with internal combustion engines. Hyundai EVs especially emphasise smooth, comfortable driving.\n\n### Home and Workplace Charging Convenience [...] |  \n Environmental Impact |  \n Zero tailpipe emissions |  \n Higher emissions, contributing to air pollution and environmental concerns |  \n\n  \n|  \n Government Incentives |  \n Substantial subsidies, tax benefits, and rebates in many regions |  \n Few or no incentives available |  \n\n  \n|  \n Driving Experience |  \n Quiet ope [truncated]",
+                  "score": 0.49040702,
+                  "published_date": null
+                },
+                {
+                  "title": "[PDF] Electric Vehicles in India - NITI Aayog",
+                  "url": "https://www.niti.gov.in/sites/default/files/2025-08/Electric-Vehicles-WEB-LOW-Report.pdf",
+                  "content": "adoption of electric vehicles. The first of these schemes was the Faster Adoption and Manufacturing of Electric Vehicles (FAME – 1). This was in operation from 2015 to 2019 and had an allocation of `895 crores. This was followed by a more ambitious FAME – 2, which was in operation from 2019 to 2024 and had an allocation of `11,500 crores. This has then been followed by an equally ambitious programme known as the PM e-Drive, which has been launched on 2024 and will be operational till 2026. It has an allocation of `10,900 crores. [...] Figure 9: Examples of incentives and mandates\b 15 Figure 10: Charging infrastructure availability Vs 4W EV penetration (2024)\b 22 LIST OF TABLES Table 1: Benefits and ease of supporting infrastructure for different types of vehicles\b 16 Table 2: Actions needed against each approach presented above\b24 xii 1 EXECUTIVE SUMMARY India has decided to aggressively move towards electric mobility. The key objectives are: • Reduced dependence on imported fuel • Increased share of renewable energy by leveraging the storage capacity of EV batteries • Reduced [...] leveraging the storage capacity of EV batteries • Reduced Greenhouse Gases (GHG) emissions • Improved air quality • Improved Plant Load Factor (PLF) of electricity generating plants • Becoming a leader in a rapidly growing global market India seeks to attain a 30% share of electric vehicles, in the total vehicles sold, by 2030. Sale of EVs in India went up from 50,000 in 2016 to 2.08 million in 2024 as against global EV sales having risen from 918,000 in 2016 to 18.78 million in 2024. Thus, India’s transition has been slow to start, but it is picking up. India’s EV penetration was only about one-fifth of the global penetration in 2020, but has picked up to over two-fifth of the g [truncated]",
+                  "score": 0.45246392,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "For city driving in India, an electric car usually gives lower running costs – you can save roughly ₹1 lakh a year on fuel and maintenance, benefit from government subsidies (often up to ₹1.5 lakh) and enjoy quieter, instant‐torque acceleration with zero tail‐pipe emissions. However, you’ll need reliable access to home or public charging (which is still expanding in many cities) and may face a higher upfront price despite the incentives. A petrol car offers a longer refuelling network and typically a higher range, but fuel prices, oil‐change and other service costs are higher and it contributes to urban air pollution. If you have convenient charging and can take advantage of the subsidies, an EV is generally the more economical and eco‐friendly choice for everyday city use; otherwise a petrol car remains the more hassle‐free option."
+      },
+      "score": {
+        "id": "cw-eval-018",
+        "category": "buying_recommendations",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "recommendations are preference-dependent; no single correct answer"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-024",
+      "category": "hinglish_understanding",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [
+          {
+            "name": "search_car_web",
+            "status": "results_found",
+            "result": {
+              "status": "results_found",
+              "query": "Hyundai Creta mileage India",
+              "results": [
+                {
+                  "title": "Hyundai Creta Price (2026) - Images, Colours, Mileage & Reviews",
+                  "url": "https://auto.hindustantimes.com/new-cars/hyundai/creta",
+                  "content": "## HyundaiCretaKey Specs\n\n 1482 - 1497 cc\n 17.4-21.8 kmpl\n 113 - 158 bhp\n Petrol | Diesel\n MaxTorque iconMax Torque\n\n  144 - 253 Nm\n DriveTrain iconDrive Train\n\n  FWD\n\nView All Creta SpecsView specs icon\n\n## Hyundai Creta Videos\n\n Full Videos\n\n## Hyundai Creta Variants\n\nHyundai Creta price starts at ₹ 10.91 Lakhs and goes up to ₹ 20.46 Lakhs (Ex-showroom). Hyundai Creta comes in 37 variants. Hyundai Creta's top variant is Lounge Edition Diesel 1.5L Turbo Automatic (TC) Dual Tone.\n\nFilter variants by:\n\nCreta E 1.5 Petrol\n\n₹10.91 Lakhs\\\n\n1497 cc\n\nPetrol\n\nManual\n\nCreta EX 1.5 Petrol\n\n₹12.07 Lakhs\\\n\n1497 cc\n\nPetrol\n\nManual\n\nCreta E Diesel 1.5L Turbo Manual\n\n₹12.53 Lakhs\\\n\n1493 cc\n\nDiesel\n\nManual\n\nCreta EX (O) 1.5 Petrol 1.5 Petrol\")\n\n₹13.14 Lakhs\\\n\n1497 cc\n\nPetrol\n\nManual [...] View all Creta specs and features\n\n## HyundaiCretaMileage\n\nHyundai Creta in India is available in Petrol & Diesel variants. Average mileage of Hyundai Creta's petrol variant is 17.4 kmpl (As claimed by the brand in ideal road conditions). Hyundai Creta E 1.5 Petrol comes with a 50 litres fuel tank.\n\nSelect Variant:\n\nE 1.5 Petrol\n\nFuel Type\n\nTransmission\n\nMileage\n\nPetrol\n\nManual\n\n17.4 kmpl\n\n## Explore Other Options\n\nphoto gallery imageSUV Cars\n\nphoto gallery imageSUV Cars Under 15 Lakhs\n\nphoto gallery imagePetrol Cars\n\nphoto gallery imageDiesel Cars\n\nphoto gallery imageCars With Sunroof\n\nphoto gallery imageUpcoming SUV Cars\n\nphoto gallery image7 Seater Cars\n\nphoto gallery imageBest Mileage Cars\n\nphoto gallery imageAutomatic Cars\n\nHomeNew CarsHyundai CarsHyundai Creta\n\nPopular Hyundai Cars [...] |  |  |  |  |\n ---  --- |\n| Variant Tier | Key Engine Options | Highlights | Ex-Showroom Price Range |\n| Base (E, EX, EX (O)) | 1.5L Petrol / 1.5L Diesel | 6 Airbags, 8-inch touchscreen, manual AC,  [truncated]",
+                  "score": 0.77662295,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta Mileage - Hyundai Creta Price Mileage & Petrol and Diesel Mileage",
+                  "url": "https://www.cardekho.com/hyundai/creta/mileage",
+                  "content": "| Variant | Mileage |  | Compare |\n ---  --- |\n| Creta E(Base Model)1497 cc, Manual, Petrol, ₹10.91 Lakh\\1 Month waiting | 17.4 kmpl | Get Diwali Offers | Compare |\n| Creta EX Summer Edition1497 cc, Manual, Petrol, ₹12.06 Lakh\\1 Month waiting | 17.4 kmpl | Get Diwali Offers | Compare |\n| Creta EX1497 cc, Manual, Petrol, ₹12.07 Lakh\\1 Month waiting | 17.4 kmpl | Get Diwali Offers | Compare |\n| Creta E Diesel1493 cc, Manual, Diesel, ₹12.61 Lakh\\1 Month waiting | 21.8 kmpl | Get Diwali Offers | Compare |\n| Creta EX (O) Summer Edition_Summer_Edition.htm \"Hyundai Creta EX (O) Summer Edition\")1497 cc, Manual, Petrol, ₹13.13 Lakh\\1 Month waiting | 17.4 kmpl | Get Diwali Offers | Compare | [...] | Creta SX Premium iVT DT1497 cc, Automatic, Petrol, ₹17.94 Lakh\\1 Month waiting | 17.7 kmpl | Get Diwali Offers | Compare |\n| Creta SX Premium Diesel1493 cc, Manual, Diesel, ₹18 Lakh\\1 Month waiting | 21.8 kmpl | Get Diwali Offers | Compare |\n| Creta SX Premium DT Diesel1493 cc, Manual, Diesel, ₹18.15 Lakh\\1 Month waiting | 21.8 kmpl | Get Diwali Offers | Compare |\n| Creta King iVT1497 cc, Automatic, Petrol, ₹18.69 Lakh\\1 Month waiting | 17.7 kmpl | Get Diwali Offers | Compare |\n| Creta King Knight iVT1497 cc, Automatic, Petrol, ₹18.83 Lakh\\1 Month waiting | 17.7 kmpl | Get Diwali Offers | Compare |\n| Creta King iVT DT1497 cc, Automatic, Petrol, ₹18.84 Lakh\\1 Month waiting | 17.7 kmpl | Get Diwali Offers | Compare | [...] | Creta S (O) Diesel AT_Diesel_AT.htm \"Hyundai Creta S (O) Diesel AT\")1493 cc, Automatic, Diesel, ₹17.37 Lakh\\1 Month waiting | 19.1 kmpl | Get Diwali Offers | Compare |\n| Creta King DT1497 cc, Manual, Petrol, ₹17.43 Lakh\\1 Month waiting | 17.4 kmpl | Get Diwali Offers | Compare |\n| Creta SX Premium iVT Summer Edition1497 cc, Automatic, Petrol, ₹17.78 Lakh [truncated]",
+                  "score": 0.7685595,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta (2026) - Price, Mileage & Expert Reviews | Autocar India",
+                  "url": "https://www.autocarindia.com/cars/hyundai/creta",
+                  "content": "Manual, Torque Converter, DCT, CVT\n\nSeating\n\n5\n\nPower\n\n116 hp\n\nAirbags\n\n6\n\nMax Torque\n\n250 Nm\n\nView price breakup\n\nCretaVariants\n\nBase model\n\nPetrol E MT\n\n1497 cc · Petrol · Manual\n\n₹12.66Lakh\n\nView DetailsMost popular\n\nPetrol S(O) CVT\n\n1497 cc · Petrol · Automatic\n\n₹18.17Lakh\n\nView DetailsTop model\n\nDiesel King Knight AT\n\n1493 cc · Diesel · Automatic\n\n₹23.97Lakh\n\nView Details\n\nView all Variants\n\nCretaHighlights\n\nSafety\n\nElectronic Parking Brake\n\nComfort\n\nFully Digital Instrument Cluster\n\nPowertrain\n\n1.5L Diesel Turbocharged Engine\n\nEntertainment\n\nWireless Phone Charging\n\nExterior\n\nSequential Turn Indicators\n\nInterior\n\nFront Only Ventilated Seats\n\nColors\n\n+5\n\nVariants\n\n27\n\nView all Specifications\n\nBecome an\n\nAutocar Shopper\n\nUnlock benefits up to ₹50,000 on Creta [...] Autocar India\n\nAutocar India\n\nSearch\n\nMBCCR 2026\n\nMileage\n\nExpert Reviews\n\nUser Reviews\n\nSpecs\n\nVariants\n\nImages\n\nColours\n\nVideos\n\nFuel Cost\n\nFAQs\n\nEMI\n\nMore\n\nFront View\n\n81179\n\n# Hyundai Creta\n\nAutocar score\n\n9\n\nView full review\n\n₹12.66- ₹23.97Lakh\n\nOn road price, Delhi\n\nDelhi\n\nStarting₹18,342 /month\n\nEMI calculator\n\nThe Hyundai Creta is a five-seat midsize SUV with a 433-litre boot, offered in 27 variants ranging from the Petrol E MT to the Diesel King Knight AT. It gets three 1.5-litre engine options: a 115hp naturally aspirated petrol, a 116hp diesel and a 160hp turbo-petrol, paired with a six-speed manual, CVT, 6-speed torque-converter automatic or 7-speed dual-clutch automatic, depending on the engine. [...] ## Hyundai Creta Latest Updates\n\n 02 November 2026: The 2027 Hyundai Creta has been spied with new alloy wheels and flush-type door handles.\n 10 September 2026: Hyundai launches Creta Lounge Edition at Rs 19.22 lakh; gets a rear entertainment screen, a black cabin and revised seat up [truncated]",
+                  "score": 0.7675156,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta Price - Images, Colours & Reviews - CarWale",
+                  "url": "https://www.carwale.com/hyundai-cars/creta",
+                  "content": "View More\n\nDownload Brochure\n\n## Hyundai Creta 2026 Brochure\n\n## Hyundai Creta Colours\n\nHyundai Creta 2026 is available/sold in the following colours in India.\n\nTitanium Black\n\nTitanium Black\n\n## Hyundai Creta Mileage\n\nHyundai Creta mileage claimed by owners is 15.4 to 18.17 kmpl.\n\n| Powertrain | User Reported Mileage |\n --- |\n| Petrol - Manual (1497 cc) | 15.4 kmpl |\n| Diesel - Manual (1493 cc) | 18.17 kmpl |\n| Petrol - Automatic (CVT) (1497 cc) | 17 kmpl |\n| Diesel - Automatic (TC) (1493 cc) | 17 kmpl |\n\nWrite Review\n\nWrite a detailed review and you can win Amazon voucher worth Rs. 2,000\n\n## Hyundai Creta User Reviews\n\n Creta\n Creta [2023-2024]\n\n4.6/5\n\n(712 Ratings) 200 Reviews\n\n4.6\n\nExterior\n\n4.7\n\nComfort\n\n4.6\n\nPerformance\n\n4.2\n\nFuel Economy\n\n4.5\n\nValue For Money\n\nAll Reviews (200) [...] | Car | Image | Avg. Ex-Showroom Price | User Rating | Mileage ARAI (kmpl) | Engine (cc) | Fuel Type | Transmission | Safety | Power (bhp) | Compare |\n ---  ---  ---  ---  --- \n| Hyundai Creta | Rs. 10.91 Lakh  onwards | 4.6/5  712 Ratings | — | 1482 to 1497 | Petrol & Diesel | Manual & Automatic | — | 113 to 158 | — |\n| German DNA Ad  Volkswagen Taigun | Rs. 11.00 Lakh  onwards | 4.7/5  62 Ratings | 19 to 20 | 999 to 1498 | Petrol | Manual & Automatic | 5 Star (Global NCAP) | 114 to 148 |  |\n| Kia Seltos | Rs. 11.00 Lakh  onwards | 4.5/5  202 Ratings | — | 1482 to 1497 | Petrol & Diesel | Manual, Automatic & Clutchless Manual (IMT) | 5 Star (Bharat NCAP) | 113 to 158 |  | [...] CarWale\n\n# Hyundai Creta\n\nExpert Rating\n\n|\n\nUser Rating (712)\n\nThe Hyundai Creta has premium looks, consistent quality, and a spacious and feature-rich cabin (including blind-spot monitoring, 360-degree camera, and panoramic sunroof). Both of its engine options, the 1.5-litre petrol or diesel, dri [truncated]",
+                  "score": 0.7294234,
+                  "published_date": null
+                },
+                {
+                  "title": "Hyundai Creta Price 2026 - Variants, Features & Reviews",
+                  "url": "https://ackodrive.com/cars/hyundai-creta",
+                  "content": "Available fuel options for this vehicle. Petrol • Diesel. ARAI mileage. Info. Mileage as per Automotive Research Association of India. 10.5 - 21.8 kmpl.",
+                  "score": 0.6981237,
+                  "published_date": null
+                }
+              ],
+              "instruction": "Use content only when it supports the claim. The score is relevance, not factual verification. If evidence is insufficient, say so."
+            }
+          }
+        ],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Hyundai Creta’s official ARAI‐certified mileage in India is about 17.4 kmpl for the 1.5 L petrol version and roughly 21.8 kmpl for the 1.5 L diesel version (figures can vary slightly across manual or automatic trims)."
+      },
+      "score": {
+        "id": "cw-eval-024",
+        "category": "hinglish_understanding",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "intent-understanding quality is qualitative; requires human judgement"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

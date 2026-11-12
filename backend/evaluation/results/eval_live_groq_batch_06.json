@@ -1,0 +1,87 @@
+{
+  "mode": "live",
+  "providers_requested": [
+    "groq"
+  ],
+  "total_cases": 3,
+  "results": [
+    {
+      "id": "cw-eval-011",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "A weak‐blowing AC is usually caused by something simple that you can check yourself first. \n\n1. **Cabin air filter** – If it’s clogged, airflow to the vents is restricted. Locate the filter (often behind the glove box), remove it and see if it’s dirty; replace it if needed. \n2. **Fan speed setting** – Make sure the AC is set to the highest fan speed and that the “recirculate” mode isn’t turned off by mistake. \n3. **Refrigerant level** – Low refrigerant can make the system feel weak. If the AC still feels cool but the airflow is low, the fan motor or blower may be the issue; otherwise, a recharge may be required. \n\nIf the filter and settings are fine and the airflow remains weak, it’s best to have a technician inspect the blower motor and refrigerant charge."
+      },
+      "score": {
+        "id": "cw-eval-011",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-012",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Generally, for most Indian cars you’ll want to change the engine oil every 5,000–10,000 km (or about every 6 months) if you’re using mineral oil, and roughly every 10,000–15,000 km (or 12 months) with synthetic oil. A full service is typically recommended at about 10,000 km or every 6 months, whichever comes first, but you should always follow the interval in your owner’s manual. If you drive a lot in heavy traffic, dusty roads, or do frequent short trips, consider tightening the schedule by about 20 % to keep the engine healthy. Regularly checking oil level, coolant, brake fluid and tyre pressure between services also helps avoid bigger issues."
+      },
+      "score": {
+        "id": "cw-eval-012",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    },
+    {
+      "id": "cw-eval-013",
+      "category": "maintenance_troubleshooting",
+      "provider_requested": "groq",
+      "mode": "live",
+      "provider_used": "groq",
+      "evidence": {
+        "provider_used": "groq",
+        "calls": [],
+        "tool_output": null,
+        "reported_facts": {},
+        "reply": "Cold weather reduces a battery’s chemical activity, so it can’t generate enough power to start the engine. At the same time, winter increases the electrical load (headlights, heater, defrosters), draining the charge faster. If the battery is old or already weak, the cold can push it below the voltage needed for starting, making it die quickly. Keeping the battery warm, checking the electrolyte level (if it’s a serviceable type), and ensuring the terminals are clean can help mitigate the problem."
+      },
+      "score": {
+        "id": "cw-eval-013",
+        "category": "maintenance_troubleshooting",
+        "scoring": {
+          "pass": null
+        },
+        "review": {
+          "human_review_required": true,
+          "reason": "diagnostic/advice content is subjective; requires human rubric grading"
+        }
+      },
+      "outcome": "human_review_required"
+    }
+  ]
+}

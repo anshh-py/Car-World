@@ -31,6 +31,7 @@ class Settings(BaseModel):
     groq_model: str = "openai/gpt-oss-120b"
     groq_cooldown_seconds: int = Field(default=60, ge=0)
     qwen3_endpoint_url: str | None = None
+    qwen3_space_id: str | None = None
     qwen3_model_id: str = "qwen3-4b-finetuned"
     qwen3_timeout: float = 60.0
     qwen3_supports_tools: bool = False
@@ -94,6 +95,7 @@ class Settings(BaseModel):
             groq_model=os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b"),
             groq_cooldown_seconds=int(os.environ.get("GROQ_COOLDOWN_SECONDS", "60")),
             qwen3_endpoint_url=os.environ.get("QWEN3_ENDPOINT_URL") or None,
+            qwen3_space_id=os.environ.get("QWEN3_SPACE_ID") or None,
             qwen3_model_id=os.environ.get("QWEN3_MODEL_ID", "qwen3-4b-finetuned"),
             qwen3_timeout=float(os.environ.get("QWEN3_TIMEOUT", "60.0")),
             qwen3_supports_tools=os.environ.get("QWEN3_SUPPORTS_TOOLS", "false").lower() == "true",
