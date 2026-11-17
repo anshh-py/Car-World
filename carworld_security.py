@@ -157,6 +157,35 @@ def contains_instruction_like_text(value: str) -> bool:
                for pattern in _INSTRUCTION_PATTERNS)
 
 
+# High-confidence abusive / harmful execution intents. These are deliberately
+# narrow to avoid false positives on normal automotive content. They target
+# requests to execute arbitrary code/commands, reach outside the application,
+# or perform destructive database actions.
+_ABUSIVE_PATTERNS = tuple(re.compile(pattern, re.I) for pattern in (
+    r"\b(?:run|execute|invoke|call|launch)\s+(?:a\s+)?(?:shell|terminal|command|bash|powershell|script)\b",
+    r"\b(?:write|create|delete|overwrite|modify|move|rename)\s+(?:a\s+)?(?:file|script|executable)\s+on\s+(?:the\s+)?(?:server|system|host|machine)\b",
+    r"\b(?:ssh|telnet|ping|nmap|curl)\s+to\s+(?:a\s+)?(?:server|host|ip|address)\b",
+    r"\b(?:drop|truncate|delete from|wipe)\s+(?:the\s+)?(?:database|table|schema|all data)\b",
+    r"\b(?:send|exfiltrate|post|upload)\s+(?:data|files|info|requests|keys)\s+to\s+an?\s+external\s+(?:server|url|endpoint)\b",
+    r"\bbypass\s+(?:the\s+)?(?:security|firewall|authentication|rate limit|moderation)\b",
+    r"\b(?:gain|obtain)\s+(?:unauthorized|root|admin)\s+access\b",
+    r"\bsend\s+(?:spam|malware|phishing|abuse)\s+(?:messages|emails|requests|content)\b",
+    r"\b(?:deface|vandalize|hack|take down|ddos)\s+(?:a|the)?\s*(?:website|site|application|server|service)\b",
+))
+
+
+def contains_abusive_content(value: str) -> bool:
+    """Deterministic light moderation: high-confidence harmful execution intents.
+
+    Used as one deterministic input guardrail (not the only defense). It is
+    intentionally narrow so legitimate automotive questions are never flagged.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return False
+    return any(pattern.search(candidate) for candidate in _decoded_text_variants(value)
+               for pattern in _ABUSIVE_PATTERNS)
+
+
 def sanitize_untrusted_text(value: str, *, max_length: int = MAX_TOOL_STRING_CHARS) -> str:
     was_truncated = len(value) > max_length
     candidate = value[:max_length] if was_truncated else value

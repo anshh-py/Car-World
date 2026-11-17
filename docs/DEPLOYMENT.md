@@ -43,21 +43,29 @@ secret manager / environment (`CARWORLD_ENV=production`).
 
 **Optional but recommended**
 
-| Variable                     | Purpose                                 | Default               |
-| ---------------------------- | --------------------------------------- | --------------------- |
-| `GROQ_MODEL`                 | Groq model id                           | `openai/gpt-oss-120b` |
-| `GROQ_COOLDOWN_SECONDS`      | Cooldown between chat requests          | `60`                  |
-| `TAVILY_API_KEY`             | Enables web/tool fallback               | (none)                |
-| `QWEN3_ENDPOINT_URL`         | Qwen3 Gradio Space endpoint             | (none)                |
-| `QWEN3_SPACE_ID`             | Qwen3 Space id                          | (none)                |
-| `QWEN3_MODEL_ID`             | Qwen3 model id                          | `qwen3-4b-finetuned`  |
-| `QWEN3_TIMEOUT`              | Qwen3 request timeout (seconds)         | `60.0`                |
-| `QWEN3_SUPPORTS_TOOLS`       | Whether the Space supports tools        | `false`               |
-| `HUGGINGFACE_TOKEN`          | HF token for private/gated Space        | (none)                |
-| `SUPABASE_URL`               | Supabase project URL (optional sign-in) | (none)                |
-| `SUPABASE_ANON_KEY`          | Supabase anon key (public)              | (none)                |
-| `CHAT_RATE_LIMIT_PER_MINUTE` | Per-minute chat limit                   | `5` (prod)            |
-| `CHAT_RATE_LIMIT_PER_DAY`    | Per-day chat limit                      | `40` (prod)           |
+| Variable                              | Purpose                                          | Default               |
+| ------------------------------------- | ------------------------------------------------ | --------------------- |
+| `GROQ_MODEL`                          | Groq model id                                    | `openai/gpt-oss-120b` |
+| `GROQ_COOLDOWN_SECONDS`               | Cooldown between chat requests                   | `60`                  |
+| `TAVILY_API_KEY`                      | Enables web/tool fallback                        | (none)                |
+| `QWEN3_ENDPOINT_URL`                  | Qwen3 Gradio Space endpoint                      | (none)                |
+| `QWEN3_SPACE_ID`                      | Qwen3 Space id                                   | (none)                |
+| `QWEN3_MODEL_ID`                      | Qwen3 model id                                   | `qwen3-4b-finetuned`  |
+| `QWEN3_TIMEOUT`                       | Qwen3 request timeout (seconds)                  | `60.0`                |
+| `QWEN3_SUPPORTS_TOOLS`                | Whether the Space supports tools                 | `false`               |
+| `HUGGINGFACE_TOKEN`                   | HF token for private/gated Space                 | (none)                |
+| `SUPABASE_URL`                        | Supabase project URL (optional sign-in)          | (none)                |
+| `SUPABASE_ANON_KEY`                   | Supabase anon key (public)                       | (none)                |
+| `CHAT_RATE_LIMIT_PER_MINUTE`          | Per-minute chat limit                            | `5` (prod)            |
+| `CHAT_RATE_LIMIT_PER_DAY`             | Per-day chat limit                               | `40` (prod)           |
+| `SEMANTIC_CACHE_ENABLED`              | Opt-in semantic cache (guest-only, history-free) | `false`               |
+| `SEMANTIC_CACHE_TTL_SECONDS`          | Cache entry TTL                                  | `300`                 |
+| `SEMANTIC_CACHE_MAX_ENTRIES`          | Maximum cache entries                            | `512`                 |
+| `SEMANTIC_CACHE_SIMILARITY_THRESHOLD` | Lexical similarity threshold                     | `0.9`                 |
+| `GROQ_INPUT_PRICE_PER_1M`             | Groq input list price (USD/1M)                   | (none)                |
+| `GROQ_OUTPUT_PRICE_PER_1M`            | Groq output list price (USD/1M)                  | (none)                |
+| `QWEN3_INPUT_PRICE_PER_1M`            | Qwen3 input list price (USD/1M)                  | (none)                |
+| `QWEN3_OUTPUT_PRICE_PER_1M`           | Qwen3 output list price (USD/1M)                 | (none)                |
 
 > **Local dev difference**: in development the backend reads
 > `POSTGRES_HOST/PORT/USER/PASSWORD/DB` (defaults to `localhost:5432/carworld`)
@@ -257,3 +265,80 @@ Point the platform health check at `/health` (or `/api/v1/health`).
 - No persistent local filesystem is required at runtime; all state is in
   PostgreSQL. The only filesystem reads are the bundled dataset used by the
   import script (already inside the image).
+
+## 8. Performance, cost & security optimization
+
+This section summarises the optimization and hardening layers that sit on top
+of the core providers and agent. All are optional, server-side, and do not
+change the public API contract.
+
+### Prompt optimization
+
+- The automotive system prompt (`SYSTEM_PROMPT` in `app.py`) is organized into
+  clear sections (PERSONALITY, SCOPE, ACCURACY AND WEB EVIDENCE, UNTRUSTED
+  DATA, FINAL ANSWER PRESENTATION, IDENTITY) and separates trusted system
+  instructions from untrusted user/history/tool content.
+- Measured with `scripts/benchmark_prompt.py` (heuristic estimator):
+  ~841 → ~764 estimated tokens (~9% smaller) with every core rule preserved.
+
+### Token & cost accounting
+
+- `app.modules.chat.usage` tracks provider-reported input/output tokens per
+  provider and computes _estimated_ cost only when prices are configured via
+  `GROQ_*_PRICE_PER_1M` / `QWEN3_*_PRICE_PER_1M`. Estimates are explicitly
+  labelled as not-actual-billing.
+- Providers that do not report usage (Qwen3 Gradio Space) are flagged with
+  `usage_unavailable` rather than fabricating numbers.
+
+### Bounded conversation context
+
+- `carworld_security.prepare_agent_messages` bounds history (20 messages /
+  6000 chars), demotes browser-supplied history to untrusted data, and never
+  duplicates the system prompt.
+
+### Semantic cache
+
+- `app.modules.chat.semantic_cache` is an opt-in (`SEMANTIC_CACHE_ENABLED`),
+  size/TTL-bounded, lexical-similarity cache. It is served **only** for guest
+  requests with no history, and refuses to cache PII, instruction-like input,
+  or context-dependent answers, so cached responses are never shared across
+  users or stale.
+
+### Batch processing
+
+- `app.modules.chat.batch.BatchProcessor` is a generic, offline-only batch
+  runner (bounded concurrency, retries with backoff, partial-failure handling,
+  structured results). It is not used in the interactive chat path.
+- The evaluation runner (`backend/evaluation/runner.py`) uses the real agent
+  and providers for dataset/bulk assessment.
+
+### Observability
+
+- `app.modules.chat.metrics` records counters and latency distributions
+  (provider calls, fallbacks, cache hit/miss, tool execution, agent init,
+  security events). `app.modules.chat.metrics.diagnostics()` returns a
+  developer-readable performance + cost digest. All state is in-memory and
+  reset on restart; no external analytics service is used.
+
+### Security hardening
+
+- `carworld_security.py` provides layered, deterministic defenses: prompt-
+  injection and jailbreak pattern detection (including decoding/obfuscation),
+  PII/secret redaction (Indian phone numbers, Aadhaar-like and PAN-like IDs,
+  emails, API keys/tokens), tool allow-lists and argument validation, output
+  validation/redaction, and a narrow abuse/moderation gate.
+- Request-body size limiting and security headers are applied via middleware in
+  `app.core.middleware`.
+- Trust boundaries are enforced in the system prompt and via
+  `prepare_agent_messages`, so retrieved web content and client history are
+  never treated as instructions.
+
+Known limitations:
+
+- First-token latency is not measured in the non-streaming FastAPI chat path
+  (streaming is provided by the Gradio app); total and provider latency are
+  recorded.
+- Older conversation turns are bounded but not LLM-summarized; history that
+  exceeds the bound is dropped oldest-first.
+- Rate limiting and metrics are per-process/in-memory; scale horizontally with
+  a shared store if hard global limits are required.

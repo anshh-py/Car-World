@@ -20,7 +20,13 @@ from app.modules.chat.schemas import ChatRequest, ChatResponse
 project_root_string = str(PROJECT_ROOT)
 if project_root_string not in sys.path:
     sys.path.insert(0, project_root_string)
-from carworld_security import redact_sensitive_text, validate_model_output
+from carworld_security import (
+    redact_sensitive_text,
+    validate_model_output,
+    contains_abusive_content,
+)
+from app.modules.chat.metrics import metrics
+from app.modules.chat.semantic_cache import semantic_cache, should_cache
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["chat"])
@@ -55,6 +61,7 @@ async def enforce_rate_limit(
             active_windows.append((requests, limit, window_seconds))
             if len(requests) >= limit:
                 retry_after = max(1, math.ceil(window_seconds - (now - requests[0])))
+                metrics.incr("sec.rate_limit_events")
                 raise HTTPException(
                     status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                     detail=f"Chat limit reached. Please retry in {retry_after} seconds.",
@@ -93,15 +100,48 @@ async def chat(
     _user: AuthenticatedUser | None = Depends(get_optional_current_user),
 ) -> ChatResponse:
     message = body.message.strip()
+    metrics.incr("perf.requests")
+    _request_start = time.perf_counter()
     if not message:
         raise HTTPException(status_code=422, detail="Message cannot be empty.")
 
-    conversation = [entry.model_dump() for entry in body.history]
+    # Lightweight deterministic moderation gate (one layer, not the only defense).
+    if contains_abusive_content(message):
+        metrics.incr("sec.moderation_events")
+        raise HTTPException(
+            status_code=422,
+            detail="That request is not supported by CarWorld AI.",
+        )
+
+    history_records = [entry.model_dump() for entry in body.history]
+    conversation = list(history_records)
     conversation.append({"role": "user", "content": message})
+
+    # Opt-in semantic cache (default off). Only consulted for guests without
+    # history so cached answers are never shared across users or contexts.
+    if semantic_cache.enabled and _user is None and should_cache(message, history_records):
+        _lookup_start = time.perf_counter()
+        cached = semantic_cache.lookup(message)
+        metrics.record_latency("latency.cache_lookup", time.perf_counter() - _lookup_start)
+        if cached is not None:
+            metrics.incr("perf.cache_hits")
+            validated_cache = validate_model_output(cached)
+            metrics.record_latency("latency.total", time.perf_counter() - _request_start)
+            return ChatResponse(reply=validated_cache)
+        metrics.incr("perf.cache_misses")
+
     try:
+        _agent_start = time.perf_counter()
         agent = get_agent()
+        metrics.record_latency("latency.agent_init", time.perf_counter() - _agent_start)
         replies = await run_in_threadpool(lambda: list(agent.run(conversation)))
         reply = validate_model_output(replies[-1] if replies else None)
+        metrics.record_latency("latency.total", time.perf_counter() - _request_start)
+        if reply == "Sorry, I couldn't provide a safe response to that request. Please try again.":
+            metrics.incr("sec.output_validation_failures")
+        # Store in the cache only when enabled, safe, guest-only, and valid.
+        if semantic_cache.enabled and _user is None and should_cache(message, history_records):
+            semantic_cache.store(message, reply)
         return ChatResponse(reply=reply)
     except BadRequestError as error:
         provider_type, provider_code, provider_param, message, generation_reason = (

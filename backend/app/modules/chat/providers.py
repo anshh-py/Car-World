@@ -20,6 +20,8 @@ except ImportError:  # pragma: no cover - environment dependent
     gradio_client = None  # type: ignore[assignment]
 
 from app.core.config import settings
+from app.modules.chat.metrics import metrics
+from app.modules.chat.usage import usage
 
 logger = logging.getLogger(__name__)
 
@@ -92,6 +94,12 @@ class GroqProvider(Provider):
 
         response = self._client.chat.completions.create(**kwargs)
         message = response.choices[0].message
+
+        _usage = getattr(response, "usage", None)
+        input_tokens = getattr(_usage, "prompt_tokens", None) if _usage is not None else None
+        output_tokens = getattr(_usage, "completion_tokens", None) if _usage is not None else None
+        usage.record("groq", input_tokens=input_tokens, output_tokens=output_tokens)
+        metrics.incr("perf.provider_calls")
 
         tool_calls = None
         if message.tool_calls:
@@ -362,6 +370,12 @@ class Qwen3Provider(Provider):
             choice = data.get("choices", [{}])[0]
             message = choice.get("message", {})
 
+            resp_usage = data.get("usage") if isinstance(data, dict) else None
+            input_tokens = resp_usage.get("prompt_tokens") if isinstance(resp_usage, dict) else None
+            output_tokens = resp_usage.get("completion_tokens") if isinstance(resp_usage, dict) else None
+            usage.record(self.name, input_tokens=input_tokens, output_tokens=output_tokens)
+            metrics.incr("perf.provider_calls")
+
             tool_calls = None
             if self._supports_tool_calling and message.get("tool_calls"):
                 tool_calls = message["tool_calls"]
@@ -473,12 +487,15 @@ class ProviderRouter:
         # Check if Groq is available for retry
         if self._is_groq_available():
             try:
+                _start = time.perf_counter()
                 response = self._groq.chat_completion(
                     messages=messages,
                     tools=tools,
                     tool_choice=tool_choice,
                     temperature=temperature,
                 )
+                metrics.record_latency("provider.groq", time.perf_counter() - _start)
+                metrics.incr("perf.groq_requests")
                 logger.info("Groq request succeeded")
                 return response
 
@@ -490,6 +507,7 @@ class ProviderRouter:
                     logger.error("Qwen3 fallback not configured")
                     raise RuntimeError("Groq rate limit exceeded and no fallback provider configured") from e
 
+                metrics.incr("perf.fallback_activated")
                 return self._handle_qwen3_fallback(
                     messages, tools, tool_choice, temperature, "Groq rate limit hit"
                 )
@@ -503,6 +521,7 @@ class ProviderRouter:
                         logger.error("Qwen3 fallback not configured")
                         raise RuntimeError("Groq rate limit exceeded and no fallback provider configured") from e
 
+                    metrics.incr("perf.fallback_activated")
                     return self._handle_qwen3_fallback(
                         messages, tools, tool_choice, temperature, "Groq HTTP 429"
                     )
@@ -513,6 +532,7 @@ class ProviderRouter:
             logger.info("Groq exhausted, using Qwen3 directly")
             if self._qwen3 is None:
                 raise RuntimeError("Groq exhausted and no fallback provider configured")
+            metrics.incr("perf.fallback_activated")
             return self._handle_qwen3_fallback(
                 messages, tools, tool_choice, temperature, "Groq previously exhausted"
             )
@@ -547,12 +567,16 @@ class ProviderRouter:
                 tools = None
                 tool_choice = "none"
 
-        return self._qwen3.chat_completion(
+        _start = time.perf_counter()
+        response = self._qwen3.chat_completion(
             messages=messages,
             tools=tools,
             tool_choice=tool_choice,
             temperature=temperature,
         )
+        metrics.record_latency("provider.qwen3", time.perf_counter() - _start)
+        metrics.incr("perf.qwen3_requests")
+        return response
 
     def reset_groq_state(self) -> None:
         """Reset the Groq exhaustion state (e.g., for new session or after retry-after)."""

@@ -36,6 +36,14 @@ class Settings(BaseModel):
     qwen3_timeout: float = 60.0
     qwen3_supports_tools: bool = False
     huggingface_token: str | None = None
+    semantic_cache_enabled: bool = False
+    semantic_cache_ttl_seconds: float = Field(default=300.0, ge=0)
+    semantic_cache_max_entries: int = Field(default=512, ge=1)
+    semantic_cache_similarity_threshold: float = Field(default=0.9, ge=0.0, le=1.0)
+    groq_input_price_per_1m: float | None = None
+    groq_output_price_per_1m: float | None = None
+    qwen3_input_price_per_1m: float | None = None
+    qwen3_output_price_per_1m: float | None = None
 
     @classmethod
     def from_environment(cls) -> "Settings":
@@ -71,6 +79,12 @@ class Settings(BaseModel):
         default_minute_limit, default_day_limit = (
             (5, 40) if environment == "production" else (30, 300)
         )
+        def _opt_float(name: str) -> float | None:
+            raw = os.environ.get(name, "").strip()
+            if not raw:
+                return None
+            return float(raw)
+
         return cls(
             carworld_env=environment,
             database_url_override=normalized_database_url,
@@ -100,6 +114,16 @@ class Settings(BaseModel):
             qwen3_timeout=float(os.environ.get("QWEN3_TIMEOUT", "60.0")),
             qwen3_supports_tools=os.environ.get("QWEN3_SUPPORTS_TOOLS", "false").lower() == "true",
             huggingface_token=os.environ.get("HUGGINGFACE_TOKEN") or os.environ.get("HF_TOKEN") or None,
+            semantic_cache_enabled=os.environ.get("SEMANTIC_CACHE_ENABLED", "false").lower() == "true",
+            semantic_cache_ttl_seconds=float(os.environ.get("SEMANTIC_CACHE_TTL_SECONDS", "300")),
+            semantic_cache_max_entries=int(os.environ.get("SEMANTIC_CACHE_MAX_ENTRIES", "512")),
+            semantic_cache_similarity_threshold=float(
+                os.environ.get("SEMANTIC_CACHE_SIMILARITY_THRESHOLD", "0.9")
+            ),
+            groq_input_price_per_1m=_opt_float("GROQ_INPUT_PRICE_PER_1M"),
+            groq_output_price_per_1m=_opt_float("GROQ_OUTPUT_PRICE_PER_1M"),
+            qwen3_input_price_per_1m=_opt_float("QWEN3_INPUT_PRICE_PER_1M"),
+            qwen3_output_price_per_1m=_opt_float("QWEN3_OUTPUT_PRICE_PER_1M"),
         )
 
     @property
