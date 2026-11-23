@@ -12,7 +12,13 @@ from dataclasses import dataclass
 from typing import Any
 
 import httpx
-from groq import APIStatusError, Groq, RateLimitError
+from groq import (
+    APIConnectionError,
+    APIStatusError,
+    APITimeoutError,
+    Groq,
+    RateLimitError,
+)
 
 try:  # Gradio client is optional at import time; a missing install is reported per-request.
     import gradio_client
@@ -444,12 +450,18 @@ def requires_tool_execution(tools: list[dict] | None) -> bool:
 
 
 class ProviderRouter:
-    """Routes requests to Groq primary with Qwen3 fallback on rate limit.
+    """Routes requests to Groq primary with Qwen3 fallback on provider failure.
+
+    Falls back to Qwen3 when Groq cannot provide an answer: HTTP 429 rate
+    limits, HTTP 5xx server errors, request timeouts, connection/network
+    failures, and HTTP 401/403 authentication/permission failures. Client-side
+    errors such as HTTP 400/422 are preserved rather than falling back.
 
     Implements automatic recovery:
-    - On HTTP 429/RateLimitError, respects Retry-After header or uses configured cooldown
+    - On qualifying failure, marks Groq unavailable (Retry-After or configured cooldown)
+    - Routes subsequent requests directly to Qwen3 during cooldown
     - After cooldown expires, attempts Groq again
-    - If Groq returns 429 again, reactivates fallback
+    - If Groq fails again, reactivates fallback
     - Thread-safe for concurrent requests
     """
 
@@ -476,6 +488,31 @@ class ProviderRouter:
         except (ValueError, TypeError):
             pass
         return None
+
+    def _classify_groq_error(self, error: BaseException) -> tuple[bool, str]:
+        """Classify a Groq failure into (should_fallback, reason).
+
+        Fallback is triggered only when Groq cannot provide an answer: HTTP 429
+        rate limits, HTTP 5xx server errors, HTTP 401/403 authentication/
+        permission failures, request timeouts, and connection/network failures.
+        Client-side errors (e.g. HTTP 400/422) are non-qualifying so the
+        original error is preserved instead of being hidden by a fallback.
+        """
+        status_code = getattr(getattr(error, "response", None), "status_code", None)
+        if status_code is not None:
+            if status_code == 429:
+                return True, "Groq HTTP 429 (rate limit)"
+            if status_code in (401, 403):
+                return True, f"Groq HTTP {status_code} (auth/permission)"
+            if status_code >= 500:
+                return True, f"Groq HTTP {status_code} (server error)"
+
+        if isinstance(error, APITimeoutError):
+            return True, "Groq request timeout"
+        if isinstance(error, APIConnectionError):
+            return True, "Groq connection failure"
+
+        return False, ""
 
     def _is_groq_available(self) -> bool:
         """Check if Groq is available for retry (thread-safe)."""
@@ -525,33 +562,30 @@ class ProviderRouter:
                 logger.info("Groq request succeeded")
                 return response
 
-            except RateLimitError as e:
-                retry_after = self._extract_retry_after(e)
+            except (APIStatusError, APIConnectionError) as e:
+                should_fallback, reason = self._classify_groq_error(e)
+                if not should_fallback:
+                    # Preserve the original error for client-side failures
+                    # (e.g. HTTP 400/422) rather than hiding them behind fallback.
+                    raise
+
+                retry_after = (
+                    self._extract_retry_after(e)
+                    if isinstance(e, APIStatusError)
+                    else None
+                )
                 self._mark_groq_exhausted(retry_after)
 
                 if self._qwen3 is None:
                     logger.error("Qwen3 fallback not configured")
-                    raise RuntimeError("Groq rate limit exceeded and no fallback provider configured") from e
+                    raise RuntimeError(
+                        "Groq unavailable and no fallback provider configured"
+                    ) from e
 
                 metrics.incr("perf.fallback_activated")
                 return self._handle_qwen3_fallback(
-                    messages, tools, tool_choice, temperature, "Groq rate limit hit"
+                    messages, tools, tool_choice, temperature, reason
                 )
-
-            except APIStatusError as e:
-                if e.status_code == 429:
-                    retry_after = self._extract_retry_after(e)
-                    self._mark_groq_exhausted(retry_after)
-
-                    if self._qwen3 is None:
-                        logger.error("Qwen3 fallback not configured")
-                        raise RuntimeError("Groq rate limit exceeded and no fallback provider configured") from e
-
-                    metrics.incr("perf.fallback_activated")
-                    return self._handle_qwen3_fallback(
-                        messages, tools, tool_choice, temperature, "Groq HTTP 429"
-                    )
-                raise
 
         else:
             # Groq is exhausted, use Qwen3 directly

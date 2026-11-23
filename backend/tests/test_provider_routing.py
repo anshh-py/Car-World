@@ -172,8 +172,8 @@ def test_groq_daily_quota_429_qwen3_called(mock_providers):
     assert response.provider_name == "qwen3_fallback"
 
 
-def test_groq_auth_failure_no_qwen3_fallback(mock_providers):
-    """Groq authentication failure: no Qwen3 fallback."""
+def test_groq_401_auth_failure_triggers_qwen3_fallback(mock_providers):
+    """Groq HTTP 401 authentication failure: Qwen3 fallback is triggered."""
     from groq import AuthenticationError
     import httpx
 
@@ -181,19 +181,70 @@ def test_groq_auth_failure_no_qwen3_fallback(mock_providers):
     auth_error = AuthenticationError("Invalid API key", response=mock_response, body={})
 
     groq = MockGroqProvider(should_fail_with=auth_error)
-    qwen3 = MockQwen3Provider([ProviderResponse(content="Should not be called")])
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Qwen3 fallback success", provider_name="qwen3_fallback")])
 
     router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
 
-    with pytest.raises(AuthenticationError):
-        router.chat_completion(
-            messages=[{"role": "user", "content": "Hello"}],
-            tools=None,
-            tool_choice="none",
-        )
+    response = router.chat_completion(
+        messages=[{"role": "user", "content": "Hello"}],
+        tools=None,
+        tool_choice="none",
+    )
 
+    assert response.content == "Qwen3 fallback success"
+    assert response.provider_name == "qwen3_fallback"
     assert len(groq.calls) == 1
-    assert len(qwen3.calls) == 0
+    assert len(qwen3.calls) == 1
+
+
+def test_groq_403_permission_failure_triggers_qwen3_fallback():
+    """Groq HTTP 403 permission failure: Qwen3 fallback is triggered."""
+    from groq import PermissionDeniedError
+    import httpx
+
+    mock_response = httpx.Response(403, request=httpx.Request("POST", "https://api.groq.com"))
+    perm_error = PermissionDeniedError("Permission denied", response=mock_response, body={})
+
+    groq = MockGroqProvider(should_fail_with=perm_error)
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Qwen3 fallback success", provider_name="qwen3_fallback")])
+
+    router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
+
+    response = router.chat_completion(
+        messages=[{"role": "user", "content": "Hello"}],
+        tools=None,
+        tool_choice="none",
+    )
+
+    assert response.content == "Qwen3 fallback success"
+    assert response.provider_name == "qwen3_fallback"
+    assert len(groq.calls) == 1
+    assert len(qwen3.calls) == 1
+
+
+def test_groq_500_server_error_triggers_qwen3_fallback():
+    """Groq HTTP 500 server error: Qwen3 fallback is triggered."""
+    from groq import InternalServerError
+    import httpx
+
+    mock_response = httpx.Response(500, request=httpx.Request("POST", "https://api.groq.com"))
+    server_error = InternalServerError("Internal server error", response=mock_response, body={})
+
+    groq = MockGroqProvider(should_fail_with=server_error)
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Qwen3 fallback success", provider_name="qwen3_fallback")])
+
+    router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
+
+    response = router.chat_completion(
+        messages=[{"role": "user", "content": "Hello"}],
+        tools=None,
+        tool_choice="none",
+    )
+
+    assert response.content == "Qwen3 fallback success"
+    assert response.provider_name == "qwen3_fallback"
+    assert len(groq.calls) == 1
+    assert len(qwen3.calls) == 1
 
 
 def test_groq_invalid_request_no_qwen3_fallback(mock_providers):
@@ -218,6 +269,80 @@ def test_groq_invalid_request_no_qwen3_fallback(mock_providers):
 
     assert len(groq.calls) == 1
     assert len(qwen3.calls) == 0
+
+
+def test_groq_422_unprocessable_preserves_error(mock_providers):
+    """Groq HTTP 422: client error preserved, no fallback."""
+    from groq import UnprocessableEntityError
+    import httpx
+
+    mock_response = httpx.Response(422, request=httpx.Request("POST", "https://api.groq.com"))
+    unprocessable_error = UnprocessableEntityError("Unprocessable entity", response=mock_response, body={})
+
+    groq = MockGroqProvider(should_fail_with=unprocessable_error)
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Should not be called")])
+
+    router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
+
+    with pytest.raises(UnprocessableEntityError):
+        router.chat_completion(
+            messages=[{"role": "user", "content": "Hello"}],
+            tools=None,
+            tool_choice="none",
+        )
+
+    assert len(groq.calls) == 1
+    assert len(qwen3.calls) == 0
+
+
+def test_groq_timeout_triggers_qwen3_fallback():
+    """Groq request timeout: Qwen3 fallback is triggered."""
+    from groq import APITimeoutError
+    import httpx
+
+    request = httpx.Request("POST", "https://api.groq.com")
+    timeout_error = APITimeoutError(request=request)
+
+    groq = MockGroqProvider(should_fail_with=timeout_error)
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Qwen3 fallback success", provider_name="qwen3_fallback")])
+
+    router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
+
+    response = router.chat_completion(
+        messages=[{"role": "user", "content": "Hello"}],
+        tools=None,
+        tool_choice="none",
+    )
+
+    assert response.content == "Qwen3 fallback success"
+    assert response.provider_name == "qwen3_fallback"
+    assert len(groq.calls) == 1
+    assert len(qwen3.calls) == 1
+
+
+def test_groq_connection_failure_triggers_qwen3_fallback():
+    """Groq connection/network failure: Qwen3 fallback is triggered."""
+    from groq import APIConnectionError
+    import httpx
+
+    request = httpx.Request("POST", "https://api.groq.com")
+    conn_error = APIConnectionError(message="Connection failed", request=request)
+
+    groq = MockGroqProvider(should_fail_with=conn_error)
+    qwen3 = MockQwen3Provider([ProviderResponse(content="Qwen3 fallback success", provider_name="qwen3_fallback")])
+
+    router = ProviderRouter(groq_provider=groq, qwen3_provider=qwen3)
+
+    response = router.chat_completion(
+        messages=[{"role": "user", "content": "Hello"}],
+        tools=None,
+        tool_choice="none",
+    )
+
+    assert response.content == "Qwen3 fallback success"
+    assert response.provider_name == "qwen3_fallback"
+    assert len(groq.calls) == 1
+    assert len(qwen3.calls) == 1
 
 
 def test_qwen3_success_validated_response(mock_providers):
