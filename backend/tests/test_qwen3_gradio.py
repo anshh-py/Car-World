@@ -66,9 +66,15 @@ class FakeGradioClient:
 
 @pytest.fixture(autouse=True)
 def clear_env_qwen3(monkeypatch):
-    """Remove Qwen3 env vars from the environment before each test."""
+    """Remove Qwen3 env vars from the environment before each test.
+
+    Most existing tests exercise the legacy fine-tuned / diagnostic path, so
+    base-only mode is disabled by default here; tests that target production
+    base-only mode explicitly enable it via QWEN3_USE_BASE=true.
+    """
     for key in ("QWEN3_ENDPOINT_URL", "QWEN3_SPACE_ID", "HUGGINGFACE_TOKEN", "HF_TOKEN"):
         monkeypatch.delenv(key, raising=False)
+    monkeypatch.setenv("QWEN3_USE_BASE", "false")
     monkeypatch.setattr(chat_routes, "settings", Settings.from_environment())
     # Point the providers-module settings at a live proxy of the current env so
     # that tests using monkeypatch.setenv() are reflected by create_qwen3_provider().
@@ -508,6 +514,107 @@ class TestGradioResponseMapping:
             assert response.tool_calls is None
 
 
+class TestBaseOnlyMode:
+    """Production base-only Qwen3 response handling (LoRA output never used)."""
+
+    def test_base_only_extracts_base_response(self, monkeypatch):
+        """Base-only mode returns base_model_response, never the fine-tuned output."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "test-org/test-space")
+        monkeypatch.setenv("QWEN3_USE_BASE", "true")
+        provider = create_qwen3_provider()
+        assert provider._use_base_model is True
+
+        with patch.object(provider, "_get_gradio_client") as MockClient:
+            MockClient.return_value = FakeGradioClient(
+                responses=[
+                    {
+                        "base_model_response": "ABS stops wheels locking under hard braking.",
+                        "finetuned_model_response": "For ABS, focus first on explaining the principle...",
+                    }
+                ]
+            )
+            response = provider.chat_completion(
+                messages=[{"role": "user", "content": "What does ABS do?"}],
+                tools=None,
+                tool_choice="none",
+            )
+
+        assert response.content == "ABS stops wheels locking under hard braking."
+        assert "focus first" not in response.content
+        assert response.provider_name == "qwen3_fallback"
+
+    def test_base_only_missing_base_raises_no_finetuned_substitution(self, monkeypatch):
+        """When base response is absent, fine-tuned output is never substituted."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "test-org/test-space")
+        monkeypatch.setenv("QWEN3_USE_BASE", "true")
+        provider = create_qwen3_provider()
+
+        with patch.object(provider, "_get_gradio_client") as MockClient:
+            MockClient.return_value = FakeGradioClient(
+                responses=[{"finetuned_model_response": "Fine-tuned output must not be used."}]
+            )
+            with pytest.raises(RuntimeError, match="unexpected response"):
+                provider.chat_completion(
+                    messages=[{"role": "user", "content": "hi"}],
+                    tools=None,
+                    tool_choice="none",
+                )
+
+    def test_base_only_empty_base_raises(self, monkeypatch):
+        """An empty base response is treated as invalid."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "test-org/test-space")
+        monkeypatch.setenv("QWEN3_USE_BASE", "true")
+        provider = create_qwen3_provider()
+
+        with patch.object(provider, "_get_gradio_client") as MockClient:
+            MockClient.return_value = FakeGradioClient(
+                responses=[
+                    {"base_model_response": "   \n\t ", "finetuned_model_response": "x"}
+                ]
+            )
+            with pytest.raises(RuntimeError, match="unexpected response"):
+                provider.chat_completion(
+                    messages=[{"role": "user", "content": "hi"}],
+                    tools=None,
+                    tool_choice="none",
+                )
+
+    def test_base_only_payload_requests_base_mode(self, monkeypatch):
+        """The Gradio payload asks for base-only inference when configured."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "test-org/test-space")
+        monkeypatch.setenv("QWEN3_USE_BASE", "true")
+        provider = create_qwen3_provider()
+
+        with patch.object(provider, "_get_gradio_client") as MockClient:
+            MockClient.return_value = FakeGradioClient(
+                responses=[{"base_model_response": "ok"}]
+            )
+            provider.chat_completion(
+                messages=[{"role": "user", "content": "hi"}], tools=None, tool_choice="none"
+            )
+
+        payload = json.loads(MockClient.return_value.predict_calls[0]["payload_text"])
+        assert payload["mode"] == "base"
+
+    def test_fine_mode_payload_omits_base_mode(self, monkeypatch):
+        """Diagnostic fine-tuned mode does not request base-only generation."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "test-org/test-space")
+        # autouse fixture sets QWEN3_USE_BASE=false by default.
+        provider = create_qwen3_provider()
+        assert provider._use_base_model is False
+
+        with patch.object(provider, "_get_gradio_client") as MockClient:
+            MockClient.return_value = FakeGradioClient(
+                responses=[{"finetuned_model_response": "ok"}]
+            )
+            provider.chat_completion(
+                messages=[{"role": "user", "content": "hi"}], tools=None, tool_choice="none"
+            )
+
+        payload = json.loads(MockClient.return_value.predict_calls[0]["payload_text"])
+        assert "mode" not in payload
+
+
 class TestGradioErrorHandling:
     """Test that Gradio errors are handled safely and never misclassified as Groq 429s."""
 
@@ -840,6 +947,40 @@ class TestIntegrationWithProviderRouter:
         assert response.content == "Qwen3 from router test."
         assert response.provider_name == "qwen3_fallback"
         assert len(mock_client.return_value.predict_calls) == 1
+        mock_groq_chat.assert_called_once()
+
+    def test_groq_429_routes_to_base_only_qwen3(self, monkeypatch):
+        """Groq 429 routes to Qwen3 and consumes the base response in base-only mode."""
+        monkeypatch.setenv("QWEN3_SPACE_ID", "org/space")
+        monkeypatch.setenv("QWEN3_USE_BASE", "true")
+        provider = create_qwen3_provider()
+        assert provider._use_base_model is True
+        groq = GroqProvider(api_key="sk_groq", model="openai/gpt-oss-120b")
+        rr = ProviderRouter(groq_provider=groq, qwen3_provider=provider)
+
+        mock_response = httpx.Response(
+            429,
+            request=httpx.Request("POST", "https://api.groq.com"),
+            headers={"Retry-After": "10"},
+        )
+        with patch.object(groq, "chat_completion") as mock_groq_chat, patch.object(
+            provider, "_get_gradio_client"
+        ) as MockClient:
+            mock_groq_chat.side_effect = RateLimitError(
+                "rate limit", response=mock_response, body={}
+            )
+            MockClient.return_value = FakeGradioClient(
+                responses=[{"base_model_response": "Base answer from router test."}]
+            )
+            response = rr.chat_completion(
+                messages=[{"role": "user", "content": "What is 2+2?"}],
+                tools=None,
+                tool_choice="none",
+            )
+
+        assert response.content == "Base answer from router test."
+        assert response.provider_name == "qwen3_fallback"
+        assert len(MockClient.return_value.predict_calls) == 1
         mock_groq_chat.assert_called_once()
 
     def test_existing_groq_cooldown_retries_groq_after_exhaustion(self, monkeypatch, router_with_gradio_qwen3):

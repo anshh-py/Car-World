@@ -123,12 +123,17 @@ class GroqProvider(Provider):
 
 
 class Qwen3Provider(Provider):
-    """Fine-tuned Qwen3-4B provider via Hugging Face Gradio Space or local endpoint.
+    """Qwen3-4B provider via Hugging Face Gradio Space or local endpoint.
 
     This provider implements the fallback path. When QWEN3_SPACE_ID is configured,
     requests are sent through the gradio_client to the private Hugging Face Space,
     whose chat_completion function returns both base_model_response and
-    finetuned_model_response; only the finetuned response is exposed.
+    finetuned_model_response.
+
+    Production uses the BASE Qwen3-4B response (QWEN3_USE_BASE=true). The LoRA
+    adapter (finetuned_model_response) is retained for diagnostics but is NOT
+    approved for production answer generation; in base-only mode the fine-tuned
+    output is never substituted.
 
     When QWEN3_SPACE_ID is unset and QWEN3_ENDPOINT_URL is set, the provider
     falls back to an OpenAI-compatible HTTP endpoint (/v1/chat/completions).
@@ -146,6 +151,7 @@ class Qwen3Provider(Provider):
         model_id: str = "qwen3-4b-finetuned",
         timeout: float = 60.0,
         supports_tool_calling: bool = False,
+        use_base_model: bool = True,
     ):
         self._http_endpoint = endpoint_url.rstrip("/") if endpoint_url else None
         self._space_id = space_id
@@ -153,6 +159,7 @@ class Qwen3Provider(Provider):
         self._model_id = model_id
         self._timeout = timeout
         self._supports_tool_calling = supports_tool_calling
+        self._use_base_model = use_base_model
         self._gradio_client = None
         self._client_lock = threading.Lock()
 
@@ -238,6 +245,12 @@ class Qwen3Provider(Provider):
             "max_tokens": 1024,
         }
 
+        # Ask the Space to generate only the base response in production. The
+        # Space still exposes the diagnostic comparison mode when this flag is
+        # absent/"fine".
+        if self._use_base_model:
+            payload["mode"] = "base"
+
         if tools and self._supports_tool_calling:
             payload["tools"] = tools
             payload["tool_choice"] = tool_choice
@@ -266,15 +279,14 @@ class Qwen3Provider(Provider):
         return self._parse_gradio_response(result)
 
     def _parse_gradio_response(self, result: Any) -> ProviderResponse:
-        """Extract finetuned_model_response from the Gradio prediction result.
+        """Extract the production response from the Gradio prediction result.
 
-        The Space returns a prediction result object containing
-        base_model_response and finetuned_model_response. Only the fine-tuned
-        response is exposed; it must be a non-empty string.
+        In production (base-only mode) the base_model_response is used. In the
+        diagnostic/fine-tuned mode the finetuned_model_response is used.
 
-        If finetuned_model_response is missing or invalid, we do NOT silently
-        substitute the base-model output: we raise a RuntimeError so the caller
-        can surface a safe fallback.
+        Missing or invalid response content raises a RuntimeError so the caller
+        can surface a safe fallback; the fine-tuned LoRA output is never silently
+        substituted in base-only mode.
         """
         try:
             if isinstance(result, dict):
@@ -284,15 +296,29 @@ class Qwen3Provider(Provider):
                 fine = getattr(result, "finetuned_model_response", None)
                 base = getattr(result, "base_model_response", None)
 
-            if isinstance(fine, str) and fine.strip():
+            if self._use_base_model:
+                # Production: consume the base Qwen3-4B answer only.
+                if isinstance(base, str) and base.strip():
+                    return ProviderResponse(
+                        content=base.strip(),
+                        tool_calls=None,  # QWEN3_SUPPORTS_TOOLS is currently false
+                        provider_name=self.name,
+                    )
+                logger.warning(
+                    "Qwen3 Gradio Space base-only mode returned no valid "
+                    "base_model_response (result type %s); refusing to expose "
+                    "fine-tuned adapter output.",
+                    type(result).__name__,
+                )
+            elif isinstance(fine, str) and fine.strip():
+                # Diagnostic / legacy fine-tuned mode.
                 return ProviderResponse(
                     content=fine.strip(),
                     tool_calls=None,  # QWEN3_SUPPORTS_TOOLS is currently false
                     provider_name=self.name,
                 )
-
-            if base is not None and isinstance(base, str) and base.strip():
-                # Diagnostic: base-model output is present but we must never expose it.
+            elif base is not None and isinstance(base, str) and base.strip():
+                # Diagnostic: base-model output is present but must never be exposed.
                 logger.warning(
                     "Qwen3 Gradio Space returned a base_model_response but no "
                     "finetuned_model_response; not exposing diagnostic output."
@@ -546,6 +572,10 @@ class ProviderRouter:
         reason: str,
     ) -> ProviderResponse:
         """Handle Qwen3 fallback with tool support checks."""
+        logger.warning(
+            "Falling back to Qwen3 provider (reason: %s)",
+            reason,
+        )
         if tools and not self._qwen3.supports_tools():
             if requires_tool_execution(tools):
                 logger.warning(
@@ -613,6 +643,7 @@ def create_qwen3_provider() -> Qwen3Provider | None:
         model_id=settings.qwen3_model_id,
         timeout=settings.qwen3_timeout,
         supports_tool_calling=settings.qwen3_supports_tools,
+        use_base_model=settings.qwen3_use_base,
     )
 
 

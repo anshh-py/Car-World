@@ -118,17 +118,34 @@ TAVILY_API_KEY=tvly_YOUR_TAVILY_API_KEY
 QWEN3_ENDPOINT_URL=
 QWEN3_SPACE_ID=
 QWEN3_MODEL_ID=qwen3-4b-finetuned
+# Production uses the BASE Qwen3-4B response (true). The LoRA adapter
+# (finetuned_model_response) is retained for diagnostics only and is NOT
+# approved for production answer generation. Set to "false" only for
+# diagnostic/fine-tuned comparisons.
+QWEN3_USE_BASE=true
 QWEN3_TIMEOUT=60.0
 QWEN3_SUPPORTS_TOOLS=false
 HUGGINGFACE_TOKEN=
+```
+
+**Qwen3 fallback model note:** In production the fallback uses the base
+Qwen3-4B model (`QWEN3_USE_BASE=true`). The fine-tuned LoRA adapter
+(`ansh9057/carworld-qwen3-4b-lora`) failed the 5-question quality comparison
+(returning instruction-style text instead of answers) and is **not** approved
+for production answer generation. It remains available on the inference Space
+for diagnostic comparisons, but the backend never substitutes its output in
+base-only mode — a missing/invalid base response surfaces a safe error instead.
 
 # --- Supabase (optional auth) -----------------------------------------
+
 SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 SUPABASE_ANON_KEY=YOUR_ANON_KEY
 
 # --- CORS -------------------------------------------------------------
+
 FRONTEND_ORIGINS=https://example-carworld.pages.dev,https://www.example-carworld.pages.dev
-```
+
+````
 
 ## 3. Backend startup
 
@@ -140,7 +157,7 @@ cd backend
 alembic upgrade head
 python scripts/import_cars.py   # seed the catalog (idempotent)
 uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-8000}"
-```
+````
 
 **Docker**: the root `Dockerfile` (Python 3.12-slim) builds the image, runs
 migrations + import, then starts uvicorn. It binds to `$PORT` if set,
